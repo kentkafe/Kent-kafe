@@ -1,5 +1,528 @@
-});
-</script>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kent Kafe - Nitelikli Lezzet</title>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Times New Roman', Times, serif; }
+        html, body { background-color: #fcfdfc; color: #0a2f1d; font-size: 12pt; line-height: 1.7; overflow-x: hidden; scroll-behavior: smooth; }
+        h1, h2, h3 { font-size: 14pt; font-weight: bold; color: #0a2f1d; letter-spacing: 1px; }
+        
+        header { background-color: #0a2f1d; display: flex; justify-content: space-between; align-items: center; padding: 0 25px; position: fixed; width: 100%; top: 0; left: 0; height: 75px; z-index: 1000; box-shadow: 0 4px 25px rgba(0,0,0,0.25); }
+        .logo-container { display: flex; align-items: center; height: 100%; cursor: pointer; text-decoration: none; }
+        .logo-img { max-height: 55px; width: auto; object-fit: contain; }
+        
+        .greeting-box { font-family: 'Times New Roman', Times, serif; font-weight: bold; color: #ffffff; text-align: center; flex-grow: 1; padding: 0 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; pointer-events: none; opacity: 0.9; line-height: 1.1; }
+        .greeting-part-time { font-size: clamp(10pt, 3vw, 14pt); text-transform: uppercase; }
+        .greeting-part-welcome { font-size: clamp(12pt, 8vw, 12.5pt); }
+        
+        .hamburger-menu { background: none; border: none; display: flex; flex-direction: column; justify-content: space-between; width: 28px; height: 18px; cursor: pointer; z-index: 1002; position: relative; }
+        .hamburger-menu span { display: block; height: 3px; width: 100%; background-color: #ffffff; transition: 0.3s; }
+        
+        /* Kompakt ve Modern Menü Tasarımı */
+        .side-banner { position: fixed; top: 0; right: -100%; width: 260px; height: 100%; background: rgba(10, 47, 29, 0.95); backdrop-filter: blur(10px); box-shadow: -5px 0 20px rgba(0,0,0,0.3); padding: 40px 20px; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001; display: flex; flex-direction: column; gap: 10px; visibility: hidden; }
+        .side-banner.open { right: 0; visibility: visible; }
+        .side-menu-logo { text-align: center; margin-bottom: 25px; }
+        .side-menu-logo img { max-height: 50px; opacity: 0.9; }
+
+        .btn-menu { display: block; background: rgba(255,255,255,0.05); color: #ffffff; text-align: left; padding: 12px 15px; text-decoration: none; font-size: 11pt; border-radius: 8px; transition: 0.3s; border-left: 3px solid transparent; }
+        .btn-menu:hover { background: rgba(255,255,255,0.1); border-left: 3px solid #d4af37; }
+        .btn-menu:active { transform: translateX(-5px); }
+        
+        .slider-section { 
+    margin-top: 75px; 
+    position: relative; 
+    width: 100%; 
+    height: 50vh; /* Mobildeki yükseklik */
+    overflow: hidden; 
+}
+
+/* PC ekranları için boyutu büyütüyoruz */
+@media (min-width: 1024px) {
+    .slider-section {
+        height: 70vh; /* PC'de daha geniş görünsün */
+    }
+}
+        .slider-wrapper { display: flex; width: 100%; height: 100%; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+        .slider-item { min-width: 100%; height: 100%; }
+        .slider-item img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .slider-nav-bar { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; background: rgba(10, 47, 29, 0.6); padding: 6px 12px; border-radius: 20px; z-index: 20; backdrop-filter: blur(4px); }
+        .slider-nav-dot { width: 25px; height: 5px; background-color: rgba(255, 255, 255, 0.4); border-radius: 3px; cursor: pointer; transition: all 0.4s ease; }
+        .slider-nav-dot.active { background-color: #ffffff; width: 40px; }
+        
+        .coffee-hero-text { background-color: #0a2f1d; color: #ffffff; text-align: center; padding: 45px 20px; position: relative; z-index: 10; }
+        .coffee-hero-text h1 { color: #ffffff; font-size: 20pt; line-height: 1.4; text-transform: uppercase; margin-bottom: 10px; }
+        .coffee-hero-text p { font-size: 12pt; opacity: 0.9; font-style: italic; margin-bottom: 20px; }
+        
+        .btn-direct-menu { display: inline-block; background-color: #ffffff; color: #0a2f1d; padding: 12px 30px; text-decoration: none; font-size: 12pt; font-weight: bold; border-radius: 4px; text-transform: uppercase; transition: 0.2s; box-shadow: 0 6px 20px rgba(0,0,0,0.15); cursor: pointer; }
+        .btn-direct-menu:active { transform: scale(0.95); }
+        
+        .main-content { padding: 40px 20px; max-width: 650px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 35px; position: relative; text-transform: uppercase; margin-top: 20px; }
+        #aboutSection .section-title::after, #featuresSection .section-title::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 60px; height: 2px; background-color: #0a2f1d; }
+        
+        .info-card { background-color: #ffffff; padding: 26px; border-radius: 8px; box-shadow: 0 12px 30px rgba(0,0,0,0.05); border-left: 5px solid #0a2f1d; }
+        .info-card h3 { margin-bottom: 12px; text-transform: uppercase; }
+        .info-card p { color: #3b4d42; font-size: 12pt; margin-bottom: 12px; text-align: justify; }
+        .info-card p:last-child { margin-bottom: 0; }
+        
+        .features-slider-container { position: relative; width: 100%; overflow: hidden; }
+        .features-slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 20px; padding: 10px 5px 20px 5px; -webkit-overflow-scrolling: touch; }
+        .features-slider::-webkit-scrollbar { display: none; }
+        .features-slider .info-card { min-width: 100%; scroll-snap-align: start; margin-bottom: 0; }
+        
+        .slider-dots { display: flex; justify-content: center; align-items: center; gap: 6px; margin: 15px 0 30px 0; }
+        .dot { width: 8px; height: 8px; background-color: #c4d1c9; border-radius: 50%; transition: all 0.3s ease; }
+        .dot.active { background-color: #0a2f1d; transform: scale(1.2); }
+        
+        .insta-masonry { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+        .insta-row-single { width: 100%; }
+        .insta-row-double { display: flex; gap: 15px; width: 100%; }
+        .insta-row-double .insta-card { flex: 1; }
+        .insta-card { display: block; text-decoration: none; overflow: hidden; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); background-color: #ffffff; padding: 6px; border: 1px solid rgba(10, 47, 29, 0.05); transition: transform 0.3s ease; }
+        .insta-card img { width: 100%; height: auto; display: block; border-radius: 4px; object-fit: contain; }
+        .insta-card:active { transform: scale(0.98); }
+        
+        #instagramSection h2 { text-align: center; margin-bottom: 15px; }
+        #instagramSection h2 .btn-direct-menu { display: inline-block; background: none; color: #0a2f1d; padding: 0; font-size: 14pt; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; box-shadow: none; text-decoration: none; cursor: pointer; }
+        
+        .reveal { opacity: 0; transform: translateY(60px); transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1), transform 1.6s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform, opacity; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .back-to-top { position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; background-color: #0a2f1d; color: #ffffff; border: 2px solid #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16pt; font-weight: bold; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; cursor: pointer; outline: none; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        
+        footer { background-color: #0a2f1d; color: #ffffff; text-align: center; padding: 25px; font-size: 10pt; }
+
+        @media (min-width: 768px) {
+            .main-content { max-width: 1000px !important; }
+        }
+
+        /* YILDIZLI GERİ BİLDİRİM SİSTEMİ STİLİ */
+        .feedback-btn { position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; background-color: #0a2f1d; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1000; }
+        .feedback-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 20px; border-radius: 20px; width: 90%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); z-index: 2000; border: 2px solid #0a2f1d; max-height: 90vh; overflow-y: auto; }
+        .star-group { margin-bottom: 15px; }
+        .star-group label { display: block; color: #0a2f1d; font-weight: bold; text-align: center; margin-bottom: 5px; font-size: 11pt; }
+        .star-rating { display: flex; flex-direction: row-reverse; justify-content: center; gap: 2px; }
+        .star-rating input { display: none; }
+        .star-rating label { font-size: 22px; color: #ccc; cursor: pointer; transition: 0.2s; }
+        .star-rating input:checked ~ label, .star-rating label:hover, .star-rating label:hover ~ label { color: #d4af37; }
+    </style>
+</head>
+<body>
+    <header id="homeTop">
+        <a href="#aboutSection" class="logo-container">
+            <img src="https://i.hizliresim.com/mb5ed03.png" alt="Kent Kafe Logo" class="logo-img">
+        </a>
+        
+        <div class="greeting-box">
+            <div class="greeting-part-time" id="greetingTextTime"></div> 
+            <div class="greeting-part-welcome">Kent Kafe'ye Hoşgeldiniz</div> 
+        </div>
+        
+        <button class="hamburger-menu" onclick="toggleBannerMenu()"><span></span><span></span><span></span></button>
+    </header>
+    
+    <nav class="side-banner" id="menuBanner">
+        <div class="side-menu-logo">
+<img src="https://i.hizliresim.com/izcw310.png" alt="Kent Kafe Menü Logo" style="width: 150px; height: 350px; object-fit: contain;">
+
+        </div>
+        <a href="#homeTop" class="btn-menu" onclick="toggleBannerMenu()">Ana Sayfa</a>
+        <a href="https://menucebimde.com/?menuid=C6CRQE" class="btn-menu" onclick="toggleBannerMenu()">Menü</a>
+        <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" class="btn-menu">Instagram</a>
+        <a href="https://maps.app.goo.gl/4LGZC4vXM9usaJN56?g_st=ic" class="btn-menu">Google Haritalar</a>
+        <a href="#aboutSection" class="btn-menu" onclick="toggleBannerMenu()">Hakkımızda</a>
+        <a href="#featuresSection" class="btn-menu" onclick="toggleBannerMenu()">Öne Çıkan Özelliklerimiz</a>
+        <a href="#luckyWheelSection" class="btn-menu" onclick="toggleBannerMenu()">Şans Çarkı</a>
+        
+        <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=40.2043383,28.3497619" target="_blank" 
+               style="display: block; background: #d4af37; color: #0a2f1d; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 11pt; border: none;">
+               Bizi Ziyaret Edin
+            </a>
+        </div>
+    </nav>
+    
+    <div class="slider-section">
+        <div class="slider-wrapper" id="imageWrapper">
+            <div class="slider-item"><img src="https://i.hizliresim.com/n4i9nno.jpeg" alt="Kent Kafe Özel Seri"></div>
+            <div class="slider-item"><img src="https://i.hizliresim.com/hyxeqhr.jpeg" alt="Kent Kafe Espresso Atışı"></div>
+            <div class="slider-item"><img src="https://i.hizliresim.com/hh6w7a4.jpeg" alt="Kent Kafe Doğa Keyfi"></div>
+            <div class="slider-item"><img src="https://i.hizliresim.com/18ta8vn.jpeg" alt="Kent Kafe İmza Lezzet"></div>
+            <div class="slider-item"><img src="https://i.hizliresim.com/74ocu2k.jpeg" alt="Kent Kafe Gün Batımı"></div>
+        </div>
+        <div class="slider-nav-bar">
+            <div class="slider-nav-dot active" onclick="goToSlide(0)"></div>
+            <div class="slider-nav-dot" onclick="goToSlide(1)"></div>
+            <div class="slider-nav-dot" onclick="goToSlide(2)"></div>
+            <div class="slider-nav-dot" onclick="goToSlide(3)"></div>
+            <div class="slider-nav-dot" onclick="goToSlide(4)"></div>
+        </div>
+    </div>
+    
+    <section class="coffee-hero-text">
+        <h1>Nitelikli Lezzet, Yüksek Kalite</h1>
+        <p>Yüksek kalite standartlarından ödün vermeden, ucuz ve ulaşılabilir lezzet mottosuyla tasarlanan yaşam alanımıza hoş geldiniz.</p>
+        <a href="https://menucebimde.com/?menuid=C6CRQE" class="btn-direct-menu">Menü</a>
+    </section>
+    
+    <main class="main-content">
+        <section id="aboutSection" class="reveal">
+            <h2 class="section-title">Hakkımızda</h2>
+            <div class="info-card">
+                <h3>Uygun Fiyat, Ulaşılabilir Lezzet</h3>
+                <p>2025 yılında kapılarını açan Kent Kafe, kurulduğu ilk günden itibaren kahve ve lezzet kültürüne kurumsal bir vizyon kazandırmayı amaçlamıştır. Misafirlerimize sadece bir mola alanı değil, aynı zamanda nitelikli ve konforlu zaman geçirebilecekleri özel bir yaşam alanı sunuyoruz.</p>
+                <p>"Uygun fiyat, ulaşılabilir lezzet" sloganını tüm operasyonlarımızın merkezine koyarak, yüksek kalite standartlarındaki ürünlerimizi herkes için erişilebilir kılmayı kendimize temel misyon edindik. Özenle seçilen %100 organik çekirdeklerimiz, profesyonel baristalarımızın elinden çıkan imza reçetelerimiz ve doğayla iç içe atmosferimizle, her damak tadına hitap eden geniş bir kurumsal menu çeşitliliği sunmaktayız.</p>
+                <p>Bugün ve gelecekte, Kent Kafe ailesi olarak samimi hizmet disiplinimizden og hijyen standartlarımızdan ödün vermeden sektörde fark yaratmaya, konforlu mekanımızda sizleri en iyi şekilde ağırlamaya ve her bardağa bir parça tutku katmaya kararlılıkla devam edeceğiz.</p>
+            </div>
+        </section>
+        
+        <section id="featuresSection" class="reveal">
+            <h2 class="section-title">Öne Çıkan Özelliklerimiz</h2>
+            
+            <div class="features-slider-container">
+                <div class="features-slider" id="featuresSlider">
+                    <div class="info-card">
+                        <h3>%100 Organik ve Orijinal Kahve Çekirdeği</h3>
+                        <p>Dünyanın en seçkin kahve tarlalarından özenle seçilen, hiçbir kimyasal işlem görmemiş %100 organik og orijinal çekirdekleri, uzman baristalarımızın hassas kalibrasyonlarıyla kusursuz bir espresso deneyimine dönüştürüyoruz.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Taze Pasta ve Sandviç Çeșitleri</h3>
+                        <p>Her sabah en seçkin ve güvenilir üreticilerden titizlikle tedarik edilen günlük taze pasta çeşitlerimiz ve üstün kalite standartlarındaki gurme sandviçlerimizle, kahve keyfinizi her zaman en kusursuz eşlikçilerle buluşturuyoruz.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Doğa İle İç İçe</h3>
+                        <p>Şehrin karmaşasından uzak, huzurlu açık hava alanımızda evcil dostlarınızla birlikte keyifle vakit geçirebilir, yürüyüş yapabilir ve sevdiklerinizle sosyalleşebileceğiniz konforlu bir ortamın tadını çıkarabilirsiniz.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Hızlı Șarj İstasyonu</h3>
+                        <p>Yenilikçi çözümlerle yanınızdayız. Tesisimizde yer alan yüksek güçlü elektrikli araç hızlı şarj istasyonları sayesinde, siz kahvenizin tadını çıkarıp dinlenirken aracınızı da güvenle ve yüksek hızda şarj edebilirsiniz.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Al Götür (Take Away) Hizmeti</h3>
+                        <p>Al götür hizmetimiz mevcuttur. Dinamik şehir hayatında, dilediğiniz her yerde en sevdiğiniz ürünlerimizi ve Kent Kafe lezzetlerini kolayca yanınızda taşıyabilir, keyfe ara vermeden devam edebilirsiniz.</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Ucuz ve Ulaşılabilir Lezzet</h3>
+                        <p>Yüksek kalite standartlarımızdan ve titiz hijyen ilkelerimizden ödün vermeden, tüm misafirlerimizin temiz, ulaşılabilir ve yüksek kaliteli ürünlere en avantajlı koşullarla erişebilmesi için çalışıyoruz.</p>
+                    </div>
+                </div>
+                
+                <div class="slider-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </section>
+        
+        <section id="instagramSection" class="reveal">
+            <h2>
+                <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="btn-direct-menu">
+                    Instagram'da Biz
+                </a>
+            </h2>
+            
+            <div class="insta-masonry">
+                <div class="insta-row-single">
+                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
+                        <img src="https://i.hizliresim.com/n4i9nno.jpeg" alt="Kent Kafe Özel Seçim">
+                    </a>
+                </div>
+                
+                <div class="insta-row-double">
+                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
+                        <img src="https://i.hizliresim.com/hyxeqhr.jpeg" alt="Kent Kafe Lezzet Serisi">
+                    </a>
+                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
+                        <img src="https://i.hizliresim.com/hh6w7a4.jpeg" alt="Kent Kafe Sunum">
+                    </a>
+                </div>
+                
+                <div class="insta-row-single">
+                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
+                        <img src="https://i.hizliresim.com/18ta8vn.jpeg" alt="Kent Kafe Ferahlık">
+                    </a>
+                </div>
+                
+                <div class="insta-row-single">
+                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
+                        <img src="https://i.hizliresim.com/74ocu2k.jpeg" alt="Kent Kafe Gün Batımı Keyfi">
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <section id="luckyWheelSection" style="padding: 60px 20px; text-align: center; background-color: #fcfdfc; border-top: 1px solid rgba(10, 47, 29, 0.1); margin-top: 30px;">
+        <h2 style="font-size: 15pt; font-weight: bold; color: #0a2f1d; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">Şanslı Günümdeyim!</h2>
+        <p style="font-size: 11pt; color: #3b4d42; font-style: italic; margin-bottom: 30px;">Bugün Acaba Hangi Kokteyl'i İçeceğim...</p>
+        
+        <div style="position: relative; width: 320px; height: 320px; margin: 0 auto 25px auto;">
+            <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 100; width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-top: 28px solid #d4af37; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));"></div>
+            
+            <div id="luckyWheel" style="width: 100%; height: 100%; border-radius: 50%; border: 10px solid #0a2f1d; position: relative; overflow: hidden; transition: transform 10s cubic-bezier(0.15, 0.85, 0.35, 1); box-shadow: 0 12px 28px rgba(0,0,0,0.15);"></div>
+            
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 45px; height: 45px; background: #0a2f1d; border: 3px solid #d4af37; border-radius: 50%; z-index: 10; box-shadow: 0 4px 8px rgba(0,0,0,0.3);"></div>
+        </div>
+        
+        <div id="wheelResult" style="font-size: 13pt; font-weight: bold; color: #0a2f1d; min-height: 35px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;"></div>
+        
+        <button id="spinButton" onclick="startLuckySpin()" style="display: inline-block; background-color: #0a2f1d; color: #ffffff; padding: 14px 40px; border: none; font-size: 11pt; font-weight: bold; border-radius: 4px; text-transform: uppercase; cursor: pointer; box-shadow: 0 5px 15px rgba(10,47,29,0.2); transition: 0.2s; outline: none;">Çarkı Çevir</button>
+    </section>
+    
+    <div class="feedback-btn" onclick="document.getElementById('modal').style.display='block'">★</div>
+    <div id="modal" class="feedback-modal">
+        <h3 style="color:#0a2f1d; text-align:center; margin-bottom:15px;">Deneyimini Paylaş</h3>
+        <p style="text-align:center; font-size: 10pt; margin-bottom:15px; color:#555;">Değerli yorumlarınız Kent Kafe'yi daha iyi yapmamıza yardımcı oluyor.</p>
+        
+        <form action="https://formspree.io/f/maqkokwp" method="POST">
+            <script>
+                ["Atmosfer", "Temizlik", "İlgi Alaka", "Servis"].forEach(cat => {
+                    document.write(`
+                        <div class="star-group">
+                            <label>${cat}</label>
+                            <div class="star-rating">
+                                ${[10,9,8,7,6,5,4,3,2,1].map(i => `
+                                    <input type="radio" id="${cat}${i}" name="${cat}" value="${i}" required>
+                                    <label for="${cat}${i}">★</label>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `);
+                });
+            </script>
+            
+            <div class="star-group">
+                <label>İsminiz (İsteğe bağlı)</label>
+                <input type="text" name="isim" placeholder="Adınız..." style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px;">
+            </div>
+            <div class="star-group">
+                <label>Eklemek İstedikleriniz</label>
+                <textarea name="yorum" rows="3" placeholder="Görüş ve önerileriniz..." style="width:100%; padding:8px; border:1px solid #ccc; border-radius:5px;"></textarea>
+            </div>
+            
+            <button type="submit" style="width:100%; padding:12px; background:#0a2f1d; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Gönder</button>
+            <button type="button" onclick="document.getElementById('modal').style.display='none'" style="width:100%; margin-top:10px; padding:8px; border:1px solid #ccc; background:white; cursor:pointer;">Vazgeç</button>
+        </form>
+    </div>
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+    
+    <section style="background: #fcfdfc; padding: 40px 20px; border-top: 1px solid rgba(10, 47, 29, 0.1);">
+        <div class="main-content" style="max-width: 650px; margin: 0 auto; background: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #eee;">
+            <h3 style="text-align: center; color: #0a2f1d; margin-bottom: 20px; text-transform: uppercase;">Bizi Ziyaret Edin</h3>
+            
+            <div style="text-align: center; color: #3b4d42; margin-bottom: 20px; font-size: 11pt;">
+                <p><strong>Adres:</strong> Canbalı, Atatürk Kültür Parkı, Karacabey/Bursa</p>
+                <p style="margin-top: 10px;"><strong>Telefon:</strong> <a href="tel:+902246768640" style="color: #0a2f1d; font-weight: bold; text-decoration: none;">0224 676 86 40</a></p>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="font-weight: bold; color: #0a2f1d; margin-bottom: 10px;">Çalışma Saatleri</p>
+                <p style="font-size: 10pt;">Her gün: 08:30 – 00:30</p>
+            </div>
+
+            <a href="https://www.google.com/maps/dir/?api=1&destination=40.2043383,28.3497619" target="_blank" 
+               style="display: block; background: #0a2f1d; color: #ffffff; text-align: center; padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 11pt;">
+               Yol Tarifi Al
+            </a>
+        </div>
+    </section>
+
+    <footer>© 2026 Kent Kafe. Tüm Hakları Saklıdır.</footer>
+    
+    <script>
+        function toggleBannerMenu() {
+            const b = document.getElementById('menuBanner');
+            if (b) b.classList.toggle('open');
+        }
+        
+        const wrapper = document.getElementById('imageWrapper');
+        const navDots = document.querySelectorAll('.slider-nav-dot');
+        let currentSlide = 0;
+        let sliderInterval;
+        
+        function updateSliderTrack() {
+            if (wrapper) wrapper.style.transform = `translateX(${-currentSlide * 100}%)`;
+            navDots.forEach((dot, index) => {
+                if (index === currentSlide) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+        
+        function startAutoSlider() {
+            sliderInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % 5;
+                updateSliderTrack();
+            }, 5000);
+        }
+        
+        function goToSlide(slideIndex) {
+            clearInterval(sliderInterval);
+            currentSlide = slideIndex;
+            updateSliderTrack();
+            startAutoSlider();
+        }
+        
+        startAutoSlider();
+        
+        const slider = document.getElementById('featuresSlider');
+        const dots = document.querySelectorAll('.features-slider-container .dot');
+        if (slider) {
+            slider.addEventListener('scroll', () => {
+                const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+                dots.forEach((dot, i) => {
+                    if (i === index) dot.classList.add('active');
+                    else dot.classList.remove('active');
+                });
+            });
+        }
+        
+        function revealElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 80) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', revealElements);
+        window.addEventListener('load', revealElements);
+        
+        const btt = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                btt.classList.add('show');
+            } else {
+                btt.classList.remove('show');
+            }
+        });
+        
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        const banner = document.getElementById('menuBanner');
+        let startX = 0;
+        if (banner) {
+            banner.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+            
+            banner.addEventListener('touchend', (e) => {
+                let endX = e.changedTouches[0].clientX;
+                if (endX - startX > 60) {
+                    banner.classList.remove('open');
+                }
+            }, { passive: true });
+        }
+    </script>
+    
+    <script>
+        (function initLuckyWheel() {
+            const cocktails = ["Luna Bloom", "Mango Sunrise", "Mango Mist", "Purple", "Velora", "Red Flag", "Mooz", "Mihaliç Sour", "Longoz Essence", "Pineapple Pop", "Casper Spirit"];
+            const wheel = document.getElementById('luckyWheel');
+            const resultDiv = document.getElementById('wheelResult');
+            const btn = document.getElementById('spinButton');
+            let currentRotation = 0;
+            let isSpinning = false;
+            
+            const totalItems = cocktails.length;
+            const anglePerSlice = 360 / totalItems;
+            let conicParts = [];
+            
+            const sliceColors = ['#0a2f1d', '#1e5c3a', '#0a2f1d', '#1e5c3a', '#0a2f1d', '#1e5c3a', '#0a2f1d', '#1e5c3a', '#0a2f1d', '#1e5c3a', '#144026'];
+            
+            if (!wheel) return;
+            
+            cocktails.forEach((item, index) => {
+                const startAngle = index * anglePerSlice;
+                const endAngle = (index + 1) * anglePerSlice;
+                const color = sliceColors[index];
+                conicParts.push(`${color} ${startAngle}deg ${endAngle}deg`);
+                
+                const textDiv = document.createElement('div');
+                textDiv.style.position = 'absolute';
+                textDiv.style.width = '120px';
+                textDiv.style.height = '30px';
+                textDiv.style.top = '50%';
+                textDiv.style.left = '50%';
+                textDiv.style.transformOrigin = 'left center';
+                textDiv.style.textAlign = 'right';
+                
+                const midAngle = startAngle + (anglePerSlice / 2);
+                textDiv.style.transform = `translate(0%, -50%) rotate(${midAngle - 90}deg) translate(15px, 0px)`;
+                textDiv.style.color = '#ffffff';
+                textDiv.style.fontWeight = 'bold';
+                textDiv.style.fontSize = '8.5pt';
+                textDiv.style.whiteSpace = 'nowrap';
+                textDiv.style.fontFamily = 'sans-serif';
+                textDiv.innerText = item;
+                wheel.appendChild(textDiv);
+            });
+            
+            wheel.style.background = `conic-gradient(${conicParts.join(', ')})`;
+            
+            window.startLuckySpin = function() {
+                if (isSpinning) return;
+                isSpinning = true;
+                resultDiv.style.color = "#3b4d42";
+                resultDiv.innerText = "Karıştırılıyor...";
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+                
+                const totalRounds = Math.floor(Math.random() * 4) + 8;
+                const randomAngle = Math.random() * 360;
+                currentRotation += (totalRounds * 360) + randomAngle;
+                
+                wheel.style.transition = "transform 10s cubic-bezier(0.15, 0.85, 0.35, 1)";
+                wheel.style.transform = `rotate(${currentRotation}deg)`;
+                
+                setTimeout(() => {
+                    const actualDegrees = currentRotation % 360;
+                    const pointerAngle = (360 - actualDegrees) % 360;
+                    const winningIndex = Math.floor(pointerAngle / anglePerSlice);
+                    const winner = cocktails[winningIndex];
+                    
+                    resultDiv.innerHTML = `Şansına Gelen: <span style="color: #1e5c3a; font-size: 14pt; border-bottom: 2px solid #1e5c3a; padding-bottom: 2px;">${winner}</span>`;
+                    isSpinning = false;
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+                }, 10000);
+            };
+        })();
+    </script>
+    
+    <script>
+        window.addEventListener('load', () => {
+            const hour = new Date().getHours();
+            let greetingWord = "";
+            
+            if (hour >= 5 && hour < 12) {
+                greetingWord = "Günaydın";
+            } else if (hour >= 12 && hour < 18) {
+                greetingWord = "Tünaydın";
+            } else {
+                greetingWord = "İyi Akşamlar";
+            }
+            
+            const greetingTimeElement = document.getElementById('greetingTextTime');
+            if (greetingTimeElement) greetingTimeElement.innerText = greetingWord;
+        });
+    </script>
 </body>
     <style>
 @media (min-width: 1024px) {
