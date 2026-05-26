@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kent Kafe - Nitelikli Lezzet</title>
-    
+    <meta name="description" content="Kent Kafe Karacabey - Atatürk Kültür Parkı'nın kalbinde, doğa ile iç içe, nitelikli kahve çeşitleri, özel imza kokteyller, taze sandviç ve gurme tatlı seçenekleriyle hizmetinizdeyiz.">
+<meta name="keywords" content="kent kafe, kent kafe karacabey, karacabey kafe, karacabey kahve, bursa karacabey kafeler, karacabey park kafe, nitelikli kahve karacabey, karacabey kokteyl, karacabey tatlı, engelsiz kafe karacabey">
+<meta name="author" content="Kent Kafe">
+
+<title>Kent Kafe Karacabey | Doğa, Kahve ve Konfor Alanı</title>
+<link rel="icon" type="image/x-icon" href="https://i.hizliresim.com/owf9yyj.png">
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Times New Roman', Times, serif; }
         html, body { background-color: #fcfdfc; color: #0a2f1d; font-size: 12pt; line-height: 1.7; overflow-x: hidden; scroll-behavior: smooth; }
@@ -126,6 +131,56 @@
         <a href="#featuresSection" class="btn-menu" onclick="toggleBannerMenu()">Öne Çıkan Özelliklerimiz</a>
         <a href="#luckyWheelSection" class="btn-menu" onclick="toggleBannerMenu()">Şans Çarkı</a>
         
+        <a href="https://forms.gle/jw8wHCJqGHRMnCcRA" target="_blank" class="career-menu-btn">
+    <span class="career-icon">💼</span> Bizimle Çalışın
+</a>
+
+<style>
+    .career-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background-color: #0a2f1d; /* Önerdiğin Premium Koyu Yeşil */
+        color: #ffffff !important; /* Beyaz yazı */
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 11pt;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-decoration: none;
+        padding: 14px 20px;
+        margin-bottom: 12px; /* Altındaki sarı butonla mükemmel mesafe */
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        width: 100%; /* Menü genişliğine tam oturması için */
+        box-sizing: border-box;
+    }
+
+    /* Fareyle üzerine gelindiğinde (Hover) şık geçiş efekti */
+    .career-menu-btn:hover {
+        background-color: #0d3f27; /* Hafifçe açılan yeşil tonu */
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2);
+        transform: translateY(-1px);
+    }
+
+    .career-icon {
+        font-size: 13pt;
+    }
+
+    /* Mobil Ekranlar İçin Tıklama Kolaylığı */
+    @media screen and (max-width: 768px) {
+        .career-menu-btn {
+            padding: 16px 20px; /* Mobilde parmakla rahat basılsın diye hafif geniş */
+            font-size: 11.5pt;
+        }
+    }
+</style>
+
+        
         <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
             <a href="https://www.google.com/maps/dir/?api=1&destination=40.2043383,28.3497619" target="_blank" 
                style="display: block; background: #d4af37; color: #0a2f1d; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 11pt; border: none;">
@@ -156,7 +211,308 @@
         <p>Yüksek kalite standartlarından ödün vermeden, ucuz ve ulaşılabilir lezzet mottosuyla tasarlanan yaşam alanımıza hoş geldiniz.</p>
         <a href="https://menucebimde.com/?menuid=C6CRQE" class="btn-direct-menu">Menü</a>
     </section>
+    <style>
+    .status-panel { 
+        width: 100%;
+        max-width: 650px; 
+        margin: 40px auto 40px auto; 
+        padding: 30px 25px; 
+        background: #ffffff; 
+        border-radius: 12px; 
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08); 
+        border: 1px solid rgba(10, 47, 29, 0.1);
+        text-align: center;
+        font-family: 'Times New Roman', Times, serif;
+        position: relative;
+        z-index: 20;
+        box-sizing: border-box;
+    }
+    .status-header {
+        margin-bottom: 20px;
+    }
+    .status-header h3 {
+        color: #0a2f1d;
+        font-size: 15pt;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+    .status-header p {
+        font-size: 11pt;
+        color: #555;
+        font-style: italic;
+        line-height: 1.4;
+        margin-bottom: 5px;
+    }
+    .live-clock {
+        font-size: 10pt;
+        color: #0a2f1d;
+        font-weight: bold;
+        background: rgba(10, 47, 29, 0.05);
+        padding: 4px 12px;
+        border-radius: 20px;
+        display: inline-block;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+    .current-status-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 35px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 13pt;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+    .status-panel-dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
     
+    .dot-sakin { background-color: #10b981; box-shadow: 0 0 10px #10b981; }
+    .dot-dinamik { background-color: #ff9f1c; box-shadow: 0 0 10px #ff9f1c; }
+    .dot-yogun { background-color: #e71d36; box-shadow: 0 0 10px #e71d36; }
+
+    .future-notice {
+        font-size: 10pt;
+        color: #e71d36;
+        font-weight: bold;
+        background: rgba(231, 29, 54, 0.05);
+        padding: 8px 15px;
+        border-radius: 6px;
+        margin-bottom: 25px;
+        line-height: 1.4;
+    }
+
+    .status-guide {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+    }
+    .guide-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+    .guide-item strong { font-size: 11pt; color: #0a2f1d; text-transform: uppercase; }
+    .guide-desc { font-size: 10pt; color: #777; line-height: 1.3; padding: 0 5px;}
+    .guide-dot { width: 10px; height: 10px; border-radius: 50%; margin-bottom: 4px; }
+
+    /* Gece Modu Uyumu */
+    body.dark-mode .status-panel { background: #0a2f1d; border-color: rgba(255,255,255,0.1); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    body.dark-mode .status-header h3 { color: #d4af37; }
+    body.dark-mode .live-clock { color: #d4af37; background: rgba(212, 175, 55, 0.1); }
+    body.dark-mode .status-header p, body.dark-mode .guide-desc { color: #ccc; }
+    body.dark-mode .guide-item strong { color: #ffffff; }
+    body.dark-mode .status-guide { border-top-color: rgba(255,255,255,0.1); }
+</style>
+
+<div class="status-panel">
+    <div class="status-header">
+        <h3>Anlık Atmosfer Durumu</h3>
+        <p>Ziyaretinizi planlamanıza yardımcı olmak için kafemizin yoğunluğunu takip edebilirsiniz.</p>
+        <div class="live-clock">🕒 Canlı Saat: <span id="liveClockTime">00:00</span></div>
+    </div>
+
+    <div id="currentStatusBox" class="current-status-box" style="background: rgba(10, 47, 29, 0.05);">
+        <span id="panelDot" class="status-panel-dot"></span>
+        <span id="panelText" style="color: #0a2f1d; font-weight: bold;">Hesaplanıyor...</span>
+    </div>
+
+    <div id="futureNotice" class="future-notice" style="display: none;"></div>
+
+    <div class="status-guide">
+        <div class="guide-item">
+            <span class="guide-dot" style="background-color: #10b981;"></span>
+            <strong>Sakin</strong>
+            <span class="guide-desc">Kafa Dinleme & Odaklanma</span>
+        </div>
+        <div class="guide-item" style="border-left: 1px solid #eee; border-right: 1px solid #eee; padding: 0 10px;">
+            <span class="guide-dot" style="background-color: #ff9f1c;"></span>
+            <strong>Dinamik</strong>
+            <span class="guide-desc">Keyifli Akış & Sosyalleşme</span>
+        </div>
+        <div class="guide-item">
+            <span class="guide-dot" style="background-color: #e71d36;"></span>
+            <strong>Yoğun</strong>
+            <span class="guide-desc">Yüksek Enerji & Tam Kapasite</span>
+        </div>
+    </div>
+</div>
+<style>
+    .quality-section {
+        width: 100%;
+        max-width: 650px; /* Yoğunluk panosu ile aynı genişlikte, kusursuz durması için */
+        margin: 20px auto 40px auto;
+        padding: 10px 10px;
+        box-sizing: border-box;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    .quality-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .quality-card {
+        background: #ffffff;
+        border: 1px solid rgba(10, 47, 29, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        text-align: left;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        transition: transform 0.2s ease;
+    }
+    .quality-icon {
+        font-size: 24pt;
+        min-width: 50px;
+        height: 50px;
+        background: rgba(16, 185, 129, 0.1); /* Zümrüt yeşili hafif arka plan */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .quality-content h4 {
+        margin: 0 0 5px 0;
+        color: #0a2f1d;
+        font-size: 12pt;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: bold;
+    }
+    .quality-content p {
+        margin: 0;
+        color: #666;
+        font-size: 10pt;
+        line-height: 1.4;
+    }
+
+    /* BİLGİSAYAR (MASAÜSTÜ) EKRANLARI İÇİN YAN YANA DÜZEN */
+    @media screen and (min-width: 768px) {
+        .quality-section {
+            max-width: 850px; /* Geniş ekranlarda panoyu biraz daha yayıyoruz */
+        }
+        .quality-grid {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .quality-card {
+            flex: 1;
+            flex-direction: column;
+            text-align: center;
+            padding: 25px 15px;
+        }
+        .quality-icon {
+            margin: 0 auto 10px auto;
+        }
+    }
+
+    /* Gece Modu Uyumu */
+    body.dark-mode .quality-card {
+        background: #0a2f1d;
+        border-color: rgba(255,255,255,0.1);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    body.dark-mode .quality-content h4 { color: #d4af37; }
+    body.dark-mode .quality-content p { color: #ccc; }
+    body.dark-mode .quality-icon { background: rgba(212, 175, 55, 0.1); }
+</style>
+
+<div class="quality-section">
+    <div class="quality-grid">
+        
+        <div class="quality-card">
+            <div class="quality-icon">✨</div>
+            <div class="quality-content">
+                <h4>%100 Taze Malzeme</h4>
+                <p>Meyve pürelerimiz, özel soslarımız ve içecek reçetelerimiz günlük olarak taze hazırlanır.</p>
+            </div>
+        </div>
+
+        <div class="quality-card">
+            <div class="quality-icon">☕</div>
+            <div class="quality-content">
+                <h4>Nitelikli Kavrum</h4>
+                <p>Espresso ve filtre kahve çeşitlerimizde sadece en üst kalite profiline sahip seçkin hasatları kullanıyoruz.</p>
+            </div>
+        </div>
+
+        <div class="quality-card">
+            <div class="quality-icon">❄️</div>
+            <div class="quality-content">
+                <h4>Soğuk Zincir Güvencesi</h4>
+                <p>Tüm pasta ve tatlı çeşitlerimiz, tazeliğini koruması için kesintisiz soğuk zincir standartlarında muhafaza edilir.</p>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    function dijitalSaatGuncelle() {
+        const simdi = new Date();
+        const saat = String(simdi.getHours()).padStart(2, '0');
+        const dakika = String(simdi.getMinutes()).padStart(2, '0');
+        const saatYazisi = document.getElementById('liveClockTime');
+        if (saatYazisi) saatYazisi.innerText = saat + ":" + dakika;
+    }
+
+    (function kontrolMerkezi() {
+        // Saati ilk açılışta çalıştır ve her dakikada bir güncelle
+        dijitalSaatGuncelle();
+        setInterval(dijitalSaatGuncelle, 60000);
+
+        const simdi = new Date();
+        const gun = simdi.getDay(); 
+        const saat = simdi.getHours();
+        const dakika = simdi.getMinutes();
+        const zaman = saat + (dakika / 60);
+
+        const dot = document.getElementById('panelDot');
+        const text = document.getElementById('panelText');
+        const box = document.getElementById('currentStatusBox');
+        const notice = document.getElementById('futureNotice');
+        if (!dot || !text || !box || !notice) return;
+
+        // Akıllı Tahmin Akışı (Cuma, Cmt, Paz günleri akşam yoğunluğu uyarısı)
+        if ((gun === 5 || gun === 6 || gun === 0) && (saat >= 12 && saat < 19)) {
+            notice.innerHTML = "🎯 Bilgi: Hafta sonu akşam yoğunluğumuz 19:00'da başlamaktadır.";
+            notice.style.display = "block";
+        } else {
+            notice.style.display = "none";
+        }
+
+        // Hafta içi sabah sakinliği (Pazartesi - Perşembe | 08:30 - 12:00)
+        if (gun >= 1 && gun <= 4 && zaman >= 8.5 && zaman < 12) {
+            dot.className = "status-panel-dot dot-sakin";
+            text.innerText = "Şu An: Sakin";
+            box.style.border = "1.5px solid #10b981";
+        }
+        // Hafta sonu akşam yoğunluğu (Cuma, Cumartesi, Pazar | 19:00 - 00:30)
+        else if ((gun === 5 || gun === 6 || gun === 0) && (zaman >= 19 || zaman < 0.5)) {
+            dot.className = "status-panel-dot dot-yogun";
+            text.innerText = "Şu An: Yoğun";
+            box.style.border = "1.5px solid #e71d36";
+        }
+        // Diğer tüm saatler rutin dinamik mod
+        else {
+            dot.className = "status-panel-dot dot-dinamik";
+            text.innerText = "Şu An: Dinamik";
+            box.style.border = "1.5px solid #ff9f1c";
+        }
+    })();
+</script>
+
     <main class="main-content">
         <section id="aboutSection" class="reveal">
             <h2 class="section-title">Hakkımızda</h2>
@@ -167,7 +523,98 @@
                 <p>Bugün ve gelecekte, Kent Kafe ailesi olarak samimi hizmet disiplinimizden og hijyen standartlarımızdan ödün vermeden sektörde fark yaratmaya, konforlu mekanımızda sizleri en iyi şekilde ağırlamaya ve her bardağa bir parça tutku katmaya kararlılıkla devam edeceğiz.</p>
             </div>
         </section>
+        <section style="padding: 60px 20px; background-color: #fcfdfc; font-family: sans-serif; border-top: 1px solid rgba(10, 47, 29, 0.1);">
+    <div style="max-width: 1000px; margin: 0 auto; background: #ffffff; padding: 40px 25px; border-radius: 24px; box-shadow: 0 10px 30px rgba(10, 47, 29, 0.05); text-align: center; border: 1px solid rgba(10, 47, 29, 0.05);">
         
+        <h4 style="color: #d4af37; font-size: 10pt; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 10px 0;">Her Yudumda Ayrıcalık, Her Anında Keyif</h4>
+        <h2 style="color: #0a2f1d; font-size: 20pt; font-weight: bold; margin: 0 0 35px 0; letter-spacing: 0.5px;">Ayrıcalıklı Detaylar</h2>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 35px 20px; text-align: left;">
+            
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 42px; height: 42px; background-color: #f4f7f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0a2f1d; font-size: 16pt;">
+                    ☕
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 5px 0; font-size: 11pt; font-weight: bold; color: #0a2f1d; line-height: 1.2;">Nitelikli Kahve</h3>
+                    <p style="margin: 0; font-size: 9.5pt; color: #708075; line-height: 1.3;">Özenle hazırlanmış kahve çekirdekleri</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 42px; height: 42px; background-color: #f4f7f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0a2f1d; font-size: 16pt;">
+                    🌳
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 5px 0; font-size: 11pt; font-weight: bold; color: #0a2f1d; line-height: 1.2;">Doğa ile İç İçe</h3>
+                    <p style="margin: 0; font-size: 9.5pt; color: #708075; line-height: 1.3;">Atatürk Kültür Parkı'nın kalbinde huzurlu anlar</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 42px; height: 42px; background-color: #f4f7f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0a2f1d; font-size: 16pt;">
+                    🍹
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 5px 0; font-size: 11pt; font-weight: bold; color: #0a2f1d; line-height: 1.2;">Özel Kokteyller</h3>
+                    <p style="margin: 0; font-size: 9.5pt; color: #708075; line-height: 1.3;">İmza Mocktail ve soğuk tarifler</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 42px; height: 42px; background-color: #f4f7f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0a2f1d; font-size: 15pt;">
+                    🍰
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 5px 0; font-size: 11pt; font-weight: bold; color: #0a2f1d; line-height: 1.2;">Günlük Tatlılar</h3>
+                    <p style="margin: 0; font-size: 9.5pt; color: #708075; line-height: 1.3;">Her gün taze ve gurme lezzetler</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 42px; height: 42px; background-color: #f4f7f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0a2f1d; font-size: 15pt;">
+                    🥪
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 5px 0; font-size: 11pt; font-weight: bold; color: #0a2f1d; line-height: 1.2;">Doyurucu Atıştırmalıklar</h3>
+                    <p style="margin: 0; font-size: 9.5pt; color: #708075; line-height: 1.3;">Gün boyu taze ve nefis sandviç seçenekleri</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 42px; height: 42px; background-color: #f4f7f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0a2f1d; font-size: 14pt;">
+                    ♿
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 5px 0; font-size: 11pt; font-weight: bold; color: #0a2f1d; line-height: 1.2;">Engelsiz Kafe</h3>
+                    <p style="margin: 0; font-size: 9.5pt; color: #708075; line-height: 1.3;">Engelli girişi ve engelli tuvaleti mevcuttur</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 42px; height: 42px; background-color: #f4f7f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0a2f1d; font-size: 14pt;">
+                    📶
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 5px 0; font-size: 11pt; font-weight: bold; color: #0a2f1d; line-height: 1.2;">Fiber İnternet</h3>
+                    <p style="margin: 0; font-size: 9.5pt; color: #708075; line-height: 1.3;">Çalışma ve eğlence için kesintisiz hız</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 42px; height: 42px; background-color: #f4f7f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0a2f1d; font-size: 14pt;">
+                    🅿️
+                </div>
+                <div>
+                    <h3 style="margin: 0 0 5px 0; font-size: 11pt; font-weight: bold; color: #0a2f1d; line-height: 1.2;">Rahat Otopark</h3>
+                    <p style="margin: 0; font-size: 9.5pt; color: #708075; line-height: 1.3;">Güvenli ve geniş park alanları</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
         <section id="featuresSection" class="reveal">
             <h2 class="section-title">Öne Çıkan Özelliklerimiz</h2>
             
