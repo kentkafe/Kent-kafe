@@ -123,6 +123,7 @@
 <img src="https://i.hizliresim.com/izcw310.png" alt="Kent Kafe Menü Logo" style="width: 150px; height: 350px; object-fit: contain;">
 
         </div>
+       
         <a href="#homeTop" class="btn-menu" onclick="toggleBannerMenu()">Ana Sayfa</a>
         <a href="https://menucebimde.com/?menuid=C6CRQE" class="btn-menu" onclick="toggleBannerMenu()">Menü</a>
         <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" class="btn-menu">Instagram</a>
@@ -318,38 +319,204 @@
     body.dark-mode .status-guide { border-top-color: rgba(255,255,255,0.1); }
 </style>
 
-<div class="status-panel">
-    <div class="status-header">
-        <h3>Anlık Atmosfer Durumu</h3>
-        <p>Ziyaretinizi planlamanıza yardımcı olmak için kafemizin yoğunluğunu takip edebilirsiniz.</p>
-        <div class="live-clock">🕒 Canlı Saat: <span id="liveClockTime">00:00</span></div>
+<style>
+    .atmosphere-card {
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        padding: 30px 20px;
+        text-align: center;
+        font-family: 'Times New Roman', Times, serif; /* Görseldeki serif font hissiyatı için */
+        max-width: 600px;
+        margin: 20px auto;
+    }
+    .atmosphere-title {
+        color: #0a2f1d;
+        font-size: 1.3rem;
+        font-weight: bold;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+    .atmosphere-subtitle {
+        color: #666;
+        font-style: italic;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        font-family: Arial, sans-serif;
+    }
+    .time-badge {
+        display: inline-block;
+        background: #f4f4f4;
+        padding: 8px 25px;
+        border-radius: 30px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 25px;
+        font-family: Arial, sans-serif;
+    }
+    .main-status-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px 40px;
+        border-radius: 40px;
+        border: 2px solid #ff9f1c; /* Varsayılan turuncu, JS ile değişecek */
+        margin-bottom: 30px;
+        font-family: Arial, sans-serif;
+    }
+    .status-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        margin-right: 12px;
+    }
+    .status-text {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        letter-spacing: 1px;
+    }
+    .legend-grid {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #eee;
+        padding-top: 25px;
+        font-family: Arial, sans-serif;
+    }
+    .legend-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.75rem;
+        padding: 0 5px;
+    }
+    .legend-item:not(:last-child) {
+        border-right: 1px solid #eee;
+    }
+    .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-bottom: 8px;
+    }
+    .legend-title {
+        color: #0a2f1d;
+        font-weight: bold;
+        font-size: 0.85rem;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+    .legend-desc {
+        color: #777;
+        line-height: 1.3;
+    }
+</style>
+
+<div class="atmosphere-card">
+    <h2 class="atmosphere-title">KENT KAFE CANLI YOĞUNLUK DURUMU</h2>
+    <p class="atmosphere-subtitle">Ziyaretinizi planlamanıza yardımcı olmak için kafemizin yoğunluğunu takip edebilirsiniz.</p>
+    
+    <div id="timeBadge" class="time-badge">
+        🕒 Canlı Saat: <span id="clockSpan">00:00</span>
     </div>
 
-    <div id="currentStatusBox" class="current-status-box" style="background: rgba(10, 47, 29, 0.05);">
-        <span id="panelDot" class="status-panel-dot"></span>
-        <span id="panelText" style="color: #0a2f1d; font-weight: bold;">Hesaplanıyor...</span>
+    <div>
+        <div id="mainStatusPill" class="main-status-pill">
+            <span id="mainDot" class="status-dot"></span>
+            <span id="mainText" class="status-text">HESAPLANIYOR...</span>
+        </div>
     </div>
 
-    <div id="futureNotice" class="future-notice" style="display: none;"></div>
-
-    <div class="status-guide">
-        <div class="guide-item">
-            <span class="guide-dot" style="background-color: #10b981;"></span>
-            <strong>Sakin</strong>
-            <span class="guide-desc">Kafa Dinleme & Odaklanma</span>
+    <div class="legend-grid">
+        <div class="legend-item">
+            <span class="legend-dot" style="background-color: #10b981;"></span>
+            <span class="legend-title">Sakin</span>
+            <span class="legend-desc">Kafa Dinleme & Odaklanma</span>
         </div>
-        <div class="guide-item" style="border-left: 1px solid #eee; border-right: 1px solid #eee; padding: 0 10px;">
-            <span class="guide-dot" style="background-color: #ff9f1c;"></span>
-            <strong>Dinamik</strong>
-            <span class="guide-desc">Keyifli Akış & Sosyalleşme</span>
+        <div class="legend-item">
+            <span class="legend-dot" style="background-color: #ff9f1c;"></span>
+            <span class="legend-title">Dİnamİk</span>
+            <span class="legend-desc">Keyifli Akış & Sosyalleşme</span>
         </div>
-        <div class="guide-item">
-            <span class="guide-dot" style="background-color: #e71d36;"></span>
-            <strong>Yoğun</strong>
-            <span class="guide-desc">Yüksek Enerji & Tam Kapasite</span>
+        <div class="legend-item">
+            <span class="legend-dot" style="background-color: #e71d36;"></span>
+            <span class="legend-title">Yoğun</span>
+            <span class="legend-desc">Yüksek Enerji & Tam Kapasite</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-dot" style="background-color: #6c757d;"></span>
+            <span class="legend-title">Kapalı</span>
+            <span class="legend-desc">Hizmet Saatleri Dışı</span>
         </div>
     </div>
 </div>
+
+<script>
+function updateAtmosphere() {
+    const now = new Date();
+    const day = now.getDay(); 
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const time = hour + minute / 60;
+    const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
+    const isWeekend = (day === 0 || day === 5 || day === 6); // Cuma(5), Cmt(6), Paz(0)
+    
+    let mode = ""; 
+
+    // --- SAAT MANTIĞI ---
+    if (time >= 0.5 && time < 8.5) {
+        mode = "kapali";
+    } else if (isWeekend) {
+        if (time >= 8.5 && time < 11.5) mode = "sakin";
+        else if (time >= 11.5 && time < 17) mode = "dinamik";
+        else if (time >= 17 && time < 23.5) mode = "yogun";
+        else mode = "sakin"; // 23:30 - 00:30
+    } else { 
+        if (time >= 8.5 && time < 12) mode = "sakin";
+        else if (time >= 12 && time < 17) mode = "dinamik";
+        else if (time >= 17 && time < 19.5) mode = "sakin";
+        else if (time >= 19.5 && time < 23.5) mode = "yogun";
+        else mode = "sakin"; // 23:30 - 00:30
+    }
+
+    // --- EKRANA UYGULAMA ---
+    const timeBadge = document.getElementById('timeBadge');
+    const mainPill = document.getElementById('mainStatusPill');
+    const mainDot = document.getElementById('mainDot');
+    const mainText = document.getElementById('mainText');
+
+    if (mode === "kapali") {
+        timeBadge.innerHTML = "🕒 Şu an kapalı";
+        mainPill.style.borderColor = "#6c757d";
+        mainDot.style.backgroundColor = "#6c757d";
+        mainText.innerText = "ŞU AN: KAPALI";
+    } else {
+        timeBadge.innerHTML = "🕒 Canlı Saat: " + formattedTime;
+        
+        if (mode === "sakin") {
+            mainPill.style.borderColor = "#10b981";
+            mainDot.style.backgroundColor = "#10b981";
+            mainText.innerText = "ŞU AN: SAKİN";
+        } else if (mode === "dinamik") {
+            mainPill.style.borderColor = "#ff9f1c";
+            mainDot.style.backgroundColor = "#ff9f1c";
+            mainText.innerText = "ŞU AN: DİNAMİK";
+        } else if (mode === "yogun") {
+            mainPill.style.borderColor = "#e71d36";
+            mainDot.style.backgroundColor = "#e71d36";
+            mainText.innerText = "ŞU AN: YOĞUN";
+        }
+    }
+}
+
+// Sayfa yüklendiğinde ve her dakikada bir çalıştır
+updateAtmosphere();
+setInterval(updateAtmosphere, 60000);
+</script>
+
 <style>
     .quality-section {
         width: 100%;
@@ -952,22 +1119,36 @@
         })();
     </script>
     
-    <script>
-        window.addEventListener('load', () => {
-            const hour = new Date().getHours();
-            let greetingWord = "";
-            
-            if (hour >= 5 && hour < 12) {
-                greetingWord = "Günaydın";
-            } else if (hour >= 12 && hour < 18) {
-                greetingWord = "Tünaydın";
-            } else {
-                greetingWord = "İyi Akşamlar";
-            }
-            
-            const greetingTimeElement = document.getElementById('greetingTextTime');
-            if (greetingTimeElement) greetingTimeElement.innerText = greetingWord;
-        });
-    </script>
-</body>
-</html>
+  
+</body><script>
+function updateLiveGreeting() {
+    const hour = new Date().getHours();
+    let greetingWord = "";
+    
+    if (hour >= 5 && hour < 12) {
+        greetingWord = "Günaydın";
+    } else if (hour >= 12 && hour < 18) {
+        greetingWord = "Tünaydın";
+    } else {
+        greetingWord = "İyi Akşamlar";
+    }
+    
+    const greetingTimeElement = document.getElementById('greetingTextTime');
+    if (greetingTimeElement) {
+        greetingTimeElement.innerText = greetingWord;
+    }
+}
+
+// Sayfa ilk yüklendiğinde hemen çalıştırır
+window.addEventListener('load', updateLiveGreeting);
+
+// Sayfa açık kaldığı sürece her 60 saniyede bir saati kontrol eder ve yazıyı yeniler
+setInterval(updateLiveGreeting, 60000);
+</script>
+</html><<tag>
+    <!--Tab to edit-->
+</tag>>
+    <!--Tab to edit-->
+</<tag>
+    <!--Tab to edit-->
+</tag>>
