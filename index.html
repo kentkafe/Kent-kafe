@@ -456,69 +456,7 @@
     </div>
 </div>
 
-<script>
-function updateAtmosphere() {
-    const now = new Date();
-    const day = now.getDay(); 
-    const hour = now.getHours();
-    const minute = now.getMinutes();
-    const time = hour + minute / 60;
-    const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
-    const isWeekend = (day === 0 || day === 5 || day === 6); // Cuma(5), Cmt(6), Paz(0)
-    
-    let mode = ""; 
-
-    // --- SAAT MANTIĞI ---
-    if (time >= 0.5 && time < 8.5) {
-        mode = "kapali";
-    } else if (isWeekend) {
-        if (time >= 8.5 && time < 11.5) mode = "sakin";
-        else if (time >= 11.5 && time < 17) mode = "dinamik";
-        else if (time >= 17 && time < 23.5) mode = "yogun";
-        else mode = "sakin"; // 23:30 - 00:30
-    } else { 
-        if (time >= 8.5 && time < 12) mode = "sakin";
-        else if (time >= 12 && time < 17) mode = "dinamik";
-        else if (time >= 17 && time < 19.5) mode = "sakin";
-        else if (time >= 19.5 && time < 23.5) mode = "yogun";
-        else mode = "sakin"; // 23:30 - 00:30
-    }
-
-    // --- EKRANA UYGULAMA ---
-    const timeBadge = document.getElementById('timeBadge');
-    const mainPill = document.getElementById('mainStatusPill');
-    const mainDot = document.getElementById('mainDot');
-    const mainText = document.getElementById('mainText');
-
-    if (mode === "kapali") {
-        timeBadge.innerHTML = "🕒 Şu an kapalı";
-        mainPill.style.borderColor = "#6c757d";
-        mainDot.style.backgroundColor = "#6c757d";
-        mainText.innerText = "ŞU AN: KAPALI";
-    } else {
-        timeBadge.innerHTML = "🕒 Canlı Saat: " + formattedTime;
-        
-        if (mode === "sakin") {
-            mainPill.style.borderColor = "#10b981";
-            mainDot.style.backgroundColor = "#10b981";
-            mainText.innerText = "ŞU AN: SAKİN";
-        } else if (mode === "dinamik") {
-            mainPill.style.borderColor = "#ff9f1c";
-            mainDot.style.backgroundColor = "#ff9f1c";
-            mainText.innerText = "ŞU AN: DİNAMİK";
-        } else if (mode === "yogun") {
-            mainPill.style.borderColor = "#e71d36";
-            mainDot.style.backgroundColor = "#e71d36";
-            mainText.innerText = "ŞU AN: YOĞUN";
-        }
-    }
-}
-
-// Sayfa yüklendiğinde ve her dakikada bir çalıştır
-updateAtmosphere();
-setInterval(updateAtmosphere, 60000);
-</script>
 
 <style>
     .quality-section {
@@ -630,61 +568,6 @@ setInterval(updateAtmosphere, 60000);
         </div>
 
     </div>
-
-<script>
-    function dijitalSaatGuncelle() {
-        const simdi = new Date();
-        const saat = String(simdi.getHours()).padStart(2, '0');
-        const dakika = String(simdi.getMinutes()).padStart(2, '0');
-        const saatYazisi = document.getElementById('liveClockTime');
-        if (saatYazisi) saatYazisi.innerText = saat + ":" + dakika;
-    }
-
-    (function kontrolMerkezi() {
-        // Saati ilk açılışta çalıştır ve her dakikada bir güncelle
-        dijitalSaatGuncelle();
-        setInterval(dijitalSaatGuncelle, 60000);
-
-        const simdi = new Date();
-        const gun = simdi.getDay(); 
-        const saat = simdi.getHours();
-        const dakika = simdi.getMinutes();
-        const zaman = saat + (dakika / 60);
-
-        const dot = document.getElementById('panelDot');
-        const text = document.getElementById('panelText');
-        const box = document.getElementById('currentStatusBox');
-        const notice = document.getElementById('futureNotice');
-        if (!dot || !text || !box || !notice) return;
-
-        // Akıllı Tahmin Akışı (Cuma, Cmt, Paz günleri akşam yoğunluğu uyarısı)
-        if ((gun === 5 || gun === 6 || gun === 0) && (saat >= 12 && saat < 19)) {
-            notice.innerHTML = "🎯 Bilgi: Hafta sonu akşam yoğunluğumuz 19:00'da başlamaktadır.";
-            notice.style.display = "block";
-        } else {
-            notice.style.display = "none";
-        }
-
-        // Hafta içi sabah sakinliği (Pazartesi - Perşembe | 08:30 - 12:00)
-        if (gun >= 1 && gun <= 4 && zaman >= 8.5 && zaman < 12) {
-            dot.className = "status-panel-dot dot-sakin";
-            text.innerText = "Şu An: Sakin";
-            box.style.border = "1.5px solid #10b981";
-        }
-        // Hafta sonu akşam yoğunluğu (Cuma, Cumartesi, Pazar | 19:00 - 00:30)
-        else if ((gun === 5 || gun === 6 || gun === 0) && (zaman >= 19 || zaman < 0.5)) {
-            dot.className = "status-panel-dot dot-yogun";
-            text.innerText = "Şu An: Yoğun";
-            box.style.border = "1.5px solid #e71d36";
-        }
-        // Diğer tüm saatler rutin dinamik mod
-        else {
-            dot.className = "status-panel-dot dot-dinamik";
-            text.innerText = "Şu An: Dinamik";
-            box.style.border = "1.5px solid #ff9f1c";
-        }
-    })();
-</script>
 
     <main class="main-content">
         <section id="aboutSection" class="reveal">
@@ -1129,68 +1012,99 @@ setInterval(updateAtmosphere, 60000);
     <script>
 const tabloURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8qgT6WUFd4uPDjKajIWlW4juoiwQgGTSeENQ0wb3yw3AeJ6KiCNmlKhMmiRZZxm2pEDYThY4in64L/pub?output=csv";
 
+// 1. Canlı Saati Güncelleme
 function saatiGuncelle() {
     const simdi = new Date();
     const saat = String(simdi.getHours()).padStart(2, '0');
     const dakika = String(simdi.getMinutes()).padStart(2, '0');
-    if(document.getElementById("clockSpan")) {
-        document.getElementById("clockSpan").innerText = saat + ":" + dakika;
-    }
+    const clockSpan = document.getElementById("clockSpan");
+    
+    if(clockSpan) clockSpan.innerText = saat + ":" + dakika;
 }
 
+// 2. Durumu ve Renkleri Ekrana Uygulama
 function durumuUygula(durumAdi) {
     const temizDurum = durumAdi.trim().toLowerCase();
     const mainText = document.getElementById("mainText");
     const mainDot = document.getElementById("mainDot");
+    const mainPill = document.getElementById("mainStatusPill");
 
-    if (!mainText || !mainDot) return;
+    if (!mainText || !mainDot || !mainPill) return;
 
     if (temizDurum === "sakin") {
-        mainText.innerText = "SAKİN";
+        mainText.innerText = "ŞU AN: SAKİN";
         mainDot.style.backgroundColor = "#10b981";
+        mainPill.style.borderColor = "#10b981";
     } else if (temizDurum === "dinamik") {
-        mainText.innerText = "DİNAMİK";
+        mainText.innerText = "ŞU AN: DİNAMİK";
         mainDot.style.backgroundColor = "#ff9f1c";
+        mainPill.style.borderColor = "#ff9f1c";
     } else if (temizDurum === "yoğun" || temizDurum === "yogun") {
-        mainText.innerText = "YOĞUN";
+        mainText.innerText = "ŞU AN: YOĞUN";
         mainDot.style.backgroundColor = "#e71d36";
+        mainPill.style.borderColor = "#e71d36";
     } else if (temizDurum === "kapalı" || temizDurum === "kapali") {
-        mainText.innerText = "KAPALI";
+        mainText.innerText = "ŞU AN: KAPALI";
         mainDot.style.backgroundColor = "#6c757d";
+        mainPill.style.borderColor = "#6c757d";
     }
 }
 
+// 3. Tabloda "Otomatik" Yazıyorsa Kent Kafe Saat Mantığını Çalıştırma
+function otomatikDurumHesapla() {
+    const now = new Date();
+    const day = now.getDay(); 
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const time = hour + minute / 60;
+    const isWeekend = (day === 0 || day === 5 || day === 6); // Cuma, Cmt, Pazar
+    
+    let mode = ""; 
+    if (time >= 0.5 && time < 8.5) {
+        mode = "kapalı";
+    } else if (isWeekend) {
+        if (time >= 8.5 && time < 11.5) mode = "sakin";
+        else if (time >= 11.5 && time < 17) mode = "dinamik";
+        else if (time >= 17 && time < 23.5) mode = "yoğun";
+        else mode = "sakin"; 
+    } else { 
+        if (time >= 8.5 && time < 12) mode = "sakin";
+        else if (time >= 12 && time < 17) mode = "dinamik";
+        else if (time >= 17 && time < 19.5) mode = "sakin";
+        else if (time >= 19.5 && time < 23.5) mode = "yoğun";
+        else mode = "sakin"; 
+    }
+    durumuUygula(mode);
+}
+
+// 4. Tabloyu Okuma (Tarayıcı Hafızasını Atlayarak Anlık Çeker)
 function yogunlukKontrolEt() {
     saatiGuncelle();
-    setInterval(saatiGuncelle, 1000);
-
-    fetch(tabloURL)
+    
+    // Tablonun sonuna benzersiz bir zaman damgası ekliyoruz ki her seferinde taze veri çeksin
+    fetch(tabloURL + "&t=" + new Date().getTime())
         .then(response => response.text())
         .then(data => {
             let tabloVerisi = data.split("\n")[0].trim().replace(/"/g, "");
             
             if (tabloVerisi.toLowerCase() === "otomatik") {
-                let mevcutSaat = new Date().getHours();
-                
-                if (mevcutSaat >= 8 && mevcutSaat < 12) {
-                    durumuUygula("sakin");
-                } else if (mevcutSaat >= 12 && mevcutSaat < 18) {
-                    durumuUygula("dinamik");
-                } else if (mevcutSaat >= 18 && mevcutSaat < 24) {
-                    durumuUygula("yoğun");
-                } else {
-                    durumuUygula("kapalı");
-                }
+                otomatikDurumHesapla();
             } else {
                 durumuUygula(tabloVerisi);
             }
         })
         .catch(error => {
             console.error("Tablo okunamadı:", error);
+            otomatikDurumHesapla(); // Hata olursa sistem çökmesin, otomatiğe dönsün
         });
 }
 
-window.addEventListener("DOMContentLoaded", yogunlukKontrolEt);
+// 5. Sistemi Başlat
+window.addEventListener("DOMContentLoaded", () => {
+    yogunlukKontrolEt(); // Sayfa açıldığında çek
+    setInterval(yogunlukKontrolEt, 15000); // Tabloyu her 15 saniyede bir kontrol et (daha hızlı tepki için)
+    setInterval(saatiGuncelle, 1000); // Saati her saniye güncelle
+});
 </script>
 
   
