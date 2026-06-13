@@ -1126,7 +1126,73 @@ setInterval(updateAtmosphere, 60000);
             };
         })();
     </script>
-    
+    <script>
+const tabloURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8qgT6WUFd4uPDjKajIWlW4juoiwQgGTSeENQ0wb3yw3AeJ6KiCNmlKhMmiRZZxm2pEDYThY4in64L/pub?output=csv";
+
+function saatiGuncelle() {
+    const simdi = new Date();
+    const saat = String(simdi.getHours()).padStart(2, '0');
+    const dakika = String(simdi.getMinutes()).padStart(2, '0');
+    if(document.getElementById("clockSpan")) {
+        document.getElementById("clockSpan").innerText = saat + ":" + dakika;
+    }
+}
+
+function durumuUygula(durumAdi) {
+    const temizDurum = durumAdi.trim().toLowerCase();
+    const mainText = document.getElementById("mainText");
+    const mainDot = document.getElementById("mainDot");
+
+    if (!mainText || !mainDot) return;
+
+    if (temizDurum === "sakin") {
+        mainText.innerText = "SAKİN";
+        mainDot.style.backgroundColor = "#10b981";
+    } else if (temizDurum === "dinamik") {
+        mainText.innerText = "DİNAMİK";
+        mainDot.style.backgroundColor = "#ff9f1c";
+    } else if (temizDurum === "yoğun" || temizDurum === "yogun") {
+        mainText.innerText = "YOĞUN";
+        mainDot.style.backgroundColor = "#e71d36";
+    } else if (temizDurum === "kapalı" || temizDurum === "kapali") {
+        mainText.innerText = "KAPALI";
+        mainDot.style.backgroundColor = "#6c757d";
+    }
+}
+
+function yogunlukKontrolEt() {
+    saatiGuncelle();
+    setInterval(saatiGuncelle, 1000);
+
+    fetch(tabloURL)
+        .then(response => response.text())
+        .then(data => {
+            let tabloVerisi = data.split("\n")[0].trim().replace(/"/g, "");
+            
+            if (tabloVerisi.toLowerCase() === "otomatik") {
+                let mevcutSaat = new Date().getHours();
+                
+                if (mevcutSaat >= 8 && mevcutSaat < 12) {
+                    durumuUygula("sakin");
+                } else if (mevcutSaat >= 12 && mevcutSaat < 18) {
+                    durumuUygula("dinamik");
+                } else if (mevcutSaat >= 18 && mevcutSaat < 24) {
+                    durumuUygula("yoğun");
+                } else {
+                    durumuUygula("kapalı");
+                }
+            } else {
+                durumuUygula(tabloVerisi);
+            }
+        })
+        .catch(error => {
+            console.error("Tablo okunamadı:", error);
+        });
+}
+
+window.addEventListener("DOMContentLoaded", yogunlukKontrolEt);
+</script>
+
   
 </body><script>
 function updateLiveGreeting() {
