@@ -456,69 +456,7 @@
     </div>
 </div>
 
-<script>
-function updateAtmosphere() {
-    const now = new Date();
-    const day = now.getDay(); 
-    const hour = now.getHours();
-    const minute = now.getMinutes();
-    const time = hour + minute / 60;
-    const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
 
-    const isWeekend = (day === 0 || day === 5 || day === 6); // Cuma(5), Cmt(6), Paz(0)
-    
-    let mode = ""; 
-
-    // --- SAAT MANTIĞI ---
-    if (time >= 0.5 && time < 8.5) {
-        mode = "kapali";
-    } else if (isWeekend) {
-        if (time >= 8.5 && time < 11.5) mode = "sakin";
-        else if (time >= 11.5 && time < 17) mode = "dinamik";
-        else if (time >= 17 && time < 23.5) mode = "yogun";
-        else mode = "sakin"; // 23:30 - 00:30
-    } else { 
-        if (time >= 8.5 && time < 12) mode = "sakin";
-        else if (time >= 12 && time < 17) mode = "dinamik";
-        else if (time >= 17 && time < 19.5) mode = "sakin";
-        else if (time >= 19.5 && time < 23.5) mode = "yogun";
-        else mode = "sakin"; // 23:30 - 00:30
-    }
-
-    // --- EKRANA UYGULAMA ---
-    const timeBadge = document.getElementById('timeBadge');
-    const mainPill = document.getElementById('mainStatusPill');
-    const mainDot = document.getElementById('mainDot');
-    const mainText = document.getElementById('mainText');
-
-    if (mode === "kapali") {
-        timeBadge.innerHTML = "🕒 Şu an kapalı";
-        mainPill.style.borderColor = "#6c757d";
-        mainDot.style.backgroundColor = "#6c757d";
-        mainText.innerText = "ŞU AN: KAPALI";
-    } else {
-        timeBadge.innerHTML = "🕒 Canlı Saat: " + formattedTime;
-        
-        if (mode === "sakin") {
-            mainPill.style.borderColor = "#10b981";
-            mainDot.style.backgroundColor = "#10b981";
-            mainText.innerText = "ŞU AN: SAKİN";
-        } else if (mode === "dinamik") {
-            mainPill.style.borderColor = "#ff9f1c";
-            mainDot.style.backgroundColor = "#ff9f1c";
-            mainText.innerText = "ŞU AN: DİNAMİK";
-        } else if (mode === "yogun") {
-            mainPill.style.borderColor = "#e71d36";
-            mainDot.style.backgroundColor = "#e71d36";
-            mainText.innerText = "ŞU AN: YOĞUN";
-        }
-    }
-}
-
-// Sayfa yüklendiğinde ve her dakikada bir çalıştır
-updateAtmosphere();
-setInterval(updateAtmosphere, 60000);
-</script>
 
 <style>
     .quality-section {
@@ -631,60 +569,7 @@ setInterval(updateAtmosphere, 60000);
 
     </div>
 
-<script>
-    function dijitalSaatGuncelle() {
-        const simdi = new Date();
-        const saat = String(simdi.getHours()).padStart(2, '0');
-        const dakika = String(simdi.getMinutes()).padStart(2, '0');
-        const saatYazisi = document.getElementById('liveClockTime');
-        if (saatYazisi) saatYazisi.innerText = saat + ":" + dakika;
-    }
 
-    (function kontrolMerkezi() {
-        // Saati ilk açılışta çalıştır ve her dakikada bir güncelle
-        dijitalSaatGuncelle();
-        setInterval(dijitalSaatGuncelle, 60000);
-
-        const simdi = new Date();
-        const gun = simdi.getDay(); 
-        const saat = simdi.getHours();
-        const dakika = simdi.getMinutes();
-        const zaman = saat + (dakika / 60);
-
-        const dot = document.getElementById('panelDot');
-        const text = document.getElementById('panelText');
-        const box = document.getElementById('currentStatusBox');
-        const notice = document.getElementById('futureNotice');
-        if (!dot || !text || !box || !notice) return;
-
-        // Akıllı Tahmin Akışı (Cuma, Cmt, Paz günleri akşam yoğunluğu uyarısı)
-        if ((gun === 5 || gun === 6 || gun === 0) && (saat >= 12 && saat < 19)) {
-            notice.innerHTML = "🎯 Bilgi: Hafta sonu akşam yoğunluğumuz 19:00'da başlamaktadır.";
-            notice.style.display = "block";
-        } else {
-            notice.style.display = "none";
-        }
-
-        // Hafta içi sabah sakinliği (Pazartesi - Perşembe | 08:30 - 12:00)
-        if (gun >= 1 && gun <= 4 && zaman >= 8.5 && zaman < 12) {
-            dot.className = "status-panel-dot dot-sakin";
-            text.innerText = "Şu An: Sakin";
-            box.style.border = "1.5px solid #10b981";
-        }
-        // Hafta sonu akşam yoğunluğu (Cuma, Cumartesi, Pazar | 19:00 - 00:30)
-        else if ((gun === 5 || gun === 6 || gun === 0) && (zaman >= 19 || zaman < 0.5)) {
-            dot.className = "status-panel-dot dot-yogun";
-            text.innerText = "Şu An: Yoğun";
-            box.style.border = "1.5px solid #e71d36";
-        }
-        // Diğer tüm saatler rutin dinamik mod
-        else {
-            dot.className = "status-panel-dot dot-dinamik";
-            text.innerText = "Şu An: Dinamik";
-            box.style.border = "1.5px solid #ff9f1c";
-        }
-    })();
-</script>
 
     <main class="main-content">
         <section id="aboutSection" class="reveal">
@@ -1127,30 +1012,128 @@ setInterval(updateAtmosphere, 60000);
         })();
     </script>
     
-  
-</body><script>
-function updateLiveGreeting() {
-    const hour = new Date().getHours();
-    let greetingWord = "";
-    
-    if (hour >= 5 && hour < 12) {
-        greetingWord = "Günaydın";
-    } else if (hour >= 12 && hour < 18) {
-        greetingWord = "Tünaydın";
-    } else {
-        greetingWord = "İyi Akşamlar";
-    }
-    
-    const greetingTimeElement = document.getElementById('greetingTextTime');
-    if (greetingTimeElement) {
-        greetingTimeElement.innerText = greetingWord;
-    }
-}
+    <script>
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS8qgT6WUFd4uPDjKajIWlW4juoiwQgGTSeENQ0wb3yw3AeJ6KiCNmlKhMmiRZZxm2pEDYThY4in64L/pub?output=csv";
 
-// Sayfa ilk yüklendiğinde hemen çalıştırır
-window.addEventListener('load', updateLiveGreeting);
+    // 1. Otomatik Saat Mantığını Hesaplayan Fonksiyon
+    function getAutomaticStatus() {
+        const now = new Date();
+        const day = now.getDay(); 
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const time = hour + minute / 60;
+        
+        const isWeekend = (day === 0 || day === 5 || day === 6);
+        let mode = "";
 
-// Sayfa açık kaldığı sürece her 60 saniyede bir saati kontrol eder ve yazıyı yeniler
-setInterval(updateLiveGreeting, 60000);
-</script>
-</html
+        if (time >= 0.5 && time < 8.5) {
+            mode = "kapali";
+        } else if (isWeekend) {
+            if (time >= 8.5 && time < 11.5) mode = "sakin";
+            else if (time >= 11.5 && time < 17) mode = "dinamik";
+            else if (time >= 17 && time < 23.5) mode = "yogun";
+            else mode = "sakin"; 
+        } else { 
+            if (time >= 8.5 && time < 12) mode = "sakin";
+            else if (time >= 12 && time < 17) mode = "dinamik";
+            else if (time >= 17 && time < 19.5) mode = "sakin";
+            else if (time >= 19.5 && time < 23.5) mode = "yogun";
+            else mode = "sakin"; 
+        }
+        return mode;
+    }
+
+    // 2. Google Sheets'i Kontrol Eden ve Karar Veren Fonksiyon
+    function checkAtmosphere() {
+        const fetchUrl = SHEET_CSV_URL + "&t=" + new Date().getTime();
+
+        fetch(fetchUrl)
+            .then(response => response.text())
+            .then(data => {
+                let sheetData = data.split('\n')[0].trim().toLowerCase();
+                sheetData = sheetData.split(',')[0]; 
+                
+                let finalMode = "";
+
+                if (sheetData === "otomatik") {
+                    finalMode = getAutomaticStatus();
+                } else {
+                    finalMode = sheetData;
+                }
+
+                uygulaDurum(finalMode);
+            })
+            .catch(error => {
+                console.error("Sheets verisi çekilemedi, otomatik moda geçiliyor:", error);
+                uygulaDurum(getAutomaticStatus()); 
+            });
+    }
+
+    // 3. Kararı Ekrana Yansıtan Fonksiyon
+    function uygulaDurum(mode) {
+        const timeBadge = document.getElementById('timeBadge');
+        const mainPill = document.getElementById('mainStatusPill');
+        const mainDot = document.getElementById('mainDot');
+        const mainText = document.getElementById('mainText');
+        const clockSpan = document.getElementById('clockSpan');
+
+        const now = new Date();
+        const formattedTime = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
+        const gecerliDurumlar = ["sakin", "dinamik", "yogun", "kapali"];
+        if (!gecerliDurumlar.includes(mode)) {
+            mode = "dinamik"; 
+        }
+
+        if (mode === "kapali") {
+            if(timeBadge) timeBadge.innerHTML = "🕒 Şu an kapalı";
+            if(mainPill) mainPill.style.borderColor = "#6c757d";
+            if(mainDot) mainDot.style.backgroundColor = "#6c757d";
+            if(mainText) mainText.innerText = "ŞU AN: KAPALI";
+        } else {
+            if(timeBadge) timeBadge.innerHTML = "🕒 Canlı Saat: " + formattedTime;
+            
+            if (mode === "sakin") {
+                if(mainPill) mainPill.style.borderColor = "#10b981";
+                if(mainDot) mainDot.style.backgroundColor = "#10b981";
+                if(mainText) mainText.innerText = "ŞU AN: SAKİN";
+            } else if (mode === "dinamik") {
+                if(mainPill) mainPill.style.borderColor = "#ff9f1c";
+                if(mainDot) mainDot.style.backgroundColor = "#ff9f1c";
+                if(mainText) mainText.innerText = "ŞU AN: DİNAMİK";
+            } else if (mode === "yogun") {
+                if(mainPill) mainPill.style.borderColor = "#e71d36";
+                if(mainDot) mainDot.style.backgroundColor = "#e71d36";
+                if(mainText) mainText.innerText = "ŞU AN: YOĞUN";
+            }
+        }
+    }
+
+    checkAtmosphere();
+    setInterval(checkAtmosphere, 10000);
+    </script>
+    <script>
+    function updateLiveGreeting() {
+        const hour = new Date().getHours();
+        let greetingWord = "";
+        
+        if (hour >= 5 && hour < 12) {
+            greetingWord = "Günaydın";
+        } else if (hour >= 12 && hour < 18) {
+            greetingWord = "Tünaydın";
+        } else {
+            greetingWord = "İyi Akşamlar";
+        }
+        
+        const greetingTimeElement = document.getElementById('greetingTextTime');
+        if (greetingTimeElement) {
+            greetingTimeElement.innerText = greetingWord;
+        }
+    }
+
+    window.addEventListener('load', updateLiveGreeting);
+    setInterval(updateLiveGreeting, 60000);
+    </script>
+
+</body>
+</html>
