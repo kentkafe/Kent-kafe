@@ -102,6 +102,65 @@
         .star-rating input { display: none; }
         .star-rating label { font-size: 22px; color: #ccc; cursor: pointer; transition: 0.2s; }
         .star-rating input:checked ~ label, .star-rating label:hover, .star-rating label:hover ~ label { color: #d4af37; }
+        .yeni-hava-durumu {
+    background-color: #0a2f1d; /* Sitenin çok daha koyu yeşil tonu */
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 30px; /* Üstteki kısımdan bir tık aşağı ayırır */
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+.yhd-baslik {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff; /* Başlık bembeyaz */
+}
+.yhd-cizgi {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    margin: 12px 0;
+}
+.yhd-detaylar {
+    display: flex;
+    justify-content: center; /* İçerikleri tam ortaya toplar */
+    flex-wrap: wrap;
+    gap: 30px; /* Bilgisayarda da mobilde de aralarında sabit tatlı bir boşluk bırakır */
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+
+/* Kayan Yazı Animasyonu Hatasının Çözümü */
+.yhd-kayan-kutu {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.yhd-kayan-yazi {
+    display: inline-block;
+    padding-left: 100%; /* Metni ekranın tam en sağından başlatır */
+    animation: tamKayma 20s linear infinite;
+    font-size: 16px;
+    font-style: italic;
+}
+@keyframes tamKayma {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); } /* Sadece metnin boyutu kadar kayıp tam bitişi sağlar */
+}
+
+
+@keyframes tamKayma {
+    0% { left: 100%; transform: translateX(0); }
+    100% { left: 0; transform: translateX(-100%); } /* Sola tamamen çıkana kadar silinmez */
+}
+
+        
     </style>
 </head>
 <body>
@@ -416,6 +475,19 @@
         line-height: 1.3;
     }
 </style>
+
+<div class="yeni-hava-durumu">
+    <h3 class="yhd-baslik">Atatürk Kültür Parkı’nın Anlık Hava Durumu</h3>
+    <hr class="yhd-cizgi">
+    <div class="yhd-detaylar">
+        <span>🌡️ <span id="yhd-sicaklik">--</span>°C Sıcaklık</span>
+        <span>💧 %<span id="yhd-nem">--</span> Nem</span>
+        <span>💨 <span id="yhd-ruzgar">--</span> m/s Rüzgâr</span>
+    </div>
+    <div class="yhd-kayan-kutu">
+        <div id="yhd-mesaj" class="yhd-kayan-yazi">Hava durumu yükleniyor...</div>
+    </div>
+</div>
 
 <div class="atmosphere-card">
     <h2 class="atmosphere-title">KENT KAFE CANLI YOĞUNLUK DURUMU</h2>
@@ -1133,6 +1205,48 @@
 
     window.addEventListener('load', updateLiveGreeting);
     setInterval(updateLiveGreeting, 60000);
+    async function yeniHavaDurumuGetir() {
+    const apiKey = "3398e898b0e4320ff56d61f7c667ea69";
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=Karacabey&units=metric&lang=tr&appid=${apiKey}`;
+    
+    try {
+        const cevap = await fetch(url);
+        const veri = await cevap.json();
+        
+        if (veri.cod === 200) {
+            const sicaklik = Math.round(veri.main.temp);
+            const durum = veri.weather[0].main.toLowerCase();
+            const ruzgar = veri.wind.speed;
+
+            document.getElementById('yhd-sicaklik').innerText = sicaklik;
+            document.getElementById('yhd-nem').innerText = veri.main.humidity;
+            document.getElementById('yhd-ruzgar').innerText = ruzgar;
+
+            // Hava durumu değişmediği sürece bu metin sabit kalır ve kaymaya devam eder
+            let mesaj = "Kent Kafe'nin harika atmosferinde sizi bekliyoruz!";
+            
+            if (sicaklik >= 25) {
+                mesaj = "Hava bugün çok güneşli! Kent Kafe'de buz gibi içeceklerimizle serinlemek için harika bir gün.";
+            } else if (durum.includes('rain')) {
+                mesaj = "Dışarıda yağmur var, içeride sıcacık kahveniz sizi bekliyor. Kent Kafe'nin huzurlu ortamına sığının!";
+            } else if (ruzgar > 6 || durum.includes('wind')) {
+                mesaj = "Tatlı bir rüzgâr esiyor! Kent Kafe'nin korunaklı ortamında taze demlenmiş çay keyfine ne dersiniz?";
+            } else if (durum.includes('clear')) {
+                mesaj = "Gökyüzü pırıl pırıl! Bu güzel havanın keyfini Kent Kafe'nin enfes lezzetleriyle çıkarın.";
+            } else if (sicaklik < 15) {
+                mesaj = "Hava biraz serin, içinizi ısıtacak nefis sıcak çikolatamızla Kent Kafe'de buluşalım.";
+            }
+
+            document.getElementById('yhd-mesaj').innerText = mesaj;
+        }
+    } catch (hata) {
+        console.error("Hata:", hata);
+    }
+}
+
+yeniHavaDurumuGetir();
+setInterval(yeniHavaDurumuGetir, 900000);
+
     </script>
 
 </body>
