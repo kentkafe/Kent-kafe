@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<!--
+  KENT KAFE — SİTE SÜRÜMÜ: 3.3.0
+  v3.2.0: Yan menüden ikonlar kaldırıldı, kayan galeri PC'de gizlendi (mobilde açık),
+          Starbucks tarzı çerez yönetimi (tercih merkezi), canlı yoğunluk kartı PC'de yatay,
+          PC'de Instagram profil kartı (mobilde eski düzen).
+  v3.3.0: Detaylı KVKK Aydınlatma Metni ve Çerez Politikası eklendi (footer, küçük punto),
+          konum izni ile çalışan "uzaklığımı göster" mekanizması + Tercih Merkezi'ne
+          Konum Verisi anahtarı eklendi, footer ve "Bizi Ziyaret Edin" PC'de genişletildi,
+          "Yol Tarifi Al" butonu site buton efektlerine kavuştu, oylama penceresi PC'de
+          genişletildi (2 sütunlu puanlama).
+  NOT: Bu sürüm numarasını her kod güncellemesinde manuel artırıyoruz.
+-->
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -57,15 +69,51 @@
         .side-menu-logo { text-align: center; margin-bottom: 25px; }
         .side-menu-logo img { max-height: 50px; opacity: 0.9; }
 
-        .btn-menu { display: block; background: rgba(255,255,255,0.05); color: #ffffff; text-align: left; padding: 12px 15px; text-decoration: none; font-size: 11pt; border-radius: 8px; transition: 0.3s; border-left: 3px solid transparent; }
-        .btn-menu:hover { background: rgba(255,255,255,0.1); border-left: 3px solid #d4af37; }
-        .btn-menu:active { transform: translateX(-5px); }
+        .btn-menu {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            color: #ffffff;
+            text-decoration: none;
+            padding: 13px 16px;
+            font-size: 11pt;
+            font-weight: 500;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+            opacity: 0;
+            transform: translateX(22px);
+        }
+        .btn-menu::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.16), transparent);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+        .btn-menu:hover::before { left: 100%; }
+        .btn-menu:hover { background: linear-gradient(135deg, rgba(212,175,55,0.14), rgba(255,255,255,0.04)); border-color: rgba(212,175,55,0.45); transform: translateX(3px) scale(1.02); }
+        .btn-menu:active { transform: translateX(3px) scale(0.96); }
+
+        /* Menü açıldığında kutular sırayla kayarak belirir */
+        .side-banner.open .btn-menu { animation: menuItemIn 0.55s cubic-bezier(0.16,1,0.3,1) forwards; }
+        @keyframes menuItemIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
         
-        .slider-section { margin-top: 75px; position: relative; width: 100%; height: 50vh; max-height: 480px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        @media (min-width: 1200px) { .slider-section { height: 55vh; max-height: 560px; } }
+        .slider-section { margin-top: 75px; position: relative; width: 100%; height: 50vh; max-height: 420px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        /* Kayan görsel alanı sadece mobilde görünür; PC'de gizlenir. */
+        @media (min-width: 768px) {
+            .slider-section { display: none; }
+        }
         .slider-wrapper { display: flex; width: 100%; height: 100%; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
         .slider-item { min-width: 100%; height: 100%; }
-        .slider-item img { width: 100%; height: 100%; object-fit: cover; }
+        .slider-item img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
         
         .slider-nav-bar { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; background: rgba(10, 47, 29, 0.6); padding: 6px 12px; border-radius: 20px; z-index: 20; backdrop-filter: blur(4px); }
         .slider-nav-dot { width: 25px; height: 5px; background-color: rgba(255, 255, 255, 0.4); border-radius: 3px; cursor: pointer; transition: all 0.4s ease; }
@@ -74,6 +122,11 @@
         .coffee-hero-text { background-color: #0a2f1d; color: #ffffff; text-align: center; padding: 45px 20px; position: relative; z-index: 10; }
         .coffee-hero-text h1 { color: #ffffff; font-size: 20pt; line-height: 1.4; text-transform: uppercase; margin-bottom: 10px; }
         .coffee-hero-text p { font-size: 12pt; opacity: 0.9; font-style: italic; margin-bottom: 20px; }
+        @media (min-width: 768px) {
+            /* Galeri PC'de gizli olduğu için sabit header'ın altına boşluk bırakıyoruz. */
+            .coffee-hero-text { margin-top: 75px; padding: 70px 20px; }
+            .coffee-hero-text h1 { font-size: 26pt; }
+        }
         
         .btn-direct-menu { font-family: var(--font-body); display: inline-block; background-color: #ffffff; color: #0a2f1d; padding: 12px 30px; text-decoration: none; font-size: 12pt; font-weight: bold; border-radius: 4px; text-transform: uppercase; transition: 0.2s; box-shadow: 0 6px 20px rgba(0,0,0,0.15); cursor: pointer; }
         .btn-direct-menu:active { transform: scale(0.95); }
@@ -103,6 +156,26 @@
         .insta-card { display: block; text-decoration: none; overflow: hidden; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); background-color: var(--card-bg); padding: 6px; border: 1px solid var(--card-border); transition: transform 0.3s ease, background-color 0.4s ease; }
         .insta-card img { width: 100%; height: auto; display: block; border-radius: 4px; object-fit: contain; }
         .insta-card:active { transform: scale(0.98); }
+
+        /* Instagram profil kartı: yalnızca PC'de görünür */
+        .insta-profile { display: none; }
+        @media (min-width: 768px) {
+            .insta-masonry { display: none; }
+            .insta-profile { display: block; text-decoration: none; color: var(--text-main); background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; box-shadow: 0 12px 34px rgba(0,0,0,0.07); padding: 34px 38px; margin-top: 25px; transition: transform 0.35s ease, box-shadow 0.35s ease, background-color 0.4s ease; }
+            .insta-profile:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.13); }
+            .ip-header { display: flex; align-items: center; gap: 34px; margin-bottom: 30px; }
+            .ip-avatar { width: 128px; height: 128px; border-radius: 50%; padding: 4px; background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7); flex-shrink: 0; }
+            .ip-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; background: #0a2f1d; padding: 14px; border: 3px solid var(--card-bg); }
+            .ip-handle { font-family: var(--font-heading); font-size: 20pt; font-weight: 700; line-height: 1.2; }
+            .ip-name { font-weight: 600; margin-top: 4px; }
+            .ip-bio { color: var(--text-muted); font-size: 11pt; margin: 4px 0 14px 0; }
+            .ip-btn { display: inline-block; background: linear-gradient(45deg, #f9ce34, #ee2a7b 55%, #6228d7); color: #ffffff; font-weight: 700; font-size: 10pt; letter-spacing: 0.5px; padding: 10px 24px; border-radius: 8px; transition: transform 0.25s ease; }
+            .insta-profile:hover .ip-btn { transform: scale(1.05); }
+            .ip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .ip-grid img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; border-radius: 4px; transition: transform 0.4s ease, filter 0.4s ease; }
+            .insta-profile:hover .ip-grid img { filter: brightness(0.94); }
+            .ip-grid img:hover { transform: scale(1.03); filter: brightness(1.05) !important; }
+        }
         
         #instagramSection h2 { text-align: center; margin-bottom: 15px; }
         #instagramSection h2 .btn-direct-menu { display: inline-block; background: none; color: var(--text-main); padding: 0; font-size: 14pt; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; box-shadow: none; text-decoration: none; cursor: pointer; }
@@ -111,9 +184,109 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
         
         .back-to-top { position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; background-color: #0a2f1d; color: #ffffff; border: 2px solid #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16pt; font-weight: bold; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s ease; cursor: pointer; outline: none; }
+
+        /* ===== ŞANS ÇARKI — büyütülmüş, responsive boyutlar ===== */
+        .wheel-wrap { position: relative; width: min(400px, 90vw); height: min(400px, 90vw); max-width: 420px; max-height: 420px; margin: 0 auto 25px auto; }
+        .wheel-disc { width: 100%; height: 100%; border-radius: 50%; border: 12px solid #0a2f1d; position: relative; overflow: hidden; transition: transform 10s cubic-bezier(0.15, 0.85, 0.35, 1); box-shadow: 0 14px 32px rgba(0,0,0,0.18); }
+        .wheel-pointer { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); z-index: 100; width: 0; height: 0; border-left: 19px solid transparent; border-right: 19px solid transparent; border-top: 32px solid #d4af37; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3)); }
+        .wheel-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 54px; height: 54px; background: #0a2f1d; border: 4px solid #d4af37; border-radius: 50%; z-index: 10; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        @media (min-width: 768px) {
+            .wheel-wrap { width: 480px; height: 480px; max-width: 480px; max-height: 480px; }
+            .wheel-disc { border-width: 14px; }
+            .wheel-hub { width: 62px; height: 62px; }
+        }
+        @media (min-width: 1200px) {
+            .wheel-wrap { width: 540px; height: 540px; max-width: 540px; max-height: 540px; }
+        }
+
+        /* ===== ÇEREZ YÖNETİMİ (Starbucks tarzı: banner + tercih merkezi) ===== */
+        .ck-banner { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6000; background: var(--card-bg); color: var(--text-main); border-top: 1px solid var(--card-border); box-shadow: 0 -12px 40px rgba(0,0,0,0.18); padding: 22px 22px calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateY(110%); transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), background-color 0.4s ease; }
+        .ck-banner.show { transform: translateY(0); }
+        .ck-title { font-family: var(--font-heading); font-size: 13.5pt; font-weight: 700; margin-bottom: 6px; }
+        .ck-text { font-size: 9.5pt; line-height: 1.6; color: var(--text-muted); margin-bottom: 16px; }
+        .ck-actions { display: flex; flex-direction: column; gap: 10px; }
+        .ck-btn { font-family: var(--font-body); font-size: 10pt; font-weight: 700; padding: 12px 24px; border-radius: 999px; cursor: pointer; transition: transform 0.2s ease, background-color 0.25s ease, color 0.25s ease; white-space: nowrap; }
+        .ck-btn:active { transform: scale(0.97); }
+        .ck-primary { background: var(--text-main); color: var(--page-bg); border: 2px solid var(--text-main); }
+        .ck-primary:hover { opacity: 0.9; }
+        .ck-outline { background: transparent; color: var(--text-main); border: 2px solid var(--text-main); }
+        .ck-outline:hover { background: var(--card-border); }
+        .ck-link { display: block; margin: 14px auto 0; background: none; border: none; font-family: var(--font-body); font-size: 10pt; font-weight: 700; color: var(--text-main); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+        @media (min-width: 768px) {
+            .ck-banner { left: 0; right: 0; margin: 0 auto 24px; width: min(860px, calc(100% - 48px)); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px 28px; display: grid; grid-template-columns: 1fr auto; column-gap: 32px; align-items: center; }
+            .ck-banner .ck-title, .ck-banner .ck-text { grid-column: 1; }
+            .ck-text { margin-bottom: 0; }
+            .ck-actions { grid-column: 2; grid-row: 1 / span 2; min-width: 210px; }
+            .ck-link { grid-column: 1; grid-row: 3; margin: 10px 0 0; justify-self: start; }
+        }
+        .ck-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 6100; opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; }
+        .ck-overlay.show { opacity: 1; visibility: visible; }
+        .ck-modal { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -46%); width: min(580px, calc(100% - 28px)); max-height: 86vh; display: flex; flex-direction: column; background: var(--card-bg); color: var(--text-main); border-radius: 20px; box-shadow: 0 24px 70px rgba(0,0,0,0.4); z-index: 6200; opacity: 0; visibility: hidden; transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease; }
+        .ck-modal.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%); }
+        .ck-modal-head { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px 14px; }
+        .ck-modal-title { font-family: var(--font-heading); font-size: 16pt; font-weight: 700; }
+        .ck-close { background: var(--card-border); color: var(--text-main); border: none; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 13pt; line-height: 1; }
+        .ck-modal-body { padding: 0 24px 8px; overflow-y: auto; }
+        .ck-intro { font-size: 10pt; line-height: 1.6; color: var(--text-muted); margin-bottom: 14px; }
+        .ck-row { border-top: 1px solid var(--card-border); padding: 16px 0; }
+        .ck-row-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 6px; }
+        .ck-row-name { font-weight: 700; font-size: 11pt; }
+        .ck-always { font-size: 9pt; font-weight: 700; color: #10b981; white-space: nowrap; }
+        .ck-row p { font-size: 9.5pt; line-height: 1.55; color: var(--text-muted); }
+        .ck-switch { position: relative; width: 48px; height: 28px; flex-shrink: 0; display: inline-block; }
+        .ck-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+        .ck-slider { position: absolute; inset: 0; background: #9aa5a0; border-radius: 999px; cursor: pointer; transition: background-color 0.3s ease; }
+        .ck-slider::before { content: ''; position: absolute; width: 22px; height: 22px; left: 3px; top: 3px; background: #ffffff; border-radius: 50%; transition: transform 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .ck-switch input:checked + .ck-slider { background: #10b981; }
+        .ck-switch input:checked + .ck-slider::before { transform: translateX(20px); }
+        .ck-switch input:focus-visible + .ck-slider { outline: 2px solid #d4af37; outline-offset: 2px; }
+        .ck-modal-foot { display: flex; gap: 10px; padding: 16px 24px 22px; border-top: 1px solid var(--card-border); }
+        .ck-modal-foot .ck-btn { flex: 1; }
+        @media (max-width: 480px) { .ck-modal-foot { flex-direction: column; } }
+
+        /* ===== YASAL METİN PENCERELERİ (KVKK / Çerez Politikası) ===== */
+        .doc-modal { width: min(720px, calc(100% - 24px)); max-height: 88vh; }
+        .doc-body h4 { font-family: var(--font-heading); font-size: 12pt; color: var(--text-main); margin: 18px 0 8px; }
+        .doc-body h4:first-of-type { margin-top: 4px; }
+        .doc-body p, .doc-body li { font-size: 9.5pt; line-height: 1.65; color: var(--text-muted); }
+        .doc-body ul { padding-left: 20px; margin-bottom: 10px; }
+        .doc-body li { margin-bottom: 4px; }
+        .doc-body strong { color: var(--text-main); }
+        .doc-body a { color: var(--text-main); font-weight: 700; }
+        .doc-body .ph { color: #b8860b; font-style: italic; }
+        .doc-table-wrap { overflow-x: auto; margin: 10px 0; }
+        .doc-table { border-collapse: collapse; width: 100%; font-size: 9pt; }
+        .doc-table th, .doc-table td { border: 1px solid var(--card-border); padding: 6px 8px; text-align: left; color: var(--text-muted); vertical-align: top; }
+        .doc-table th { color: var(--text-main); background: var(--card-border); }
+
+        /* Footer'daki küçük punto yasal bağlantılar */
+        .legal-links { margin-top: 6px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; font-size: 8.5pt; opacity: 0.7; }
+        .legal-links a { color: #ffffff; text-decoration: underline; text-underline-offset: 2px; }
+        .legal-links span.sep { opacity: 0.5; }
         .back-to-top.show { opacity: 1; visibility: visible; }
         
         footer { background-color: #0a2f1d; color: #ffffff; text-align: center; padding: 25px; font-size: 10pt; }
+        #siteFooter { padding: 25px 20px; }
+        @media (min-width: 768px) {
+            #siteFooter { padding: 46px 20px; font-size: 10.5pt; }
+        }
+
+        /* ===== "YOL TARİFİ AL" / "UZAKLIĞIMI GÖSTER" — site buton efektleriyle uyumlu ===== */
+        .btn-visit { display: block; background: #0a2f1d; color: #ffffff; text-align: center; padding: 13px; border-radius: 6px; text-decoration: none; border: 2px solid #0a2f1d; font-weight: bold; text-transform: uppercase; font-size: 11pt; letter-spacing: 0.5px; cursor: pointer; font-family: var(--font-body); transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease; box-shadow: 0 6px 18px rgba(10,47,29,0.25); width: 100%; }
+        .btn-visit:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(10,47,29,0.35); background: #0d3f27; }
+        .btn-visit:active { transform: translateY(0) scale(0.96); box-shadow: 0 4px 10px rgba(10,47,29,0.25); }
+        .btn-visit-outline { background: transparent; color: var(--text-main); border-color: var(--text-main); box-shadow: none; margin-top: 12px; }
+        .btn-visit-outline:hover { background: var(--card-border); box-shadow: none; }
+        .distance-result { margin-top: 14px; font-size: 10pt; color: var(--text-muted); min-height: 14px; line-height: 1.5; }
+
+        /* ===== "Bizi Ziyaret Edin" — PC'de daha geniş, iki sütunlu yerleşim ===== */
+        @media (min-width: 768px) {
+            .visit-card { max-width: 900px !important; padding: 40px 48px !important; }
+            .visit-grid { display: flex; align-items: center; gap: 48px; text-align: left; }
+            .visit-info { flex: 1; }
+            .visit-info > div { text-align: left !important; }
+            .visit-actions { width: 280px; flex-shrink: 0; }
+        }
 
         @media (min-width: 768px) {
             .main-content { max-width: 1000px !important; }
@@ -207,6 +380,10 @@
         /* YILDIZLI GERİ BİLDİRİM SİSTEMİ STİLİ */
         .feedback-btn { position: fixed; bottom: 25px; left: 25px; width: 55px; height: 55px; background-color: #0a2f1d; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 25px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1000; }
         .feedback-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); padding: 20px; border-radius: 20px; width: 90%; max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); z-index: 2000; border: 2px solid #0a2f1d; max-height: 90vh; overflow-y: auto; }
+        @media (min-width: 768px) {
+            .feedback-modal { max-width: 520px; padding: 34px; }
+            .star-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+        }
         .star-group { margin-bottom: 15px; }
         .star-group label { display: block; color: var(--text-main); font-weight: bold; text-align: center; margin-bottom: 5px; font-size: 11pt; }
         .modal-input { width: 100%; padding: 8px; border: 1px solid var(--card-border); border-radius: 5px; background: var(--page-bg); color: var(--text-main); font-family: var(--font-body); }
@@ -310,7 +487,8 @@
         // Tema tercihini sayfa boyanmadan ÖNCE uygula ki yanlış temanın anlık görünmesi (flaş) engellensin.
         (function () {
             try {
-                var saved = localStorage.getItem('kentkafe-theme');
+                var c = null; try { c = JSON.parse(localStorage.getItem('kentkafe-cookie-consent')); } catch (e2) {}
+                var saved = (c && c.functional) ? localStorage.getItem('kentkafe-theme') : null;
                 var isDark = saved ? saved === 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
                 if (isDark) {
                     document.documentElement.classList.add('dark-mode');
@@ -351,16 +529,16 @@
 
         </div>
        
-        <a href="#homeTop" class="btn-menu" onclick="toggleBannerMenu()">Ana Sayfa</a>
-        <a href="https://menucebimde.com/?menuid=C6CRQE" class="btn-menu" onclick="toggleBannerMenu()">Menü</a>
-        <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" class="btn-menu">Instagram</a>
-        <a href="https://maps.app.goo.gl/4LGZC4vXM9usaJN56?g_st=ic" target="_blank" class="btn-menu">Google Haritalar</a>
-        <a href="#aboutSection" class="btn-menu" onclick="toggleBannerMenu()">Hakkımızda</a>
-        <a href="#featuresSection" class="btn-menu" onclick="toggleBannerMenu()">Öne Çıkan Özelliklerimiz</a>
-        <a href="#luckyWheelSection" class="btn-menu" onclick="toggleBannerMenu()">Şans Çarkı</a>
+        <a href="#homeTop" class="btn-menu" style="animation-delay:.05s" onclick="toggleBannerMenu()">Ana Sayfa</a>
+        <a href="https://menucebimde.com/?menuid=C6CRQE" class="btn-menu" style="animation-delay:.10s" onclick="toggleBannerMenu()">Menü</a>
+        <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" class="btn-menu" style="animation-delay:.15s">Instagram</a>
+        <a href="https://maps.app.goo.gl/4LGZC4vXM9usaJN56?g_st=ic" target="_blank" class="btn-menu" style="animation-delay:.20s">Google Haritalar</a>
+        <a href="#aboutSection" class="btn-menu" style="animation-delay:.25s" onclick="toggleBannerMenu()">Hakkımızda</a>
+        <a href="#featuresSection" class="btn-menu" style="animation-delay:.30s" onclick="toggleBannerMenu()">Öne Çıkan Özelliklerimiz</a>
+        <a href="#luckyWheelSection" class="btn-menu" style="animation-delay:.35s" onclick="toggleBannerMenu()">Şans Çarkı</a>
         
 <a href="https://forms.gle/jw8wHCJqGHRMnCcRA" target="_blank" class="career-menu-btn" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 15px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.05); color: #ffffff; text-decoration: none; border-radius: 5px; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; font-family: sans-serif; font-weight: normal; text-transform: none; font-size: 0.9rem;">
-    <span class="career-icon" style="font-size: 1.1rem;">💼</span> Bizimle Çalışın
+    Bizimle Çalışın
 </a>
 
 
@@ -642,6 +820,21 @@
         color: var(--text-muted);
         line-height: 1.3;
     }
+
+    /* PC: kare kart yerine geniş, yatay kart. Mobil düzen aynen korunur. */
+    @media (min-width: 768px) {
+        .atmosphere-card { max-width: 1000px; padding: 34px 48px; }
+        .atm-top { display: flex; align-items: center; justify-content: space-between; gap: 48px; margin-bottom: 28px; }
+        .atm-head { flex: 1; text-align: left; }
+        .atm-live { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .atmosphere-title { font-size: 1.5rem; }
+        .atmosphere-subtitle { margin-bottom: 0; font-size: 1rem; }
+        .atm-live .time-badge { margin-bottom: 16px; }
+        .atm-live .main-status-pill { margin-bottom: 0; }
+        .legend-grid { padding-top: 28px; }
+        .legend-item { font-size: 0.85rem; }
+        .legend-title { font-size: 0.95rem; }
+    }
 </style>
 
 <div class="yeni-hava-durumu">
@@ -658,21 +851,28 @@
 </div>
 
 <div class="atmosphere-card">
-    <h2 class="atmosphere-title">KENT KAFE CANLI YOĞUNLUK DURUMU</h2>
-    <p class="atmosphere-subtitle">Ziyaretinizi planlamanıza yardımcı olmak için kafemizin yoğunluğunu takip edebilirsiniz.</p>
-    
-    <div id="timeBadge" class="time-badge">
-        🕒 Canlı Saat: <span id="clockSpan">00:00</span>
-    </div>
+    <div class="atm-top">
+        <div class="atm-head">
+            <h2 class="atmosphere-title">KENT KAFE CANLI YOĞUNLUK DURUMU</h2>
+            <p class="atmosphere-subtitle">Ziyaretinizi planlamanıza yardımcı olmak için kafemizin yoğunluğunu takip edebilirsiniz.</p>
+        </div>
 
-    <div>
-        <div id="mainStatusPill" class="main-status-pill">
-            <span id="mainDot" class="status-dot"></span>
-            <span id="mainText" class="status-text">HESAPLANIYOR...</span>
+        <div class="atm-live">
+            <div id="timeBadge" class="time-badge">
+                🕒 Canlı Saat: <span id="clockSpan">00:00</span>
+            </div>
+
+            <div>
+                <div id="mainStatusPill" class="main-status-pill">
+                    <span id="mainDot" class="status-dot"></span>
+                    <span id="mainText" class="status-text">HESAPLANIYOR...</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="legend-grid">
+
         <div class="legend-item">
             <span class="legend-dot" style="background-color: #10b981;"></span>
             <span class="legend-title">Sakin</span>
@@ -975,6 +1175,30 @@
                     Instagram'da Biz
                 </a>
             </h2>
+
+            <!-- PC'de görünen Instagram profil kartı (mobilde gizli, eski düzen devam eder) -->
+            <a class="insta-profile" href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" rel="noopener" aria-label="Kent Kafe Instagram profilini aç">
+                <div class="ip-header">
+                    <div class="ip-avatar"><img src="images/Untitled design.png" alt="Kent Kafe" loading="lazy"></div>
+                    <div class="ip-info">
+                        <div class="ip-handle">kentkafe16</div>
+                        <div class="ip-name">Kent Kafe · Karacabey</div>
+                        <div class="ip-bio">Atatürk Kültür Parkı'nın kalbinde doğa, kahve ve konfor.</div>
+                        <span class="ip-btn">Instagram'da Görüntüle</span>
+                    </div>
+                </div>
+                <div class="ip-grid">
+                    <img src="images/IMG_0395.jpeg" alt="Kent Kafe paylaşımı" loading="lazy">
+                    <img src="images/IMG_0918.jpeg" alt="Kent Kafe paylaşımı" loading="lazy">
+                    <img src="images/IMG_0914.jpeg" alt="Kent Kafe paylaşımı" loading="lazy">
+                    <img src="images/IMG_6953.jpeg" alt="Kent Kafe paylaşımı" loading="lazy">
+                    <img src="images/IMG_0400.jpeg" alt="Kent Kafe paylaşımı" loading="lazy">
+                    <img src="images/IMG_0244.jpeg" alt="Kent Kafe paylaşımı" loading="lazy">
+                    <img src="images/IMG_6647.jpeg" alt="Kent Kafe paylaşımı" loading="lazy">
+                    <img src="images/IMG_4675.png" alt="Kent Kafe paylaşımı" loading="lazy">
+                    <img src="images/IMG_6435.jpeg" alt="Kent Kafe paylaşımı" loading="lazy">
+                </div>
+            </a>
             
             <div class="insta-masonry">
                 <div class="insta-row-single">
@@ -1008,14 +1232,14 @@
     </main>
     <section id="luckyWheelSection" style="padding: 60px 20px; text-align: center; background-color: var(--page-bg); border-top: 1px solid var(--card-border); margin-top: 30px; transition: background-color 0.4s ease;">
         <h2 style="font-size: 15pt; font-weight: bold; color: var(--text-main); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">Şanslı Günümdeyim!</h2>
-        <p style="font-size: 11pt; color: #3b4d42; font-style: italic; margin-bottom: 30px;">Bugün Acaba Hangi Kokteyl'i İçeceğim...</p>
+        <p style="font-size: 11pt; color: var(--text-muted); font-style: italic; margin-bottom: 30px;">Bugün Acaba Hangi Kokteyl'i İçeceğim...</p>
         
-        <div style="position: relative; width: min(320px, 82vw); height: min(320px, 82vw); max-width: 380px; max-height: 380px; margin: 0 auto 25px auto;">
-            <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 100; width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-top: 28px solid #d4af37; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));"></div>
+        <div class="wheel-wrap">
+            <div class="wheel-pointer"></div>
             
-            <div id="luckyWheel" style="width: 100%; height: 100%; border-radius: 50%; border: 10px solid #0a2f1d; position: relative; overflow: hidden; transition: transform 10s cubic-bezier(0.15, 0.85, 0.35, 1); box-shadow: 0 12px 28px rgba(0,0,0,0.15);"></div>
+            <div id="luckyWheel" class="wheel-disc"></div>
             
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 45px; height: 45px; background: #0a2f1d; border: 3px solid #d4af37; border-radius: 50%; z-index: 10; box-shadow: 0 4px 8px rgba(0,0,0,0.3);"></div>
+            <div class="wheel-hub"></div>
         </div>
         
         <div id="wheelResult" style="font-size: 13pt; font-weight: bold; color: var(--text-main); min-height: 35px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;"></div>
@@ -1029,6 +1253,7 @@
         <p style="text-align:center; font-size: 10pt; margin-bottom:15px; color: var(--text-muted);">Değerli yorumlarınız Kent Kafe'yi daha iyi yapmamıza yardımcı oluyor.</p>
         
         <form action="https://formspree.io/f/maqkokwp" method="POST">
+            <div class="star-grid">
             <script>
                 ["Atmosfer", "Temizlik", "İlgi Alaka", "Servis"].forEach(cat => {
                     document.write(`
@@ -1044,6 +1269,7 @@
                     `);
                 });
             </script>
+            </div>
             
             <div class="star-group">
                 <label>İsminiz (İsteğe bağlı)</label>
@@ -1059,31 +1285,253 @@
         </form>
     </div>
     <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <!-- ===== KONUM İZNİ PENCERESİ ===== -->
+    <div class="ck-overlay" id="locOverlay" onclick="closeLocModal()"></div>
+    <div class="ck-modal" id="locModal" role="dialog" aria-modal="true" aria-label="Konum izni">
+        <div class="ck-modal-head">
+            <div class="ck-modal-title">Konum İzni</div>
+            <button class="ck-close" onclick="closeLocModal()" aria-label="Kapat">✕</button>
+        </div>
+        <div class="ck-modal-body">
+            <p class="ck-intro">Kent Kafe'ye olan uzaklığınızı (kuş uçuşu) gösterebilmemiz için cihazınızın konumu <strong>bir kez</strong> okunacaktır. Ardından tarayıcınız ayrıca izin isteyebilir.</p>
+            <p class="ck-intro">Konum bilginiz yalnızca cihazınızda mesafe hesabı için kullanılır; sunucularımıza gönderilmez, kaydedilmez ve üçüncü kişilerle paylaşılmaz. İznizi dilediğiniz zaman "Çerez Tercihleri"nden geri alabilirsiniz. Ayrıntılar için <a href="#" onclick="closeLocModal(); openDoc('kvkkModal'); return false;">KVKK Aydınlatma Metni</a>'ne bakabilirsiniz.</p>
+        </div>
+        <div class="ck-modal-foot">
+            <button class="ck-btn ck-outline" onclick="closeLocModal()">Vazgeç</button>
+            <button class="ck-btn ck-primary" onclick="acceptLocation()">İzin Ver ve Devam Et</button>
+        </div>
+    </div>
+
+    <!-- ===== KVKK AYDINLATMA METNİ ===== -->
+    <div class="ck-overlay" id="docOverlay" onclick="closeDoc()"></div>
+    <div class="ck-modal doc-modal" id="kvkkModal" role="dialog" aria-modal="true" aria-label="KVKK Aydınlatma Metni">
+        <div class="ck-modal-head">
+            <div class="ck-modal-title">KVKK Aydınlatma Metni</div>
+            <button class="ck-close" onclick="closeDoc()" aria-label="Kapat">✕</button>
+        </div>
+        <div class="ck-modal-body doc-body">
+            <p><em>Son güncelleme: 28 Eylül 2026</em></p>
+            <p>Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu'nun ("KVKK") 10. maddesi ve Aydınlatma Yükümlülüğünün Yerine Getirilmesinde Uyulacak Usul ve Esaslar Hakkında Tebliğ uyarınca, Kent Kafe internet sitesini (www.kentkafe.com.tr) ziyaret eden kişileri bilgilendirmek amacıyla hazırlanmıştır. Mekân içindeki uygulamalar (ör. güvenlik kamerası) için ayrı aydınlatma yapılabilir.</p>
+
+            <h4>1. Veri Sorumlusu</h4>
+            <p>Unvan: <span class="ph">[TİCARİ UNVAN]</span> ("Kent Kafe")<br>
+            MERSİS / Vergi No: <span class="ph">[MERSİS / VERGİ NO]</span><br>
+            Adres: Canbalı, Atatürk Kültür Parkı, Karacabey/Bursa<br>
+            Telefon: 0224 676 86 40<br>
+            KVKK başvuru e-posta adresi: <span class="ph">[E-POSTA ADRESİ]</span></p>
+
+            <h4>2. İşlenen Kişisel Veriler</h4>
+            <ul>
+                <li><strong>Kimlik bilgisi:</strong> Geri bildirim formunda isteğe bağlı olarak yazdığınız isim.</li>
+                <li><strong>Müşteri geri bildirimi:</strong> Atmosfer, temizlik, ilgi-alaka ve servis puanlarınız ile serbest yorum metniniz.</li>
+                <li><strong>Konum verisi:</strong> Yalnızca açık rızanız varsa, cihazınızın anlık enlem/boylam bilgisi (ayrıntılar 8. bölümde).</li>
+                <li><strong>İşlem güvenliği / internet trafiği bilgisi:</strong> IP adresi, tarayıcı ve cihaz türü, işletim sistemi, erişim tarihi ve saati, ziyaret edilen sayfalar.</li>
+                <li><strong>Tercih kayıtları:</strong> Çerez tercihiniz, konum izni tercihiniz ve karanlık/aydınlık mod seçiminiz (tarayıcınızın yerel depolamasında tutulur).</li>
+                <li><strong>Kariyer başvurusu:</strong> "Bizimle Çalışın" bağlantısı üzerinden Google Formlar'da paylaştığınız bilgiler (ilgili formda ayrıca bilgilendirilirsiniz).</li>
+            </ul>
+
+            <h4>3. Kişisel Verilerin İşlenme Amaçları</h4>
+            <ul>
+                <li>İnternet sitesinin çalıştırılması, güvenliğinin sağlanması ve teknik sorunların giderilmesi,</li>
+                <li>Geri bildirimlerin değerlendirilmesi, hizmet ve ürün kalitesinin iyileştirilmesi,</li>
+                <li>Tercihlerinizin (karanlık mod, çerez ve konum izni) hatırlanması,</li>
+                <li>Kent Kafe'ye olan uzaklığınızın hesaplanarak size gösterilmesi (yalnızca açık rızanızla),</li>
+                <li>Kariyer başvurularının değerlendirilmesi,</li>
+                <li>Hukuki yükümlülüklerin yerine getirilmesi, talep ve şikayetlerin yönetilmesi, hakkın tesisi ve korunması.</li>
+            </ul>
+
+            <h4>4. Hukuki Sebepler</h4>
+            <p>Verileriniz KVKK'nın 5. maddesindeki şu şartlara dayanılarak işlenir: (i) internet sitesinin işletilmesi ve güvenliği için <em>meşru menfaatimiz</em> (m.5/2-f); (ii) mevzuattan doğan <em>hukuki yükümlülüklerimizin yerine getirilmesi</em> (m.5/2-a, ç); (iii) bir hakkın tesisi, kullanılması veya korunması için veri işlemenin zorunlu olması (m.5/2-e); (iv) konum verisi ile isteğe bağlı çerezler bakımından <em>açık rızanız</em> (m.5/1). Geri bildirim formunu kendi isteğinizle doldurup göndermeniz, bu formdaki verilerin yukarıdaki amaçlarla işlenmesi için yeterlidir.</p>
+
+            <h4>5. Verilerin Toplanma Yöntemi</h4>
+            <p>Verileriniz; internet sitesindeki geri bildirim formu, tarayıcınız ve cihazınız (otomatik yollarla), çerez ve benzeri yerel depolama teknolojileri ile cihazınızın konum sensörü (tarayıcınızın Geolocation özelliği ve sizin izniniz üzerine) aracılığıyla, tamamen veya kısmen otomatik yöntemlerle toplanır.</p>
+
+            <h4>6. Verilerin Aktarılması</h4>
+            <p>Kişisel verileriniz, yukarıdaki amaçlarla sınırlı olarak ve KVKK'nın 8. ve 9. maddelerine uygun şekilde şu alıcı gruplarına aktarılabilir:</p>
+            <ul>
+                <li><strong>Barındırma ve alan adı hizmet sağlayıcıları:</strong> Sitenin yayınlanması ve teknik kayıtların tutulması.</li>
+                <li><strong>Formspree (ABD):</strong> Geri bildirim formunuzun bize iletilmesi.</li>
+                <li><strong>Google (Google Formlar, Google E-Tablolar, Google Fonts, Google Haritalar):</strong> Kariyer başvuru formu, canlı yoğunluk bilgisinin sunulması, yazı tiplerinin yüklenmesi ve yol tarifi bağlantısı. Bu hizmetler kullanılırken IP adresiniz Google'a iletilebilir.</li>
+                <li><strong>Cloudflare (ABD):</strong> Hava durumu bilgisinin sunulması için kullanılan ara sunucu; istek sırasında IP adresiniz teknik olarak işlenebilir.</li>
+                <li><strong>Yetkili kamu kurum ve kuruluşları:</strong> Mevzuat gereği talep halinde.</li>
+            </ul>
+            <p>Bu hizmet sağlayıcıların bir kısmı yurt dışında bulunduğundan, aktarımlar KVKK'nın 9. maddesi kapsamında yapılır. <strong>Konum verisi hiçbir üçüncü kişiye aktarılmaz.</strong> Instagram, dış menü sayfası ve Google Haritalar bağlantılarına tıkladığınızda ilgili siteler kendi gizlilik politikalarına tabidir.</p>
+
+            <h4>7. Saklama Süresi</h4>
+            <p>Geri bildirimleriniz, işlenme amacının gerektirdiği süre boyunca; teknik kayıtlar ilgili mevzuatın öngördüğü süreler boyunca saklanır. Sürenin dolması halinde verileriniz silinir, yok edilir veya anonim hale getirilir. Tercih kayıtları tarayıcınızda siz silene ya da tarayıcı verilerini temizleyene kadar kalır. <strong>Konum verisi kaydedilmez.</strong></p>
+
+            <h4>8. Konum Verisinin İşlenmesi</h4>
+            <ul>
+                <li><strong>Ne zaman alınır?</strong> Yalnızca "Bizi Ziyaret Edin" bölümündeki "Bana Uzaklığımı Göster" düğmesine bastığınızda ve açık rıza verdikten sonra. Site açıldığında konumunuz kendiliğinden alınmaz.</li>
+                <li><strong>Nasıl işlenir?</strong> Cihazınızın konumu tarayıcı üzerinden bir kez okunur ve Kent Kafe'ye olan kuş uçuşu mesafe cihazınızda hesaplanır. Konum bilgisi sunucularımıza gönderilmez, kaydedilmez, profilleme veya reklam amacıyla kullanılmaz.</li>
+                <li><strong>Hukuki sebep:</strong> Açık rızanız. Bu rıza "Tümünü Kabul Et" seçeneğine bağlanmamıştır; yalnızca konum özelliğini kullanırken ya da Çerez Tercih Merkezi'ndeki "Konum Verisi" anahtarını açarak verilir.</li>
+                <li><strong>Rızayı geri alma:</strong> "Çerez Tercihleri" bağlantısından anahtarı kapatarak veya tarayıcı/cihaz ayarlarınızdan site için konum iznini kaldırarak istediğiniz zaman geri alabilirsiniz. Geri alma, öncesindeki işlemlerin hukuka uygunluğunu etkilemez.</li>
+                <li><strong>Vermezseniz?</strong> Yalnızca mesafe gösterme özelliğini kullanamazsınız; sitenin diğer bölümleri etkilenmez.</li>
+            </ul>
+
+            <h4>9. İlgili Kişinin Hakları (KVKK m.11)</h4>
+            <p>Veri sahibi olarak şu haklara sahipsiniz: (a) kişisel verinizin işlenip işlenmediğini öğrenme, (b) işlenmişse buna ilişkin bilgi talep etme, (c) işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, (ç) yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme, (d) eksik veya yanlış işlenmişse düzeltilmesini isteme, (e) KVKK'nın 7. maddesindeki şartlar çerçevesinde silinmesini veya yok edilmesini isteme, (f) (d) ve (e) bentlerindeki işlemlerin aktarıldığı üçüncü kişilere bildirilmesini isteme, (g) işlenen verilerin münhasıran otomatik sistemlerle analiz edilmesi suretiyle aleyhinize bir sonuç doğmasına itiraz etme, (ğ) kanuna aykırı işlenmesi sebebiyle zarara uğramanız halinde zararın giderilmesini talep etme.</p>
+
+            <h4>10. Başvuru Yöntemi</h4>
+            <p>Haklarınıza ilişkin taleplerinizi, kimliğinizi doğrulayıcı bilgilerle birlikte yukarıda belirtilen adresimize yazılı olarak veya <span class="ph">[E-POSTA ADRESİ]</span> adresine iletebilirsiniz. Talepleriniz, niteliğine göre en geç otuz gün içinde ücretsiz olarak sonuçlandırılır; işlemin ayrıca bir maliyet gerektirmesi halinde Kişisel Verileri Koruma Kurulu'nca belirlenen tarife uygulanabilir. Başvurunuza verilen cevabı yetersiz bulmanız halinde Kişisel Verileri Koruma Kurulu'na şikayet hakkınız saklıdır.</p>
+
+            <h4>11. Değişiklikler</h4>
+            <p>Bu metin, mevzuat veya hizmetlerimizdeki değişikliklere göre güncellenebilir; güncel sürüm bu sayfada yayımlanır.</p>
+        </div>
+        <div class="ck-modal-foot">
+            <button class="ck-btn ck-outline" onclick="closeDoc(); openDoc('policyModal')">Çerez Politikası</button>
+            <button class="ck-btn ck-primary" onclick="closeDoc()">Kapat</button>
+        </div>
+    </div>
+
+    <!-- ===== ÇEREZ POLİTİKASI ===== -->
+    <div class="ck-modal doc-modal" id="policyModal" role="dialog" aria-modal="true" aria-label="Çerez Politikası">
+        <div class="ck-modal-head">
+            <div class="ck-modal-title">Çerez Politikası</div>
+            <button class="ck-close" onclick="closeDoc()" aria-label="Kapat">✕</button>
+        </div>
+        <div class="ck-modal-body doc-body">
+            <p><em>Son güncelleme: 28 Eylül 2026</em></p>
+
+            <h4>1. Çerez Nedir?</h4>
+            <p>Çerezler ve benzeri teknolojiler (ör. tarayıcının yerel depolaması), bir internet sitesini ziyaret ettiğinizde cihazınıza kaydedilen küçük veri parçalarıdır. Siteyi çalıştırmak, tercihlerinizi hatırlamak ve deneyiminizi iyileştirmek için kullanılır.</p>
+
+            <h4>2. Sitemizde Kullanılan Kayıtlar</h4>
+            <div class="doc-table-wrap">
+            <table class="doc-table">
+                <thead><tr><th>Ad</th><th>Tür</th><th>Amaç</th><th>Süre</th></tr></thead>
+                <tbody>
+                    <tr><td>kentkafe-cookie-consent</td><td>Zorunlu</td><td>Çerez tercihinizin kaydı</td><td>Siz silene kadar</td></tr>
+                    <tr><td>kentkafe-location-consent</td><td>Zorunlu</td><td>Konum izni tercihinizin kaydı</td><td>Siz geri alana / silene kadar</td></tr>
+                    <tr><td>kentkafe-theme</td><td>İşlevsel</td><td>Karanlık/aydınlık mod seçiminiz</td><td>Siz silene kadar</td></tr>
+                    <tr><td>—</td><td>Performans</td><td>Şu anda sitemizde analiz/istatistik çerezi kullanılmamaktadır. İleride kullanılması halinde yalnızca izninizle etkinleştirilecektir.</td><td>—</td></tr>
+                </tbody>
+            </table>
+            </div>
+            <p>İşlevsel kayıt, yalnızca "İşlevsel Çerezler" izni verdiğinizde saklanır. Bu izni vermezseniz karanlık mod seçiminiz bir sonraki ziyarette hatırlanmaz.</p>
+
+            <h4>3. Üçüncü Taraf Hizmetler</h4>
+            <p>Sitemiz; Google Fonts (yazı tipleri), Google E-Tablolar (canlı yoğunluk bilgisi), Cloudflare (hava durumu ara sunucusu) ve Formspree (geri bildirim formu) gibi hizmetlerden yararlanır. Bu hizmetlerle iletişim sırasında IP adresiniz ve tarayıcı bilgileriniz teknik olarak ilgili sağlayıcıya iletilir. Bu sağlayıcılar kendi gizlilik ve çerez politikalarına tabidir. Instagram, Google Haritalar ve dış menü sayfası bağlantılarına tıkladığınızda ilgili sitenin politikaları geçerli olur.</p>
+
+            <h4>4. Konum Bilgisi</h4>
+            <p>Konum bilgisi bir çerez değildir; ancak izne bağlı olduğu için aynı Tercih Merkezi'nden yönetilir. Konumunuz yalnızca "Bana Uzaklığımı Göster" düğmesine bastığınızda ve açık rıza verdiğinizde bir kez okunur; mesafe cihazınızda hesaplanır, hiçbir yere gönderilmez ve kaydedilmez. "Tümünü Kabul Et" seçeneği konum iznini <strong>kapsamaz</strong>. Ayrıntılar için KVKK Aydınlatma Metni'nin 8. bölümüne bakınız.</p>
+
+            <h4>5. Tercihlerinizi Nasıl Yönetebilirsiniz?</h4>
+            <ul>
+                <li>Sayfanın en altındaki <strong>"Çerez Tercihleri"</strong> bağlantısından dilediğiniz zaman izinlerinizi değiştirebilirsiniz.</li>
+                <li>Tarayıcı ayarlarınızdan çerezleri ve site verilerini silebilir veya engelleyebilirsiniz; bu durumda bazı özellikler (ör. tercihlerinizin hatırlanması) çalışmayabilir.</li>
+                <li>Konum iznini tarayıcı veya cihaz ayarlarından da kaldırabilirsiniz.</li>
+            </ul>
+
+            <h4>6. Kişisel Verilerin Korunması</h4>
+            <p>Çerezler yoluyla işlenen kişisel verileriniz, 6698 sayılı KVKK ve <a href="#" onclick="closeDoc(); openDoc('kvkkModal'); return false;">KVKK Aydınlatma Metni</a>'nde belirtilen esaslara göre işlenir; haklarınız ve başvuru yöntemleri orada açıklanmıştır.</p>
+
+            <h4>7. Değişiklikler</h4>
+            <p>Bu politika gerektiğinde güncellenebilir; güncel sürüm bu sayfada yayımlanır.</p>
+        </div>
+        <div class="ck-modal-foot">
+            <button class="ck-btn ck-outline" onclick="closeDoc(); openDoc('kvkkModal')">KVKK Aydınlatma Metni</button>
+            <button class="ck-btn ck-primary" onclick="closeDoc()">Kapat</button>
+        </div>
+    </div>
+
+    <div class="ck-banner" id="cookieConsent" role="dialog" aria-live="polite" aria-label="Çerez tercihleri">
+        <div class="ck-title">Çerezlerle daha güzel bir kahve molası</div>
+        <p class="ck-text">Kent Kafe sitesinde deneyiminizi kolaylaştırmak ve tercihlerinizi (örneğin karanlık mod seçiminizi) hatırlamak için çerezler kullanıyoruz. Zorunlu çerezler sitenin çalışması için gereklidir; diğerlerini dilediğiniz gibi yönetebilirsiniz.</p>
+        <div class="ck-actions">
+            <button class="ck-btn ck-primary" onclick="cookieAcceptAll()">Tümünü Kabul Et</button>
+            <button class="ck-btn ck-outline" onclick="cookieRejectAll()">Tümünü Reddet</button>
+        </div>
+        <button class="ck-link" onclick="openCookieSettings()">Çerez Ayarları</button>
+    </div>
+
+    <div class="ck-overlay" id="cookieOverlay" onclick="closeCookieSettings()"></div>
+    <div class="ck-modal" id="cookieModal" role="dialog" aria-modal="true" aria-label="Çerez Tercih Merkezi">
+        <div class="ck-modal-head">
+            <div class="ck-modal-title">Çerez Tercih Merkezi</div>
+            <button class="ck-close" onclick="closeCookieSettings()" aria-label="Kapat">✕</button>
+        </div>
+        <div class="ck-modal-body">
+            <p class="ck-intro">Hangi çerezlere izin vereceğinize siz karar verirsiniz. Tercihlerinizi istediğiniz zaman sayfanın altındaki "Çerez Tercihleri" bağlantısından değiştirebilirsiniz.</p>
+
+            <div class="ck-row">
+                <div class="ck-row-top">
+                    <div class="ck-row-name">Zorunlu Çerezler</div>
+                    <div class="ck-always">Her zaman aktif</div>
+                </div>
+                <p>Sitenin düzgün çalışması ve çerez tercihinizin hatırlanması için gereklidir. Kapatılamaz.</p>
+            </div>
+
+            <div class="ck-row">
+                <div class="ck-row-top">
+                    <div class="ck-row-name">İşlevsel Çerezler</div>
+                    <label class="ck-switch"><input type="checkbox" id="ckFunctional"><span class="ck-slider"></span></label>
+                </div>
+                <p>Karanlık/aydınlık mod seçiminiz gibi tercihlerinizi bir sonraki ziyaretinizde hatırlamamızı sağlar.</p>
+            </div>
+
+            <div class="ck-row">
+                <div class="ck-row-top">
+                    <div class="ck-row-name">Performans Çerezleri</div>
+                    <label class="ck-switch"><input type="checkbox" id="ckPerformance"><span class="ck-slider"></span></label>
+                </div>
+                <p>Sitemizin nasıl kullanıldığını anonim olarak anlamamıza ve iyileştirmemize yardımcı olur (örneğin en çok ziyaret edilen bölümler).</p>
+            </div>
+
+            <div class="ck-row">
+                <div class="ck-row-top">
+                    <div class="ck-row-name">Konum Verisi</div>
+                    <label class="ck-switch"><input type="checkbox" id="ckLocation"><span class="ck-slider"></span></label>
+                </div>
+                <p>Yalnızca "Bizi Ziyaret Edin" bölümündeki "Bana Uzaklığımı Göster" düğmesiyle kullanılır. Cihazınızın konumu tek seferlik okunur, hiçbir yere gönderilmez veya kaydedilmez. Ayrıntılar için <a href="#" onclick="closeCookieSettings(true); openDoc('kvkkModal'); return false;">KVKK Aydınlatma Metni</a>.</p>
+            </div>
+        </div>
+        <div class="ck-modal-foot">
+            <button class="ck-btn ck-outline" onclick="cookieSaveChoices()">Tercihlerimi Kaydet</button>
+            <button class="ck-btn ck-primary" onclick="cookieAcceptAll()">Tümünü Kabul Et</button>
+        </div>
+    </div>
     
-    <section style="background: var(--page-bg); padding: 40px 20px; border-top: 1px solid var(--card-border); transition: background-color 0.4s ease;">
-        <div class="main-content" style="max-width: 650px; margin: 0 auto; background: var(--card-bg); padding: 25px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--card-border); transition: background-color 0.4s ease;">
+    <section class="visit-section" style="background: var(--page-bg); padding: 40px 20px; border-top: 1px solid var(--card-border); transition: background-color 0.4s ease;">
+        <div class="main-content visit-card" style="max-width: 650px; margin: 0 auto; background: var(--card-bg); padding: 25px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--card-border); transition: background-color 0.4s ease;">
             <h3 style="text-align: center; color: var(--text-main); margin-bottom: 20px; text-transform: uppercase;">Bizi Ziyaret Edin</h3>
-            
-            <div style="text-align: center; color: var(--text-muted); margin-bottom: 20px; font-size: 11pt;">
-                <p><strong>Adres:</strong> Canbalı, Atatürk Kültür Parkı, Karacabey/Bursa</p>
-                <p style="margin-top: 10px;"><strong>Telefon:</strong> <a href="tel:+902246768640" style="color: var(--text-main); font-weight: bold; text-decoration: none;">0224 676 86 40</a></p>
-            </div>
 
-            <div style="text-align: center; margin-bottom: 20px;">
-                <p style="font-weight: bold; color: var(--text-main); margin-bottom: 10px;">Çalışma Saatleri</p>
-                <p style="font-size: 10pt; color: var(--text-muted);">Her gün: 08:30 – 00:30</p>
-            </div>
+            <div class="visit-grid">
+                <div class="visit-info">
+                    <div style="text-align: center; color: var(--text-muted); margin-bottom: 20px; font-size: 11pt;">
+                        <p><strong>Adres:</strong> Canbalı, Atatürk Kültür Parkı, Karacabey/Bursa</p>
+                        <p style="margin-top: 10px;"><strong>Telefon:</strong> <a href="tel:+902246768640" style="color: var(--text-main); font-weight: bold; text-decoration: none;">0224 676 86 40</a></p>
+                    </div>
 
-            <a href="https://www.google.com/maps/dir/?api=1&destination=40.2043383,28.3497619" target="_blank" 
-               style="display: block; background: #0a2f1d; color: #ffffff; text-align: center; padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 11pt;">
-               Yol Tarifi Al
-            </a>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <p style="font-weight: bold; color: var(--text-main); margin-bottom: 10px;">Çalışma Saatleri</p>
+                        <p style="font-size: 10pt; color: var(--text-muted);">Her gün: 08:30 – 00:30</p>
+                    </div>
+                </div>
+
+                <div class="visit-actions">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=40.2043383,28.3497619" target="_blank" class="btn-visit">
+                        Yol Tarifi Al
+                    </a>
+                    <button type="button" class="btn-visit btn-visit-outline" onclick="requestDistance()">📍 Bana Uzaklığımı Göster</button>
+                    <div id="distanceResult" class="distance-result"></div>
+                </div>
+            </div>
         </div>
     </section>
 
-<footer style="background-color: #1e3129; color: #ffffff; text-align: center; padding: 25px 20px; font-size: 10pt; width: 100%; box-sizing: border-box; margin-top: 50px;">
+<footer id="siteFooter" style="background-color: #1e3129; color: #ffffff; text-align: center; width: 100%; box-sizing: border-box; margin-top: 50px;">
     <div style="max-width: 1200px; margin: 0 auto; width: 100%; opacity: 0.9;">
         © 2026 Kent Kafe. Tüm Hakları Saklıdır.
+        <div class="legal-links">
+            <a href="#" onclick="openCookieSettings(); return false;">Çerez Tercihleri</a>
+            <span class="sep">·</span>
+            <a href="#" onclick="openDoc('policyModal'); return false;">Çerez Politikası</a>
+            <span class="sep">·</span>
+            <a href="#" onclick="openDoc('kvkkModal'); return false;">KVKK Aydınlatma Metni</a>
+        </div>
+        <div style="font-size: 8pt; opacity: 0.5; margin-top: 4px;">v3.3.0</div>
     </div>
 </footer>
 
@@ -1114,7 +1562,8 @@
             document.body.classList.toggle('dark-mode', isDark);
             const btn = document.getElementById('themeToggle');
             if (btn) btn.textContent = isDark ? '☀️' : '🌙';
-            try { localStorage.setItem('kentkafe-theme', isDark ? 'dark' : 'light'); } catch (e) {}
+            const c = getConsent();
+            if (c && c.functional) { try { localStorage.setItem('kentkafe-theme', isDark ? 'dark' : 'light'); } catch (e) {} }
         }
         function toggleDarkMode() {
             applyTheme(!document.body.classList.contains('dark-mode'));
@@ -1123,6 +1572,133 @@
         window.addEventListener('load', () => {
             applyTheme(document.body.classList.contains('dark-mode'));
         });
+
+        // ===== ÇEREZ / TERCİH YÖNETİMİ =====
+        const CK_KEY = 'kentkafe-cookie-consent';
+        function getConsent() {
+            try {
+                const c = JSON.parse(localStorage.getItem(CK_KEY));
+                if (c && typeof c === 'object' && 'functional' in c) return c;
+            } catch (e) {}
+            return null;
+        }
+        function saveConsent(functional, performance, location) {
+            const prev = getConsent();
+            const c = {
+                necessary: true,
+                functional: !!functional,
+                performance: !!performance,
+                // Konum izni her zaman ayrı bir onaydır: parametre verilmemişse önceki değer korunur,
+                // "Tümünü Kabul/Reddet Et" bu alanı otomatik değiştirmez.
+                location: (location !== undefined) ? !!location : (prev ? !!prev.location : false),
+                date: new Date().toISOString()
+            };
+            try { localStorage.setItem(CK_KEY, JSON.stringify(c)); } catch (e) {}
+            try {
+                if (c.functional) localStorage.setItem('kentkafe-theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+                else localStorage.removeItem('kentkafe-theme');
+            } catch (e) {}
+            document.getElementById('cookieConsent').classList.remove('show');
+            closeCookieSettings(true);
+        }
+        function cookieAcceptAll() { saveConsent(true, true); }
+        function cookieRejectAll() { saveConsent(false, false); }
+        function cookieSaveChoices() {
+            saveConsent(
+                document.getElementById('ckFunctional').checked,
+                document.getElementById('ckPerformance').checked,
+                document.getElementById('ckLocation').checked
+            );
+        }
+        function openCookieSettings() {
+            const c = getConsent();
+            document.getElementById('ckFunctional').checked = c ? c.functional : false;
+            document.getElementById('ckPerformance').checked = c ? c.performance : false;
+            document.getElementById('ckLocation').checked = c ? !!c.location : false;
+            document.getElementById('cookieConsent').classList.remove('show');
+            document.getElementById('cookieOverlay').classList.add('show');
+            document.getElementById('cookieModal').classList.add('show');
+        }
+        function closeCookieSettings(saved) {
+            document.getElementById('cookieOverlay').classList.remove('show');
+            document.getElementById('cookieModal').classList.remove('show');
+            // Henüz karar verilmediyse pencereyi kapatınca banner geri gelsin.
+            if (saved !== true && !getConsent()) document.getElementById('cookieConsent').classList.add('show');
+        }
+        window.addEventListener('load', () => {
+            if (!getConsent()) {
+                // Karşılama ekranı kaybolduktan hemen sonra nazikçe belirsin.
+                setTimeout(() => {
+                    if (!getConsent() && !document.getElementById('cookieModal').classList.contains('show')) {
+                        document.getElementById('cookieConsent').classList.add('show');
+                    }
+                }, 2500);
+            }
+        });
+
+        // ===== KVKK AYDINLATMA METNİ / ÇEREZ POLİTİKASI PENCERELERİ =====
+        function openDoc(id) {
+            document.getElementById('docOverlay').classList.add('show');
+            const el = document.getElementById(id);
+            if (el) el.classList.add('show');
+        }
+        function closeDoc() {
+            document.getElementById('docOverlay').classList.remove('show');
+            ['kvkkModal', 'policyModal'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('show');
+            });
+        }
+
+        // ===== KONUM İZNİ / MESAFE HESABI =====
+        // Konum verisi hiçbir sunucuya gönderilmez; mesafe tamamen cihazınızda hesaplanır.
+        const CAFE_LAT = 40.2043383, CAFE_LNG = 28.3497619;
+        function haversineKm(lat1, lng1, lat2, lng2) {
+            const R = 6371;
+            const toRad = d => d * Math.PI / 180;
+            const dLat = toRad(lat2 - lat1);
+            const dLng = toRad(lng2 - lng1);
+            const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+        function requestDistance() {
+            const c = getConsent();
+            if (c && c.location) {
+                runGeolocation();
+            } else {
+                document.getElementById('locOverlay').classList.add('show');
+                document.getElementById('locModal').classList.add('show');
+            }
+        }
+        function closeLocModal() {
+            document.getElementById('locOverlay').classList.remove('show');
+            document.getElementById('locModal').classList.remove('show');
+        }
+        function acceptLocation() {
+            const prev = getConsent() || { necessary: true, functional: false, performance: false };
+            saveConsent(prev.functional, prev.performance, true);
+            closeLocModal();
+            runGeolocation();
+        }
+        function runGeolocation() {
+            const out = document.getElementById('distanceResult');
+            if (!out) return;
+            if (!navigator.geolocation) {
+                out.textContent = 'Tarayıcınız konum özelliğini desteklemiyor.';
+                return;
+            }
+            out.textContent = 'Konumunuz alınıyor...';
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const km = haversineKm(pos.coords.latitude, pos.coords.longitude, CAFE_LAT, CAFE_LNG);
+                    out.textContent = `Kent Kafe'ye yaklaşık ${km.toFixed(1)} km uzaklıktasınız.`;
+                },
+                () => {
+                    out.textContent = 'Konumunuza ulaşılamadı. Tarayıcı izinlerini kontrol edip tekrar deneyebilirsiniz.';
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        }
         
         const wrapper = document.getElementById('imageWrapper');
         const navDots = document.querySelectorAll('.slider-nav-dot');
@@ -1223,6 +1799,12 @@
             const sliceColors = ['#0a2f1d', '#1e5c3a', '#0a2f1d', '#1e5c3a', '#0a2f1d', '#1e5c3a', '#0a2f1d', '#1e5c3a', '#0a2f1d', '#1e5c3a', '#144026'];
             
             if (!wheel) return;
+
+            // Çark artık ekrana göre büyüyüp küçülüyor; etiketleri gerçek yarıçapa göre
+            // orantılı yerleştiriyoruz ki her boyutta (mobil/masaüstü) doğru görünsün.
+            const radius = wheel.getBoundingClientRect().width / 2;
+            const labelDistance = Math.round(radius * 0.55);
+            const labelFontSize = Math.max(9, Math.round(radius * 0.075));
             
             cocktails.forEach((item, index) => {
                 const startAngle = index * anglePerSlice;
@@ -1232,7 +1814,7 @@
                 
                 const textDiv = document.createElement('div');
                 textDiv.style.position = 'absolute';
-                textDiv.style.width = '120px';
+                textDiv.style.width = '140px';
                 textDiv.style.height = '30px';
                 textDiv.style.top = '50%';
                 textDiv.style.left = '50%';
@@ -1240,10 +1822,10 @@
                 textDiv.style.textAlign = 'right';
                 
                 const midAngle = startAngle + (anglePerSlice / 2);
-                textDiv.style.transform = `translate(0%, -50%) rotate(${midAngle - 90}deg) translate(15px, 0px)`;
+                textDiv.style.transform = `translate(0%, -50%) rotate(${midAngle - 90}deg) translate(${labelDistance}px, 0px)`;
                 textDiv.style.color = '#ffffff';
                 textDiv.style.fontWeight = 'bold';
-                textDiv.style.fontSize = '8.5pt';
+                textDiv.style.fontSize = labelFontSize + 'px';
                 textDiv.style.whiteSpace = 'nowrap';
                 textDiv.style.fontFamily = 'sans-serif';
                 textDiv.innerText = item;
@@ -1255,7 +1837,7 @@
             window.startLuckySpin = function() {
                 if (isSpinning) return;
                 isSpinning = true;
-                resultDiv.style.color = "#3b4d42";
+                resultDiv.style.color = "var(--text-muted)";
                 resultDiv.innerText = "Karıştırılıyor...";
                 btn.style.opacity = '0.5';
                 btn.style.cursor = 'not-allowed';
@@ -1273,7 +1855,9 @@
                     const winningIndex = Math.floor(pointerAngle / anglePerSlice);
                     const winner = cocktails[winningIndex];
                     
-                    resultDiv.innerHTML = `Şansına Gelen: <span style="color: #1e5c3a; font-size: 14pt; border-bottom: 2px solid #1e5c3a; padding-bottom: 2px;">${winner}</span>`;
+                    // Renk artık var(--text-main) ile geliyor: açık temada koyu yeşil,
+                    // karanlık modda otomatik olarak beyaza yakın bir tona dönüyor.
+                    resultDiv.innerHTML = `Şansına Gelen: <span style="color: var(--text-main); font-size: 14pt; border-bottom: 2px solid #d4af37; padding-bottom: 2px;">${winner}</span>`;
                     isSpinning = false;
                     btn.style.opacity = '1';
                     btn.style.cursor = 'pointer';
@@ -1406,7 +1990,7 @@
     async function yeniHavaDurumuGetir() {
     // API anahtarı artık burada YOK. İstek, anahtarı gizli tutan Cloudflare Worker proxy'sine gidiyor.
     // Aşağıdaki adresi kendi worker adresinizle değiştirin (worker-proxy-kurulum.txt dosyasındaki adımlara bakın).
-    const url = "https://kentkafe-weather-proxy.kentkafee.workers.dev/";
+    const url = "https://kentkafe-weather-proxy.KULLANICI-ADINIZ.workers.dev/";
     
     try {
         const cevap = await fetch(url);
