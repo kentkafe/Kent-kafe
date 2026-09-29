@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <!--
-  KENT KAFE — SİTE SÜRÜMÜ: 3.3.0
+  KENT KAFE — SİTE SÜRÜMÜ: 3.4.0
+  v3.4.0: KRİTİK YAPISAL HATA DÜZELTİLDİ — "quality-section" kutusu ve "Hakkımızda" bölümü
+          hiç kapanmıyordu, bu yüzden Instagram/çark/footer/tüm modallar yanlışlıkla bunların
+          içine gömülüydü (footer'ın PC'de dar görünmesinin asıl sebebi buydu). Ayrıca:
+          hava durumu proxy adresi düzeltildi, çark etiketleri artık diskin dışına taşıp
+          kaybolmuyor, karşılama yazısı tek satır + büyük punto, "Öne Çıkan Özelliklerimiz"
+          15sn'de bir otomatik kayıyor (manuel kaydırma da çalışıyor).
   v3.2.0: Yan menüden ikonlar kaldırıldı, kayan galeri PC'de gizlendi (mobilde açık),
           Starbucks tarzı çerez yönetimi (tercih merkezi), canlı yoğunluk kartı PC'de yatay,
           PC'de Instagram profil kartı (mobilde eski düzen).
@@ -345,8 +351,9 @@
         .welcome-text {
             font-family: var(--font-heading);
             font-weight: 700;
-            font-size: clamp(15pt, 6vw, 19pt);
-            letter-spacing: 2px;
+            font-size: clamp(15pt, 6.5vw, 24pt);
+            white-space: nowrap;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             background: linear-gradient(100deg, #8a6a1f 0%, #f6e7ab 18%, #fffbe8 32%, #d4af37 45%, #fff6da 58%, #b8860b 72%, #f6e7ab 86%, #8a6a1f 100%);
             background-size: 250% auto;
@@ -372,7 +379,7 @@
         /* Masaüstü ölçü: bilgisayar ekranına göre büyük logo/yazı */
         @media (min-width: 768px) {
             .welcome-logo { width: 180px; max-width: 180px; min-width: 180px; }
-            .welcome-text { font-size: 26pt; letter-spacing: 3px; }
+            .welcome-text { font-size: 34pt; letter-spacing: 2px; }
             .welcome-sub { font-size: 12pt; }
             .welcome-line { width: 70px; margin: 24px auto; }
         }
@@ -502,7 +509,7 @@
         <div class="welcome-inner">
             <img class="welcome-logo" src="images/Untitled design.png" alt="Kent Kafe Logo">
             <div class="welcome-line"></div>
-            <div class="welcome-text">Kent Kafe'ye<br>Hoşgeldiniz</div>
+            <div class="welcome-text">Kent Kafe'ye Hoşgeldiniz</div>
             <div class="welcome-sub">Doğa, Kahve ve Konfor Bir Arada</div>
         </div>
     </div>
@@ -1008,8 +1015,7 @@
         </div>
 
     </div>
-
-
+</div>
 
     <main class="main-content">
         <section id="aboutSection" class="reveal">
@@ -1029,6 +1035,7 @@
         Bugün ve gelecekte, Kent Kafe ailesi olarak samimi hizmet disiplinimizden ve hijyen standartlarımızdan ödün vermeden sektörde fark yaratmaya, konforlu mekanımızda sizleri en iyi şekilde ağırlamaya ve her bardağa bir parça tutku katmaya kararlılıkla devam edeceğiz.
     </p>
 </div>
+        </section>
 
         <section style="padding: 60px 20px; background-color: var(--page-bg); font-family: sans-serif; border-top: 1px solid var(--card-border); transition: background-color 0.4s ease;">
     <div style="max-width: 1000px; margin: 0 auto; background: var(--card-bg); padding: 40px 25px; border-radius: 24px; box-shadow: 0 10px 30px rgba(10, 47, 29, 0.05); text-align: center; border: 1px solid var(--card-border); transition: background-color 0.4s ease;">
@@ -1531,7 +1538,7 @@
             <span class="sep">·</span>
             <a href="#" onclick="openDoc('kvkkModal'); return false;">KVKK Aydınlatma Metni</a>
         </div>
-        <div style="font-size: 8pt; opacity: 0.5; margin-top: 4px;">v3.3.0</div>
+        <div style="font-size: 8pt; opacity: 0.5; margin-top: 4px;">v3.4.0</div>
     </div>
 </footer>
 
@@ -1740,6 +1747,26 @@
                 });
             });
         }
+
+        // Öne Çıkan Özellikler: 15 saniyede bir otomatik kayar, kullanıcı elle
+        // kaydırdığında (dokunma/fare/tekerlek) zamanlayıcı sıfırlanıp yeniden başlar.
+        let featuresAutoTimer;
+        function startFeaturesAutoSlider() {
+            clearInterval(featuresAutoTimer);
+            if (!slider || !slider.children.length) return;
+            featuresAutoTimer = setInterval(() => {
+                const count = slider.children.length;
+                const current = Math.round(slider.scrollLeft / slider.offsetWidth);
+                const next = (current + 1) % count;
+                slider.scrollTo({ left: next * slider.offsetWidth, behavior: 'smooth' });
+            }, 15000);
+        }
+        if (slider) {
+            startFeaturesAutoSlider();
+            ['touchstart', 'mousedown', 'wheel'].forEach(evt => {
+                slider.addEventListener(evt, startFeaturesAutoSlider, { passive: true });
+            });
+        }
         
         function revealElements() {
             const reveals = document.querySelectorAll('.reveal');
@@ -1800,11 +1827,15 @@
             
             if (!wheel) return;
 
-            // Çark artık ekrana göre büyüyüp küçülüyor; etiketleri gerçek yarıçapa göre
-            // orantılı yerleştiriyoruz ki her boyutta (mobil/masaüstü) doğru görünsün.
+            // Çark artık ekrana göre büyüyüp küçülüyor. Etiketin İÇ başlangıç noktası (merkezden
+            // uzaklığı) ile DIŞ ucu (metin genişliği eklenince ulaştığı nokta) her zaman diskin
+            // yarıçapının güvenli bir oranının içinde kalacak şekilde hesaplanır; böylece metin
+            // konteynerin overflow:hidden sınırının dışına taşıp görünmez olmaz.
             const radius = wheel.getBoundingClientRect().width / 2;
-            const labelDistance = Math.round(radius * 0.55);
-            const labelFontSize = Math.max(9, Math.round(radius * 0.075));
+            const innerStart = Math.max(20, Math.round(radius * 0.22));
+            const outerEdge = Math.round(radius * 0.80);
+            const labelWidth = Math.max(50, outerEdge - innerStart);
+            const labelFontSize = Math.max(9, Math.round(radius * 0.065));
             
             cocktails.forEach((item, index) => {
                 const startAngle = index * anglePerSlice;
@@ -1814,7 +1845,7 @@
                 
                 const textDiv = document.createElement('div');
                 textDiv.style.position = 'absolute';
-                textDiv.style.width = '140px';
+                textDiv.style.width = labelWidth + 'px';
                 textDiv.style.height = '30px';
                 textDiv.style.top = '50%';
                 textDiv.style.left = '50%';
@@ -1822,11 +1853,13 @@
                 textDiv.style.textAlign = 'right';
                 
                 const midAngle = startAngle + (anglePerSlice / 2);
-                textDiv.style.transform = `translate(0%, -50%) rotate(${midAngle - 90}deg) translate(${labelDistance}px, 0px)`;
+                textDiv.style.transform = `translate(0%, -50%) rotate(${midAngle - 90}deg) translate(${innerStart}px, 0px)`;
                 textDiv.style.color = '#ffffff';
                 textDiv.style.fontWeight = 'bold';
                 textDiv.style.fontSize = labelFontSize + 'px';
                 textDiv.style.whiteSpace = 'nowrap';
+                textDiv.style.overflow = 'hidden';
+                textDiv.style.textOverflow = 'ellipsis';
                 textDiv.style.fontFamily = 'sans-serif';
                 textDiv.innerText = item;
                 wheel.appendChild(textDiv);
@@ -1990,7 +2023,7 @@
     async function yeniHavaDurumuGetir() {
     // API anahtarı artık burada YOK. İstek, anahtarı gizli tutan Cloudflare Worker proxy'sine gidiyor.
     // Aşağıdaki adresi kendi worker adresinizle değiştirin (worker-proxy-kurulum.txt dosyasındaki adımlara bakın).
-    const url = "https://kentkafe-weather-proxy.KULLANICI-ADINIZ.workers.dev/";
+    const url = "https://kentkafe-weather-proxy.kentkafee.workers.dev/";
     
     try {
         const cevap = await fetch(url);
