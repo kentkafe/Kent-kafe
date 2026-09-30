@@ -1,22 +1,4 @@
 <!DOCTYPE html>
-<!--
-  KENT KAFE — SİTE SÜRÜMÜ: 3.4.0
-  v3.4.0: KRİTİK YAPISAL HATA DÜZELTİLDİ — "quality-section" kutusu ve "Hakkımızda" bölümü
-          hiç kapanmıyordu, bu yüzden Instagram/çark/footer/tüm modallar yanlışlıkla bunların
-          içine gömülüydü (footer'ın PC'de dar görünmesinin asıl sebebi buydu). Ayrıca:
-          hava durumu proxy adresi düzeltildi, çark etiketleri artık diskin dışına taşıp
-          kaybolmuyor, karşılama yazısı tek satır + büyük punto, "Öne Çıkan Özelliklerimiz"
-          15sn'de bir otomatik kayıyor (manuel kaydırma da çalışıyor).
-  v3.2.0: Yan menüden ikonlar kaldırıldı, kayan galeri PC'de gizlendi (mobilde açık),
-          Starbucks tarzı çerez yönetimi (tercih merkezi), canlı yoğunluk kartı PC'de yatay,
-          PC'de Instagram profil kartı (mobilde eski düzen).
-  v3.3.0: Detaylı KVKK Aydınlatma Metni ve Çerez Politikası eklendi (footer, küçük punto),
-          konum izni ile çalışan "uzaklığımı göster" mekanizması + Tercih Merkezi'ne
-          Konum Verisi anahtarı eklendi, footer ve "Bizi Ziyaret Edin" PC'de genişletildi,
-          "Yol Tarifi Al" butonu site buton efektlerine kavuştu, oylama penceresi PC'de
-          genişletildi (2 sütunlu puanlama).
-  NOT: Bu sürüm numarasını her kod güncellemesinde manuel artırıyoruz.
--->
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -155,32 +137,34 @@
         .dot { width: 8px; height: 8px; background-color: #c4d1c9; border-radius: 50%; transition: all 0.3s ease; }
         .dot.active { background-color: #0a2f1d; transform: scale(1.2); }
         
-        .insta-masonry { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
-        .insta-row-single { width: 100%; }
-        .insta-row-double { display: flex; gap: 15px; width: 100%; }
-        .insta-row-double .insta-card { flex: 1; }
-        .insta-card { display: block; text-decoration: none; overflow: hidden; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); background-color: var(--card-bg); padding: 6px; border: 1px solid var(--card-border); transition: transform 0.3s ease, background-color 0.4s ease; }
-        .insta-card img { width: 100%; height: auto; display: block; border-radius: 4px; object-fit: contain; }
-        .insta-card:active { transform: scale(0.98); }
+        /* Instagram profil kartı: mobil ve PC'de birebir aynı yapı, sadece boyutlar ölçekleniyor */
+        .insta-profile { display: block; text-decoration: none; color: var(--text-main); background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; box-shadow: 0 10px 28px rgba(0,0,0,0.07); padding: 20px; margin-top: 25px; transition: transform 0.35s ease, box-shadow 0.35s ease, background-color 0.4s ease; }
+        .insta-profile:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(0,0,0,0.12); }
+        .ip-header { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+        .ip-avatar { width: 74px; height: 74px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7); flex-shrink: 0; }
+        .ip-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; background: #0a2f1d; padding: 8px; border: 2px solid var(--card-bg); }
+        .ip-handle { font-family: var(--font-heading); font-size: 13pt; font-weight: 700; line-height: 1.2; }
+        .ip-stats { font-size: 9pt; color: var(--text-muted); margin-top: 2px; }
+        .ip-name { font-weight: 600; margin-top: 4px; font-size: 10pt; }
+        .ip-bio { color: var(--text-muted); font-size: 9.5pt; line-height: 1.5; margin: 4px 0 12px 0; }
+        .ip-btn { display: inline-block; background: linear-gradient(45deg, #f9ce34, #ee2a7b 55%, #6228d7); color: #ffffff; font-weight: 700; font-size: 9pt; letter-spacing: 0.5px; padding: 8px 18px; border-radius: 8px; transition: transform 0.25s ease; }
+        .insta-profile:hover .ip-btn { transform: scale(1.05); }
+        .ip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+        .ip-grid img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; border-radius: 3px; transition: transform 0.4s ease, filter 0.4s ease; }
+        .insta-profile:hover .ip-grid img { filter: brightness(0.94); }
+        .ip-grid img:hover { transform: scale(1.03); filter: brightness(1.05) !important; }
 
-        /* Instagram profil kartı: yalnızca PC'de görünür */
-        .insta-profile { display: none; }
         @media (min-width: 768px) {
-            .insta-masonry { display: none; }
-            .insta-profile { display: block; text-decoration: none; color: var(--text-main); background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; box-shadow: 0 12px 34px rgba(0,0,0,0.07); padding: 34px 38px; margin-top: 25px; transition: transform 0.35s ease, box-shadow 0.35s ease, background-color 0.4s ease; }
-            .insta-profile:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.13); }
-            .ip-header { display: flex; align-items: center; gap: 34px; margin-bottom: 30px; }
-            .ip-avatar { width: 128px; height: 128px; border-radius: 50%; padding: 4px; background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7); flex-shrink: 0; }
-            .ip-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; background: #0a2f1d; padding: 14px; border: 3px solid var(--card-bg); }
-            .ip-handle { font-family: var(--font-heading); font-size: 20pt; font-weight: 700; line-height: 1.2; }
-            .ip-name { font-weight: 600; margin-top: 4px; }
-            .ip-bio { color: var(--text-muted); font-size: 11pt; margin: 4px 0 14px 0; }
-            .ip-btn { display: inline-block; background: linear-gradient(45deg, #f9ce34, #ee2a7b 55%, #6228d7); color: #ffffff; font-weight: 700; font-size: 10pt; letter-spacing: 0.5px; padding: 10px 24px; border-radius: 8px; transition: transform 0.25s ease; }
-            .insta-profile:hover .ip-btn { transform: scale(1.05); }
-            .ip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-            .ip-grid img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; border-radius: 4px; transition: transform 0.4s ease, filter 0.4s ease; }
-            .insta-profile:hover .ip-grid img { filter: brightness(0.94); }
-            .ip-grid img:hover { transform: scale(1.03); filter: brightness(1.05) !important; }
+            .insta-profile { max-width: 640px; margin-left: auto; margin-right: auto; padding: 34px 38px; }
+            .ip-header { gap: 34px; margin-bottom: 30px; }
+            .ip-avatar { width: 128px; height: 128px; padding: 4px; }
+            .ip-avatar img { padding: 14px; border-width: 3px; }
+            .ip-handle { font-size: 20pt; }
+            .ip-stats { font-size: 10.5pt; }
+            .ip-name { font-size: 11pt; }
+            .ip-bio { font-size: 11pt; margin-bottom: 14px; }
+            .ip-btn { font-size: 10pt; padding: 10px 24px; }
+            .ip-grid { gap: 8px; }
         }
         
         #instagramSection h2 { text-align: center; margin-bottom: 15px; }
@@ -545,8 +529,9 @@
         <a href="#luckyWheelSection" class="btn-menu" style="animation-delay:.35s" onclick="toggleBannerMenu()">Şans Çarkı</a>
         
 <a href="https://forms.gle/jw8wHCJqGHRMnCcRA" target="_blank" class="career-menu-btn" style="display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 15px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.05); color: #ffffff; text-decoration: none; border-radius: 5px; border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; font-family: sans-serif; font-weight: normal; text-transform: none; font-size: 0.9rem;">
-    Bizimle Çalışın
+    Kariyer
 </a>
+<!-- GEÇİCİ: Kariyer sayfası (Starbucks tarzı) henüz kurulmadı, o yüzden bu link şimdilik doğrudan forma gidiyor. Sayfa kurulunca #careerSection'a çevrilecek. -->
 
 
 
@@ -1183,14 +1168,15 @@
                 </a>
             </h2>
 
-            <!-- PC'de görünen Instagram profil kartı (mobilde gizli, eski düzen devam eder) -->
+            <!-- Instagram profil kartı: mobil ve PC'de aynı görünüm -->
             <a class="insta-profile" href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" rel="noopener" aria-label="Kent Kafe Instagram profilini aç">
                 <div class="ip-header">
-                    <div class="ip-avatar"><img src="images/Untitled design.png" alt="Kent Kafe" loading="lazy"></div>
+                    <div class="ip-avatar"><img src="images/logo.png" alt="Kent Kafe" loading="lazy"></div>
                     <div class="ip-info">
                         <div class="ip-handle">kentkafe16</div>
-                        <div class="ip-name">Kent Kafe · Karacabey</div>
-                        <div class="ip-bio">Atatürk Kültür Parkı'nın kalbinde doğa, kahve ve konfor.</div>
+                        <div class="ip-stats">2.865 takipçi · 2.211 takip</div>
+                        <div class="ip-name">Kent Kafe</div>
+                        <div class="ip-bio">Karacabey, Bursa<br>Senin Şehrin, Senin Kahvecin.<br>www.kentkafe.com.tr ve 2 diğer</div>
                         <span class="ip-btn">Instagram'da Görüntüle</span>
                     </div>
                 </div>
@@ -1207,34 +1193,6 @@
                 </div>
             </a>
             
-            <div class="insta-masonry">
-                <div class="insta-row-single">
-                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
-                        <img src="images/IMG_0395.jpeg" alt="Kent Kafe Özel Seçim" loading="lazy">
-                    </a>
-                </div>
-                
-                <div class="insta-row-double">
-                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
-                        <img src="images/IMG_0918.jpeg" alt="Kent Kafe Lezzet Serisi" loading="lazy">
-                    </a>
-                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
-                        <img src="images/IMG_0914.jpeg" alt="Kent Kafe Sunum" loading="lazy">
-                    </a>
-                </div>
-                
-                <div class="insta-row-single">
-                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
-                        <img src="images/IMG_6953.jpeg" alt="Kent Kafe Ferahlık" loading="lazy">
-                    </a>
-                </div>
-                
-                <div class="insta-row-single">
-                    <a href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" class="insta-card">
-                        <img src="images/IMG_0400.jpeg" alt="Kent Kafe Gün Batımı Keyfi" loading="lazy">
-                    </a>
-                </div>
-            </div>
         </section>
     </main>
     <section id="luckyWheelSection" style="padding: 60px 20px; text-align: center; background-color: var(--page-bg); border-top: 1px solid var(--card-border); margin-top: 30px; transition: background-color 0.4s ease;">
@@ -1251,7 +1209,7 @@
         
         <div id="wheelResult" style="font-size: 13pt; font-weight: bold; color: var(--text-main); min-height: 35px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;"></div>
         
-        <button id="spinButton" onclick="startLuckySpin()" style="display: inline-block; background-color: #0a2f1d; color: #ffffff; padding: 14px 40px; border: none; font-size: 11pt; font-weight: bold; border-radius: 4px; text-transform: uppercase; cursor: pointer; box-shadow: 0 5px 15px rgba(10,47,29,0.2); transition: 0.2s; outline: none;">Çarkı Çevir</button>
+        <button id="spinButton" onclick="startLuckySpin()" style="display: inline-block; background-color: #0a2f1d; color: #ffffff; padding: 14px 40px; border: none; font-size: 11pt; font-weight: bold; border-radius: 4px; text-transform: uppercase; cursor: pointer; box-shadow: 0 5px 15px rgba(10,47,29,0.2); transition: 0.2s; outline: none;">Şansını Dene</button>
     </section>
     
     <div class="feedback-btn" onclick="document.getElementById('modal').style.display='block'">★</div>
@@ -1322,11 +1280,11 @@
             <p>Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu'nun ("KVKK") 10. maddesi ve Aydınlatma Yükümlülüğünün Yerine Getirilmesinde Uyulacak Usul ve Esaslar Hakkında Tebliğ uyarınca, Kent Kafe internet sitesini (www.kentkafe.com.tr) ziyaret eden kişileri bilgilendirmek amacıyla hazırlanmıştır. Mekân içindeki uygulamalar (ör. güvenlik kamerası) için ayrı aydınlatma yapılabilir.</p>
 
             <h4>1. Veri Sorumlusu</h4>
-            <p>Unvan: <span class="ph">[TİCARİ UNVAN]</span> ("Kent Kafe")<br>
-            MERSİS / Vergi No: <span class="ph">[MERSİS / VERGİ NO]</span><br>
+            <p>Unvan: Belkar Temizlik Turizm Akaryakıt Nakliyat Tarım İnşaat Sanayi ve Ticaret Limited Şirketi ("Kent Kafe")<br>
+            MERSİS / Vergi No: 1630417026 (Vergi No)<br>
             Adres: Canbalı, Atatürk Kültür Parkı, Karacabey/Bursa<br>
             Telefon: 0224 676 86 40<br>
-            KVKK başvuru e-posta adresi: <span class="ph">[E-POSTA ADRESİ]</span></p>
+            KVKK başvuru e-posta adresi: kentkafee@outlook.com</p>
 
             <h4>2. İşlenen Kişisel Veriler</h4>
             <ul>
@@ -1335,7 +1293,7 @@
                 <li><strong>Konum verisi:</strong> Yalnızca açık rızanız varsa, cihazınızın anlık enlem/boylam bilgisi (ayrıntılar 8. bölümde).</li>
                 <li><strong>İşlem güvenliği / internet trafiği bilgisi:</strong> IP adresi, tarayıcı ve cihaz türü, işletim sistemi, erişim tarihi ve saati, ziyaret edilen sayfalar.</li>
                 <li><strong>Tercih kayıtları:</strong> Çerez tercihiniz, konum izni tercihiniz ve karanlık/aydınlık mod seçiminiz (tarayıcınızın yerel depolamasında tutulur).</li>
-                <li><strong>Kariyer başvurusu:</strong> "Bizimle Çalışın" bağlantısı üzerinden Google Formlar'da paylaştığınız bilgiler (ilgili formda ayrıca bilgilendirilirsiniz).</li>
+                <li><strong>Kariyer başvurusu:</strong> "Kariyer" bağlantısı üzerinden Google Formlar'da paylaştığınız bilgiler (ilgili formda ayrıca bilgilendirilirsiniz).</li>
             </ul>
 
             <h4>3. Kişisel Verilerin İşlenme Amaçları</h4>
@@ -1381,7 +1339,7 @@
             <p>Veri sahibi olarak şu haklara sahipsiniz: (a) kişisel verinizin işlenip işlenmediğini öğrenme, (b) işlenmişse buna ilişkin bilgi talep etme, (c) işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, (ç) yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme, (d) eksik veya yanlış işlenmişse düzeltilmesini isteme, (e) KVKK'nın 7. maddesindeki şartlar çerçevesinde silinmesini veya yok edilmesini isteme, (f) (d) ve (e) bentlerindeki işlemlerin aktarıldığı üçüncü kişilere bildirilmesini isteme, (g) işlenen verilerin münhasıran otomatik sistemlerle analiz edilmesi suretiyle aleyhinize bir sonuç doğmasına itiraz etme, (ğ) kanuna aykırı işlenmesi sebebiyle zarara uğramanız halinde zararın giderilmesini talep etme.</p>
 
             <h4>10. Başvuru Yöntemi</h4>
-            <p>Haklarınıza ilişkin taleplerinizi, kimliğinizi doğrulayıcı bilgilerle birlikte yukarıda belirtilen adresimize yazılı olarak veya <span class="ph">[E-POSTA ADRESİ]</span> adresine iletebilirsiniz. Talepleriniz, niteliğine göre en geç otuz gün içinde ücretsiz olarak sonuçlandırılır; işlemin ayrıca bir maliyet gerektirmesi halinde Kişisel Verileri Koruma Kurulu'nca belirlenen tarife uygulanabilir. Başvurunuza verilen cevabı yetersiz bulmanız halinde Kişisel Verileri Koruma Kurulu'na şikayet hakkınız saklıdır.</p>
+            <p>Haklarınıza ilişkin taleplerinizi, kimliğinizi doğrulayıcı bilgilerle birlikte yukarıda belirtilen adresimize yazılı olarak veya kentkafee@outlook.com adresine iletebilirsiniz. Talepleriniz, niteliğine göre en geç otuz gün içinde ücretsiz olarak sonuçlandırılır; işlemin ayrıca bir maliyet gerektirmesi halinde Kişisel Verileri Koruma Kurulu'nca belirlenen tarife uygulanabilir. Başvurunuza verilen cevabı yetersiz bulmanız halinde Kişisel Verileri Koruma Kurulu'na şikayet hakkınız saklıdır.</p>
 
             <h4>11. Değişiklikler</h4>
             <p>Bu metin, mevzuat veya hizmetlerimizdeki değişikliklere göre güncellenebilir; güncel sürüm bu sayfada yayımlanır.</p>
@@ -1538,7 +1496,6 @@
             <span class="sep">·</span>
             <a href="#" onclick="openDoc('kvkkModal'); return false;">KVKK Aydınlatma Metni</a>
         </div>
-        <div style="font-size: 8pt; opacity: 0.5; margin-top: 4px;">v3.4.0</div>
     </div>
 </footer>
 
@@ -1835,7 +1792,7 @@
             const innerStart = Math.max(20, Math.round(radius * 0.22));
             const outerEdge = Math.round(radius * 0.80);
             const labelWidth = Math.max(50, outerEdge - innerStart);
-            const labelFontSize = Math.max(9, Math.round(radius * 0.065));
+            const labelFontSize = Math.max(12, Math.round(radius * 0.088));
             
             cocktails.forEach((item, index) => {
                 const startAngle = index * anglePerSlice;
@@ -1871,7 +1828,7 @@
                 if (isSpinning) return;
                 isSpinning = true;
                 resultDiv.style.color = "var(--text-muted)";
-                resultDiv.innerText = "Karıştırılıyor...";
+                resultDiv.innerText = "Şans Çarkı Çevriliyor...";
                 btn.style.opacity = '0.5';
                 btn.style.cursor = 'not-allowed';
                 
