@@ -283,6 +283,52 @@
         .cb-desc { font-family: var(--font-body); font-size: 9.5pt; color: var(--text-muted); line-height: 1.6; }
         .career-apply-again { text-align: center; margin-top: 40px; }
 
+        /* ===== KAHVE SEÇİM SİHİRBAZI ===== */
+        .wiz-section { text-align: center; padding: 44px 24px; margin: 30px 0 10px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; box-shadow: 0 10px 28px rgba(0,0,0,0.05); transition: background-color 0.4s ease; }
+        .wiz-eyebrow { font-family: var(--font-body); font-size: 9pt; letter-spacing: 3px; font-weight: 700; color: #d4af37; margin-bottom: 8px; }
+        .wiz-heading { font-size: 17pt; margin-bottom: 10px; }
+        .wiz-text { max-width: 480px; margin: 0 auto 24px; font-size: 10pt; line-height: 1.65; color: var(--text-muted); }
+        .wiz-start-btn { display: inline-block; width: auto; padding: 13px 38px; }
+
+        .wiz-modal { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -46%); width: min(520px, calc(100% - 28px)); max-height: 88vh; overflow-y: auto; background: var(--card-bg); color: var(--text-main); border-radius: 20px; box-shadow: 0 24px 70px rgba(0,0,0,0.4); padding: 36px 28px 28px; z-index: 6200; opacity: 0; visibility: hidden; transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease; text-align: center; }
+        .wiz-modal.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%); }
+        .wiz-close { position: absolute; top: 14px; right: 14px; background: var(--card-border); color: var(--text-main); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 11pt; line-height: 1; }
+        .wiz-progress { display: flex; gap: 6px; margin-bottom: 18px; }
+        .wiz-progress span { flex: 1; height: 4px; border-radius: 2px; background: var(--card-border); transition: background-color 0.3s ease; }
+        .wiz-progress span.done { background: #d4af37; }
+        .wiz-step-label { font-family: var(--font-body); font-size: 8.5pt; letter-spacing: 2.5px; font-weight: 700; color: #d4af37; margin-bottom: 14px; }
+        .wiz-question { font-family: var(--font-heading); font-size: 16pt; font-weight: 700; line-height: 1.35; margin-bottom: 28px; min-height: 64px; display: flex; align-items: center; justify-content: center; }
+        .wiz-answers { display: flex; gap: 12px; }
+        .wiz-answer { flex: 1; font-family: var(--font-body); font-size: 11pt; font-weight: 700; letter-spacing: 0.5px; padding: 15px; border-radius: 10px; cursor: pointer; background: transparent; color: var(--text-main); border: 2px solid var(--text-main); transition: transform 0.2s ease, background-color 0.25s ease, color 0.25s ease; }
+        .wiz-answer:hover { background: var(--text-main); color: var(--page-bg); transform: translateY(-2px); }
+        .wiz-answer:active { transform: scale(0.97); }
+        .wiz-back { margin-top: 18px; background: none; border: none; color: var(--text-muted); font-family: var(--font-body); font-size: 9.5pt; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+        .wiz-back[disabled] { visibility: hidden; }
+
+        .wiz-result-name { font-family: var(--font-heading); font-size: 24pt; font-weight: 700; margin-bottom: 10px; }
+        .wiz-result-desc { font-size: 10.5pt; line-height: 1.65; color: var(--text-muted); max-width: 400px; margin: 0 auto 16px; }
+        .wiz-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 14px; }
+        .wiz-chips span { font-size: 8.5pt; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: var(--card-border); color: var(--text-main); }
+        .wiz-tip { font-size: 9.5pt; font-style: italic; color: var(--text-muted); margin-bottom: 22px; min-height: 14px; }
+        .wiz-result-actions { display: flex; flex-direction: column; gap: 4px; }
+        .wiz-result-actions .btn-visit-outline { margin-top: 8px; }
+        .wiz-nutrition { font-size: 9pt; font-weight: 700; letter-spacing: 0.3px; color: var(--text-main); margin-bottom: 12px; }
+        .wiz-alternatives { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-bottom: 20px; }
+        .wiz-alt-title { width: 100%; font-size: 8.5pt; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 2px; }
+        .wiz-alt { font-family: var(--font-body); font-size: 9pt; font-weight: 600; padding: 8px 14px; border-radius: 999px; cursor: pointer; background: transparent; color: var(--text-main); border: 1px solid var(--card-border); transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease; }
+        .wiz-alt:hover { background: var(--card-border); border-color: #d4af37; transform: translateY(-1px); }
+        .wiz-disclaimer { margin-top: 14px; font-size: 8pt; line-height: 1.5; color: var(--text-muted); }
+
+        @media (min-width: 768px) {
+            .wiz-section { padding: 56px 40px; }
+            .wiz-heading { font-size: 22pt; }
+            .wiz-text { font-size: 11pt; }
+            .wiz-modal { padding: 44px 44px 36px; }
+            .wiz-question { font-size: 19pt; }
+            .wiz-result-actions { flex-direction: row; gap: 12px; }
+            .wiz-result-actions .btn-visit-outline { margin-top: 0; }
+        }
+
         /* ===== TEDARİK SÜRECİ ===== */
         .supply-section { background: var(--card-bg); padding: 55px 20px 60px; text-align: center; transition: background-color 0.4s ease; }
         .supply-eyebrow { font-family: var(--font-body); font-size: 9pt; letter-spacing: 3px; text-transform: uppercase; color: #d4af37; font-weight: 700; margin-bottom: 8px; }
@@ -1189,6 +1235,13 @@
 </div>
         </section>
 
+        <section id="coffeeWizardSection" class="wiz-section">
+            <div class="wiz-eyebrow">SİZE ÖZEL ÖNERİ</div>
+            <h2 class="wiz-heading">Kahve Seçim Sihirbazı</h2>
+            <p class="wiz-text">Ne içeceğinize karar veremediyseniz, beş kısa soruyla damak zevkinize en uygun kahveyi birlikte bulalım.</p>
+            <button type="button" class="btn-visit wiz-start-btn" onclick="openCoffeeWizard()">Sihirbazı Başlat</button>
+        </section>
+
         <section style="padding: 60px 20px; background-color: var(--page-bg); font-family: sans-serif; border-top: 1px solid var(--card-border); transition: background-color 0.4s ease;">
     <div style="max-width: 1000px; margin: 0 auto; background: var(--card-bg); padding: 40px 25px; border-radius: 24px; box-shadow: 0 10px 30px rgba(10, 47, 29, 0.05); text-align: center; border: 1px solid var(--card-border); transition: background-color 0.4s ease;">
         
@@ -1515,6 +1568,39 @@
     <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
 
     <!-- ===== KONUM İZNİ PENCERESİ ===== -->
+    <!-- ===== KAHVE SEÇİM SİHİRBAZI ===== -->
+    <div class="ck-overlay" id="wizOverlay" onclick="closeCoffeeWizard()"></div>
+    <div class="wiz-modal" id="wizModal" role="dialog" aria-modal="true" aria-label="Kahve Seçim Sihirbazı">
+        <button class="wiz-close" onclick="closeCoffeeWizard()" aria-label="Kapat">✕</button>
+
+        <div id="wizQuestionView">
+            <div class="wiz-progress" id="wizProgress"></div>
+            <div class="wiz-step-label" id="wizStepLabel"></div>
+            <div class="wiz-question" id="wizQuestion"></div>
+            <div class="wiz-answers">
+                <button class="wiz-answer" onclick="wizAnswer(true)">Evet</button>
+                <button class="wiz-answer" onclick="wizAnswer(false)">Hayır</button>
+            </div>
+            <button class="wiz-back" id="wizBack" onclick="wizBack()">Önceki soru</button>
+        </div>
+
+        <div id="wizResultView" style="display:none;">
+            <div class="wiz-step-label">SİZE ÖNERİMİZ</div>
+            <div class="wiz-result-name" id="wizResultName"></div>
+            <p class="wiz-result-desc" id="wizResultDesc"></p>
+            <div class="wiz-nutrition" id="wizNutrition"></div>
+            <div class="wiz-chips" id="wizChips"></div>
+            <p class="wiz-tip" id="wizTip"></p>
+            <div class="wiz-alternatives" id="wizAlternatives"></div>
+            <div class="wiz-result-actions">
+                <button type="button" class="btn-visit" onclick="wizShowNext()">Başka Bir Öneri</button>
+                <a href="https://menucebimde.com/?menuid=C6CRQE" target="_blank" class="btn-visit btn-visit-outline">Menüyü Aç</a>
+            </div>
+            <button class="wiz-back" onclick="startCoffeeWizard()">Yeniden başla</button>
+            <p class="wiz-disclaimer">Alerjiniz veya gıda hassasiyetiniz varsa siparişten önce lütfen personelimize bildiriniz.</p>
+        </div>
+    </div>
+
     <!-- ===== SİTE ARAMA ===== -->
     <div class="ck-overlay" id="searchOverlay" onclick="closeSiteSearch()"></div>
     <div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Sitede ara">
@@ -2083,9 +2169,247 @@
             });
         }
 
+        // ===== KAHVE SEÇİM SİHİRBAZI =====
+        // Ürün verisi Kent Kafe Alerjen & Kalori Rehberi'nden alınmıştır.
+        // m: sütlü, i: soğuk, w: güçlü/yoğun, s: tatlı/aromalı, c: kremsi/pürüzsüz
+        const WIZ_MENU = [
+            {"n": "Single Espresso", "d": "30 Ml 1 Shot Espresso", "a": [], "k": 2, "m": 0, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Double Espresso", "d": "60 Ml 2 Shot Espresso", "a": [], "k": 4, "m": 0, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Lungo", "d": "90 Ml Double Espresso", "a": [], "k": 5, "m": 0, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Americano", "d": "2 Shot Espresso Üzerine Su", "a": [], "k": 5, "m": 0, "i": 0, "w": 0, "s": 0, "c": 0},
+            {"n": "Red Eye", "d": "Filtre Kahve Üzerine 1 Shot Espresso", "a": [], "k": 7, "m": 0, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Black Eye", "d": "Filtre Kahve Üzerine 2 Shot Espresso", "a": [], "k": 5, "m": 0, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Dead Eye", "d": "Filtre Kahve Üzerine 3 Shot Espresso", "a": [], "k": 9, "m": 0, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Vikings", "d": "Su Üzerine 4 Shot Espresso", "a": [], "k": 8, "m": 0, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Flat White", "d": "2 Shot Espresso & Süt", "a": ["Süt"], "k": 126, "m": 1, "i": 0, "w": 1, "s": 0, "c": 1},
+            {"n": "Latte", "d": "1 Shot Espresso & Süt", "a": ["Süt"], "k": 182, "m": 1, "i": 0, "w": 0, "s": 0, "c": 0},
+            {"n": "Latte Macchiato", "d": "1 Shot Espresso & Süt Kreması", "a": ["Süt"], "k": 182, "m": 1, "i": 0, "w": 0, "s": 0, "c": 1},
+            {"n": "Caramel Macchiato", "d": "1 Shot Espresso, Karamel & Süt Kreması", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Vanilya Latte", "d": "1 Shot espresso, Vanilya & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Rasberry Latte", "d": "1 Shot Espresso, Frambuaz & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Salted Caramel Latte", "d": "1 Shot Espresso, Tuzlu Karamel & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Chocolate Cookie Latte", "d": "1 Shot Espresso, Çikolatalı Kurabiye & süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Black Mulberry Latte", "d": "1 Shot Espresso, Böğürtlen & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Strawberry Latte", "d": "1 Shot Espresso, Çilek & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Coconut Latte", "d": "1 Shot Espresso, Kokonat & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Toffee Nut Latte", "d": "1 Shot Espresso, Karamelli Fındık & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Tiramisu Latte", "d": "1 Shot Espresso, Tramisu & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Hazelnut Latte", "d": "1 Shot Espresso, Fındık & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Caramel Latte", "d": "1 Shot Espresso, Karamel & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Pumpkin Spice Latte", "d": "1 Shot Espresso, Balkabağı & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "White Chocolate Mocha", "d": "1 Shot Espresso, Beyaz Çikolata & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Mocha", "d": "1 Shot Espresso, Çikolata & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Cortado", "d": "120 Ml Bardak Boyu, 1 Shot Espresso & Süt", "a": ["Süt"], "k": 200, "m": 1, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Cappuccino", "d": "1 Shot Espresso & Süt Kreması", "a": ["Süt"], "k": 182, "m": 1, "i": 0, "w": 0, "s": 0, "c": 1},
+            {"n": "Filtre Kahve", "d": "Özel Harmanlanmış Yöresel Kahve", "a": [], "k": 5, "m": 0, "i": 0, "w": 0, "s": 0, "c": 0},
+            {"n": "Espresso Macchiato", "d": "1 Shot Espresso, Süt Kreması", "a": ["Süt"], "k": 17, "m": 1, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Ginger Cookie Latte", "d": "1 Shot Espresso, Zencefil, Kurabiye & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Popcorn Latte", "d": "1 Shot Espresso, Patlamış Mısır & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Dirty Chai Tea Latte", "d": "Çeşitli Baharatlı Sütlü İçecek", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 253, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Zebra Latte", "d": "1 Shot Espresso, Çikolata, Beyaz Çikolata & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Strawberry Mocha", "d": "Çilek, Çikolata & 1 Shot Espresso", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Cafe Cubano", "d": "Esmer Şeker & 1 Shot Espresso", "a": [], "k": 78, "m": 0, "i": 0, "w": 1, "s": 1, "c": 1},
+            {"n": "Espresso Romeo", "d": "30 Ml 1 Shot Espresso, Trash Limon", "a": [], "k": 5, "m": 0, "i": 0, "w": 1, "s": 0, "c": 0},
+            {"n": "Long Black", "d": "Su Üzerine 2 Shot Espresso", "a": [], "k": 5, "m": 0, "i": 0, "w": 0, "s": 0, "c": 0},
+            {"n": "Nutella Latte", "d": "1 Shot Espresso, Çikolata, Fındık & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Lotus Latte", "d": "1 Shot Espresso, Lotus & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Bubble Gum Latte", "d": "1 Shot Espresso, Bubble Gum & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 0},
+            {"n": "Cafe Misto", "d": "Filtre Kahve & Süt", "a": ["Süt"], "k": 184, "m": 1, "i": 0, "w": 0, "s": 0, "c": 0},
+            {"n": "Verlangert", "d": "Su & Uzun Çekim Single Espresso", "a": [], "k": 2, "m": 0, "i": 0, "w": 0, "s": 0, "c": 0},
+            {"n": "White Americano", "d": "Sade ve hafif beyaz süt ile hazırlanmış klasik Americano kahve.", "a": ["Süt"], "k": 97, "m": 1, "i": 0, "w": 0, "s": 0, "c": 0},
+            {"n": "Mint Mocha", "d": "Nane aromalı ve çikolatalı sıcak kahve, ferahlatıcı ve lezzet dolu.", "a": ["Süt"], "k": 232, "m": 1, "i": 0, "w": 0, "s": 1, "c": 1},
+            {"n": "Dark Flat Nut", "d": "2 Shot Espresso, Fındık Aroması, Çikolata Aroması & Laktossuz Süt", "a": ["Sülfür Dioksit", "Fıstık", "Süt"], "k": 189, "m": 1, "i": 0, "w": 1, "s": 1, "c": 1},
+            {"n": "Türk Kahvesi", "d": "Sade, Orta, Şekerli", "a": [], "k": 2, "m": 0, "i": 0, "w": 1, "s": 0, "c": 1},
+            {"n": "Double Türk Kahvesi", "d": "Sade, Orta, Şekerli", "a": [], "k": 4, "m": 0, "i": 0, "w": 1, "s": 0, "c": 1},
+            {"n": "Çilekli Türk Kahvesi", "d": "Özel aromalı çilekli Türk kahvesiyle yöresel lezzeti deneyimleyin.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 57, "m": 0, "i": 0, "w": 1, "s": 1, "c": 1},
+            {"n": "Çikolatalı Türk Kahvesi", "d": "Geleneksel Türk kahvesine çikolata lezzeti eklenmiştir.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 57, "m": 0, "i": 0, "w": 1, "s": 1, "c": 1},
+            {"n": "Damla Sakızlı Türk Kahvesi", "d": "Özel hazırlanmış damla sakızlı Türk kahvesi ile geleneksel lezzeti deneyimleyin.", "a": ["Sülfür Dioksit", "Sert Kabuklu"], "k": 57, "m": 0, "i": 0, "w": 1, "s": 1, "c": 1},
+            {"n": "Fındıklı Türk Kahvesi", "d": "Özel fındık aromalı, geleneksel Türk kahvesi keyfi.", "a": ["Sülfür Dioksit", "Fıstık", "Sert Kabuklu"], "k": 57, "m": 0, "i": 0, "w": 1, "s": 1, "c": 1},
+            {"n": "Vanilyalı Türk Kahvesi", "d": "Özel vanilya aroması ile hazırlanmış, geleneksel Türk kahvesi deneyimi.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 57, "m": 0, "i": 0, "w": 1, "s": 1, "c": 1},
+            {"n": "Ice Americano", "d": "2 Shot Espresso Üzerine Su", "a": [], "k": 5, "m": 0, "i": 1, "w": 0, "s": 0, "c": 0},
+            {"n": "Ice Latte", "d": "1 Shot Espresso & Süt", "a": ["Süt"], "k": 203, "m": 1, "i": 1, "w": 0, "s": 0, "c": 0},
+            {"n": "Cold Brew", "d": "12 Saat Demlenmiş Soğuk Kahve", "a": [], "k": 15, "m": 0, "i": 1, "w": 1, "s": 0, "c": 1},
+            {"n": "Ice Mocha", "d": "1 Shot Espresso, Çikolata & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Ice Coconut Latte", "d": "1 Shot Espresso, Kokonat & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Toffee Nut Latte", "d": "1 Shot Espresso, Karamelli Fındık & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Pumpkin Spice Latte", "d": "1 Shot Espresso, Balkabağı & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Chocolate Cookie Latte", "d": "1 Shot Espresso, Çikolatalı Kurabiye & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Caramel Latte", "d": "1 Shot Espresso, Karamel & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Latte Macchiato", "d": "1 Shot Espresso, Süt & Süt Kreması", "a": ["Süt"], "k": 203, "m": 1, "i": 1, "w": 0, "s": 0, "c": 1},
+            {"n": "Ice Caramel Macchiato", "d": "1 Shot Espresso, Karamel & Süt Kreması", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Ice White Chocolate Mocha", "d": "1 Shot Espresso, Beyaz Çikolata & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Ice Hazelnut Latte", "d": "1 Shot Espresso, Fındık & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Rasberry Latte", "d": "1 Shot Espresso, Frambuaz & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Black Mulberry Latte", "d": "1 Shot Espresso, Böğürtlen & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Vanilya Latte", "d": "1 Shot Espresso, Vanilya & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Cappuccino", "d": "1 Shot Espresso & Süt Kreması", "a": ["Süt"], "k": 203, "m": 1, "i": 1, "w": 0, "s": 0, "c": 1},
+            {"n": "Ice Salted Caramel Latte", "d": "1 Shot Espresso, Tuzlu Karamel & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice White Strawberry Latte", "d": "1 Shot Espresso, Çilek, Beyaz Çikolata & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Berry Hibiscus Latte", "d": "Böğürtlen, Hibiscus, Espresso & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Flat White", "d": "2 Shot Espresso & Süt", "a": ["Süt"], "k": 208, "m": 1, "i": 1, "w": 1, "s": 0, "c": 1},
+            {"n": "Ice Vikings", "d": "4 Shot Espresso & Su", "a": [], "k": 20, "m": 0, "i": 1, "w": 1, "s": 0, "c": 0},
+            {"n": "Bull", "d": "2 Shot Espresso & Redbull", "a": ["Sülfür Dioksit"], "k": 125, "m": 0, "i": 1, "w": 1, "s": 1, "c": 0},
+            {"n": "Ice Red Eye", "d": "Filtre Kahve Üzerine 1 Shot Espresso", "a": [], "k": 10, "m": 0, "i": 1, "w": 1, "s": 0, "c": 0},
+            {"n": "Ice Black Eye", "d": "Filtre Kahve Üzerine 2 Shot Espresso", "a": [], "k": 5, "m": 0, "i": 1, "w": 1, "s": 0, "c": 0},
+            {"n": "Ice Dead Eye", "d": "Filtre Kahve Üzerine 3 Shot Espresso", "a": [], "k": 25, "m": 0, "i": 1, "w": 1, "s": 0, "c": 0},
+            {"n": "Ice Lotus Latte", "d": "1 Shot Espresso, Lotus & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Affogato", "d": "Dondurma & 2 Shot Espresso", "a": ["Glüten", "Süt", "Sert Kabuklu"], "k": 110, "m": 1, "i": 1, "w": 1, "s": 1, "c": 1},
+            {"n": "Ice Popcorn Latte", "d": "1 Shot Espresso, Patlamış Mısır & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Long Black", "d": "Su Üzerine 2 Shot Espresso", "a": [], "k": 5, "m": 0, "i": 1, "w": 0, "s": 0, "c": 0},
+            {"n": "Ice Strawberry Latte", "d": "1 Shot Espresso, Çilek & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Nutella Latte", "d": "1 Shot Espresso, Çikolata, Fındık & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Ice Strawberry Mocha", "d": "Çilek, Çikolata & 1 Shot Espresso", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Ice Ginger Cookie Latte", "d": "1 Shot Espresso, Zencefil, Kurabiye & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Bubble Gum Latte", "d": "1 Shot Espresso, Bubble Gum & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 0},
+            {"n": "Ice Zebra Latte", "d": "1 Shot Espresso, Çikolata, Beyaz Çikolata & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Ice Tiramisu Latte", "d": "1 Shot Espresso, Tramisu & Süt", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Shot Lemon", "d": "Limonata & Singel Shot Espresso", "a": [], "k": 135, "m": 0, "i": 1, "w": 1, "s": 1, "c": 0},
+            {"n": "Ice Cafee Misto", "d": "Filtre Kahve & Süt", "a": ["Süt"], "k": 113, "m": 1, "i": 1, "w": 0, "s": 0, "c": 0},
+            {"n": "Ice Verlengert", "d": "Su & Uzun Çekim Single Espresso", "a": [], "k": 5, "m": 0, "i": 1, "w": 0, "s": 0, "c": 0},
+            {"n": "Karamelli Frappe", "d": "Soğuk ve karamelli tatla zenginleştirilmiş köpüklü frappe içeceği.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 290, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Çikolatalı Frappe", "d": "Soğuk ve kremamsı çikolatalı frappe ile ferahlatıcı bir lezzet.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 290, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Vanilyalı Frappe", "d": "Soğuk ve kremamsı vanilyalı frappe ile ferahlatıcı bir lezzet.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 290, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Ice Mint Mocha", "d": "Nane aromalı serinletici mocha kahve, buz ile servis edilir.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 283, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Çikolatalı Frappuccino", "d": "Soğuk, dondurmalı ve ferahlatıcı kahve bazlı frappe içeceği.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 390, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Karamelli Frappuccino", "d": "Soğuk kahve ve dondurmayla hazırlanmış tatlı karamelli lezzet.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 390, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Vanilyalı Frappuccino", "d": "Soğuk kahve ve dondurmayla hazırlanmış tatlı vanilyalı lezzet.", "a": ["Sülfür Dioksit", "Süt", "Sert Kabuklu"], "k": 390, "m": 1, "i": 1, "w": 0, "s": 1, "c": 1},
+            {"n": "Ice White Americano", "d": "Sade ve hafif beyaz süt ile hazırlanmış klasik Americano kahve.", "a": ["Süt"], "k": 118, "m": 1, "i": 1, "w": 0, "s": 0, "c": 0}
+        ];
+        const WIZ_QUESTIONS = [
+            { key: 'm', text: 'Sütlü bir kahve ister misiniz?' },
+            { key: 'w', text: 'Güçlü ve yoğun bir kahve mi tercih edersiniz?' },
+            { key: 'i', text: 'Soğuk servis edilsin mi?' },
+            { key: 's', text: 'Tatlı veya aromalı bir tat arıyor musunuz?' },
+            { key: 'c', text: 'Pürüzsüz ve kremsi bir doku hoşunuza gider mi?' }
+        ];
+        const WIZ_WEIGHTS = { m: 4, i: 4, w: 3, s: 3, c: 2 };
+        let wizIndex = 0;
+        let wizAnswers = {};
+        let wizCurrent = null;
+        const wizSeen = {};
+
+        function wizSignature() {
+            return WIZ_QUESTIONS.map(q => wizAnswers[q.key] ? 1 : 0).join('');
+        }
+        function wizScore(item) {
+            let score = 0;
+            for (const k in WIZ_WEIGHTS) {
+                if (!!item[k] === !!wizAnswers[k]) score += WIZ_WEIGHTS[k];
+            }
+            return score;
+        }
+        function wizShuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+        // Cevaplara en uygun ürünleri puana göre sıralar; eşit puanlıları karıştırır ve
+        // aynı cevaplarla daha önce gösterilenleri sona atar. Böylece aynı cevaplar
+        // tekrar verildiğinde farklı öneriler çıkar.
+        function wizCandidates() {
+            const sig = wizSignature();
+            const seen = wizSeen[sig] || (wizSeen[sig] = new Set());
+            const ranked = wizShuffle(WIZ_MENU.slice()).map(item => ({ item, score: wizScore(item) }))
+                .sort((a, b) => b.score - a.score);
+            let pool = [];
+            for (const size of [10, 20, 40, ranked.length]) {
+                const cutoff = ranked[Math.min(size, ranked.length) - 1].score;
+                pool = ranked.filter(r => r.score >= cutoff && !seen.has(r.item.n));
+                if (pool.length) break;
+            }
+            if (!pool.length) {            // hepsi gösterildiyse başa dön
+                seen.clear();
+                return wizCandidates();
+            }
+            return pool;
+        }
+        function renderWizProgress() {
+            document.getElementById('wizProgress').innerHTML =
+                WIZ_QUESTIONS.map((q, i) => '<span class="' + (i <= wizIndex ? 'done' : '') + '"></span>').join('');
+        }
+        function showWizQuestion() {
+            document.getElementById('wizQuestionView').style.display = '';
+            document.getElementById('wizResultView').style.display = 'none';
+            document.getElementById('wizStepLabel').textContent = 'SORU ' + (wizIndex + 1) + ' / ' + WIZ_QUESTIONS.length;
+            document.getElementById('wizQuestion').textContent = WIZ_QUESTIONS[wizIndex].text;
+            document.getElementById('wizBack').disabled = (wizIndex === 0);
+            renderWizProgress();
+        }
+        function startCoffeeWizard() {
+            wizIndex = 0;
+            wizAnswers = {};
+            showWizQuestion();
+        }
+        function openCoffeeWizard() {
+            startCoffeeWizard();
+            document.getElementById('wizOverlay').classList.add('show');
+            document.getElementById('wizModal').classList.add('show');
+        }
+        function closeCoffeeWizard() {
+            document.getElementById('wizOverlay').classList.remove('show');
+            document.getElementById('wizModal').classList.remove('show');
+        }
+        function wizAnswer(value) {
+            wizAnswers[WIZ_QUESTIONS[wizIndex].key] = value;
+            if (wizIndex < WIZ_QUESTIONS.length - 1) {
+                wizIndex++;
+                showWizQuestion();
+            } else {
+                wizShowNext();
+            }
+        }
+        function wizBack() {
+            if (wizIndex > 0) {
+                wizIndex--;
+                showWizQuestion();
+            }
+        }
+        function wizShowNext() {
+            wizShowItem(wizCandidates()[0].item);
+        }
+        function wizShowItem(item) {
+            wizCurrent = item;
+            wizSeen[wizSignature()].add(item.n);
+            document.getElementById('wizQuestionView').style.display = 'none';
+            document.getElementById('wizResultView').style.display = '';
+            document.getElementById('wizResultName').textContent = item.n;
+            document.getElementById('wizResultDesc').textContent = item.d;
+            document.getElementById('wizNutrition').textContent =
+                item.k + ' kcal  ·  ' + (item.a.length ? 'Alerjen: ' + item.a.join(', ') : 'Alerjen işareti yok');
+            const chips = [
+                wizAnswers.m ? 'Sütlü' : 'Sütsüz',
+                wizAnswers.w ? 'Yoğun' : 'Yumuşak',
+                wizAnswers.i ? 'Soğuk' : 'Sıcak',
+                wizAnswers.s ? 'Tatlı / aromalı' : 'Sade',
+                wizAnswers.c ? 'Kremsi doku' : 'Hafif doku'
+            ];
+            document.getElementById('wizChips').innerHTML = chips.map(c => '<span>' + c + '</span>').join('');
+            // Seçilen ürün cevaplarla birebir örtüşmüyorsa küçük bir not düş.
+            const mismatch = WIZ_QUESTIONS.filter(q => !!item[q.key] !== !!wizAnswers[q.key]).length;
+            document.getElementById('wizTip').textContent = mismatch
+                ? 'Cevaplarınıza birebir uyan başka ürün bulunmadığı için size en yakın seçenekleri gösteriyoruz.'
+                : '';
+            // Diğer seçenekler: şu an gösterilen dışındaki en uygun 3 ürün.
+            const others = wizCandidates().filter(r => r.item.n !== item.n).slice(0, 3);
+            const box = document.getElementById('wizAlternatives');
+            box.innerHTML = others.length
+                ? '<div class="wiz-alt-title">Bunlara da göz atın</div>' + others.map((r, i) =>
+                    '<button type="button" class="wiz-alt" data-i="' + i + '">' + r.item.n + '</button>').join('')
+                : '';
+            box.querySelectorAll('.wiz-alt').forEach((btn, i) => {
+                btn.addEventListener('click', () => wizShowItem(others[i].item));
+            });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeCoffeeWizard();
+        });
+
         // ===== SİTE ARAMA =====
         const SEARCH_INDEX = [
             { title: 'Hakkımızda', desc: 'Kent Kafe hikayemiz ve misyonumuz', type: 'anchor', target: '#aboutSection' },
+            { title: 'Kahve Seçim Sihirbazı', desc: 'Beş soruda size uygun kahveyi bulun', type: 'anchor', target: '#coffeeWizardSection' },
             { title: 'Menü', desc: 'Kahve, kokteyl, tatlı ve sandviç menümüz', type: 'link', target: 'https://menucebimde.com/?menuid=C6CRQE' },
             { title: 'Öne Çıkan Özelliklerimiz', desc: 'Organik kahve, doğa, şarj istasyonu, al götür', type: 'anchor', target: '#featuresSection' },
             { title: 'Otopark', desc: 'Güvenli ve geniş otopark alanımız mevcuttur', type: 'anchor', target: '#featuresSection' },
