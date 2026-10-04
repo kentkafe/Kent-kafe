@@ -385,6 +385,45 @@
             .supply-step { padding-bottom: 52px; }
         }
 
+        /* ===== DİL SEÇİCİ (yan menü) ===== */
+        .side-lang { margin-bottom: 20px; }
+        .side-lang-label { display: flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: 8pt; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+        .side-lang-label svg { color: #d4af37; }
+        .side-lang-select { width: 100%; appearance: none; -webkit-appearance: none; background-color: rgba(255,255,255,0.04); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; color: #ffffff; font-family: var(--font-body); font-size: 10.5pt; padding: 12px 38px 12px 14px; cursor: pointer; transition: border-color 0.3s ease, background-color 0.3s ease; }
+        .side-lang-select:hover, .side-lang-select:focus { border-color: rgba(212,175,55,0.5); background-color: rgba(212,175,55,0.08); outline: none; }
+        .side-lang-select:disabled { opacity: 0.6; cursor: progress; }
+        .side-lang-select option { background: #0a2f1d; color: #ffffff; }
+        .side-lang-status { min-height: 14px; margin-top: 6px; font-size: 8pt; color: rgba(255,255,255,0.55); }
+
+        /* Google Çeviri'nin kendi arayüzünü gizle (kendi seçicimizi kullanıyoruz) */
+        #google_translate_element { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
+        body { top: 0 !important; }
+        body > .skiptranslate, iframe.skiptranslate, .goog-te-banner-frame, .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf { display: none !important; }
+        .goog-tooltip, .goog-tooltip:hover, #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+        .goog-text-highlight { background: none !important; box-shadow: none !important; }
+
+        /* ===== GİZLİ MİNİ KAHVE OYUNU (8-bit) ===== */
+        .side-menu-logo img { -webkit-user-drag: none; user-select: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        .game-overlay { position: fixed; inset: 0; z-index: 6300; background: rgba(0,0,0,0.78); display: flex; align-items: center; justify-content: center; padding: 10px; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s ease; }
+        .game-overlay.show { opacity: 1; visibility: visible; }
+        .game-panel { position: relative; background: #0b1f15; border: 4px solid #d4af37; box-shadow: 0 0 0 4px #000, 8px 8px 0 4px rgba(0,0,0,0.55); padding: 14px 14px 10px; text-align: center; font-family: 'Courier New', Courier, monospace; color: #f4ead5; max-height: 100%; overflow: auto; }
+        .game-title { font-size: 15pt; font-weight: 700; letter-spacing: 4px; color: #d4af37; margin: 0 28px 10px; text-shadow: 3px 3px 0 #000; }
+        .game-close { position: absolute; top: 6px; right: 6px; width: 28px; height: 28px; background: #d4af37; color: #111; border: 3px solid #000; font-family: inherit; font-weight: 700; cursor: pointer; line-height: 1; padding: 0; }
+        .game-stage { position: relative; display: inline-block; line-height: 0; border: 3px solid #000; background: #000; }
+        #gameCanvas { display: block; image-rendering: pixelated; image-rendering: crisp-edges; touch-action: none; cursor: none; }
+        .game-screen { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 14px; background: rgba(7,20,13,0.9); line-height: 1.5; }
+        .game-screen.show { display: flex; }
+        .game-screen-title { font-size: 17pt; font-weight: 700; letter-spacing: 3px; color: #d4af37; text-shadow: 3px 3px 0 #000; }
+        .game-screen p { margin: 0; font-size: 10pt; color: #f4ead5; letter-spacing: 1px; }
+        .game-newbest { color: #f5c542 !important; font-weight: 700; min-height: 16px; }
+        .game-btn { font-family: inherit; font-size: 11pt; font-weight: 700; letter-spacing: 2px; background: #d4af37; color: #111; border: 3px solid #000; padding: 10px 18px; cursor: pointer; box-shadow: 4px 4px 0 #000; transition: transform 0.08s ease, box-shadow 0.08s ease; }
+        .game-btn:hover { background: #f5c542; }
+        .game-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+        .game-footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; font-size: 9pt; font-weight: 700; letter-spacing: 2px; color: #f5c542; }
+        .game-sound { font-family: inherit; font-size: 8pt; font-weight: 700; letter-spacing: 1px; background: transparent; color: #f4ead5; border: 2px solid #f4ead5; padding: 4px 8px; cursor: pointer; }
+        .game-sound:hover { background: rgba(244,234,213,0.15); }
+        .game-hint { margin-top: 8px; font-size: 7pt; letter-spacing: 1px; color: #8fa89a; }
+
         /* ===== SİTE ARAMA ===== */
         .search-modal { position: fixed; left: 50%; top: 12%; transform: translate(-50%, -10px); width: min(560px, calc(100% - 28px)); max-height: 76vh; display: flex; flex-direction: column; background: var(--card-bg); color: var(--text-main); border-radius: 16px; box-shadow: 0 24px 70px rgba(0,0,0,0.4); z-index: 6200; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease; }
         .search-modal.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
@@ -667,6 +706,8 @@
         </div>
     </header>
     
+    <div id="google_translate_element" class="notranslate" aria-hidden="true"></div>
+
     <nav class="side-banner" id="menuBanner">
         <div class="side-menu-logo">
 <img src="images/Untitled design.png" alt="Kent Kafe Menü Logo" style="width: 150px; height: 350px; object-fit: contain;">
@@ -684,6 +725,24 @@
             </button>
         </div>
        
+        <div class="side-lang" translate="no">
+            <label class="side-lang-label" for="langSelect">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <span>Dil / Language</span>
+            </label>
+            <select id="langSelect" class="side-lang-select notranslate" onchange="setSiteLanguage(this.value)" aria-label="Dil / Language">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="ru">Русский</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="it">Italiano</option>
+            </select>
+            <div class="side-lang-status" id="langStatus" aria-live="polite"></div>
+        </div>
+
         <a href="#homeTop" class="btn-menu" style="animation-delay:.05s" onclick="toggleBannerMenu()">Ana Sayfa</a>
         <a href="https://menucebimde.com/?menuid=C6CRQE" class="btn-menu" style="animation-delay:.10s" onclick="toggleBannerMenu()">Menü</a>
         <a href="https://heyzine.com/flip-book/731f1e07ff.html" target="_blank" class="btn-menu" style="animation-delay:.13s">Alerjen &amp; Kalori Bilgisi</a>
@@ -1451,8 +1510,8 @@
                 <div class="ip-header">
                     <div class="ip-avatar"><img src="images/logo.png" alt="Kent Kafe" loading="lazy"></div>
                     <div class="ip-info">
-                        <div class="ip-handle">kentkafe16</div>
-                        <div class="ip-stats">2.865 takipçi · 2.211 takip</div>
+                        <div class="ip-handle" translate="no">kentkafe16</div>
+                        <div class="ip-stats">86.543 takipçi · 86.543 takip</div>
                         <div class="ip-name">Kent Kafe</div>
                         <div class="ip-bio">Karacabey, Bursa<br>Senin Şehrin, Senin Kahvecin.<br>www.kentkafe.com.tr ve 2 diğer</div>
                         <span class="ip-btn">Instagram'da Görüntüle</span>
@@ -1518,7 +1577,7 @@
         <div class="wheel-wrap">
             <div class="wheel-pointer"></div>
             
-            <div id="luckyWheel" class="wheel-disc"></div>
+            <div id="luckyWheel" class="wheel-disc" translate="no"></div>
             
             <div class="wheel-hub"></div>
         </div>
@@ -1586,7 +1645,7 @@
 
         <div id="wizResultView" style="display:none;">
             <div class="wiz-step-label">SİZE ÖNERİMİZ</div>
-            <div class="wiz-result-name" id="wizResultName"></div>
+            <div class="wiz-result-name" id="wizResultName" translate="no"></div>
             <p class="wiz-result-desc" id="wizResultDesc"></p>
             <div class="wiz-nutrition" id="wizNutrition"></div>
             <div class="wiz-chips" id="wizChips"></div>
@@ -1598,6 +1657,33 @@
             </div>
             <button class="wiz-back" onclick="startCoffeeWizard()">Yeniden başla</button>
             <p class="wiz-disclaimer">Alerjiniz veya gıda hassasiyetiniz varsa siparişten önce lütfen personelimize bildiriniz.</p>
+        </div>
+    </div>
+
+    <!-- ===== GİZLİ MİNİ KAHVE OYUNU ===== -->
+    <div class="game-overlay" id="gameOverlay">
+        <div class="game-panel" role="dialog" aria-modal="true" aria-label="Mini Kahve Oyunu">
+            <button class="game-close" onclick="CoffeeGame.close()" aria-label="Kapat">✕</button>
+            <div class="game-title">KAHVE YAKALA</div>
+            <div class="game-stage">
+                <canvas id="gameCanvas"></canvas>
+                <div class="game-screen show" id="gameStart">
+                    <div class="game-screen-title">KENT KAFE</div>
+                    <p>Düşen kahveleri tepsiyle yakala.<br>Altın bardak = 3 puan.<br>3 kahveyi kaçırırsan oyun biter.</p>
+                    <button class="game-btn" onclick="CoffeeGame.start()">BAŞLA</button>
+                </div>
+                <div class="game-screen" id="gameOver">
+                    <div class="game-screen-title">OYUN BİTTİ</div>
+                    <p id="gameFinalScore">SKOR: 0</p>
+                    <p class="game-newbest" id="gameNewBest"></p>
+                    <button class="game-btn" onclick="CoffeeGame.start()">TEKRAR OYNA</button>
+                </div>
+            </div>
+            <div class="game-footer">
+                <span id="gameBest">REKOR: 0</span>
+                <button class="game-sound" id="gameSoundBtn" onclick="CoffeeGame.toggleSound()">SES: KAPALI</button>
+            </div>
+            <div class="game-hint">← → TUŞLARI · FARE · PARMAĞINI SÜRÜKLE</div>
         </div>
     </div>
 
@@ -1652,7 +1738,7 @@
                 <li><strong>Müşteri geri bildirimi:</strong> Atmosfer, temizlik, ilgi-alaka ve servis puanlarınız ile serbest yorum metniniz.</li>
                 <li><strong>Konum verisi:</strong> Yalnızca açık rızanız varsa, cihazınızın anlık enlem/boylam bilgisi (ayrıntılar 8. bölümde).</li>
                 <li><strong>İşlem güvenliği / internet trafiği bilgisi:</strong> IP adresi, tarayıcı ve cihaz türü, işletim sistemi, erişim tarihi ve saati, ziyaret edilen sayfalar.</li>
-                <li><strong>Tercih kayıtları:</strong> Çerez tercihiniz, konum izni tercihiniz ve karanlık/aydınlık mod seçiminiz (tarayıcınızın yerel depolamasında tutulur).</li>
+                <li><strong>Tercih kayıtları:</strong> Çerez tercihiniz, konum izni tercihiniz ve karanlık/aydınlık mod ve dil seçiminiz ile mini oyun rekorunuz (tarayıcınızın yerel depolamasında tutulur).</li>
                 <li><strong>Kariyer başvurusu:</strong> "Kariyer" bağlantısı üzerinden Google Formlar'da paylaştığınız bilgiler (ilgili formda ayrıca bilgilendirilirsiniz).</li>
             </ul>
 
@@ -1678,6 +1764,7 @@
                 <li><strong>Barındırma ve alan adı hizmet sağlayıcıları:</strong> Sitenin yayınlanması ve teknik kayıtların tutulması.</li>
                 <li><strong>Formspree (ABD):</strong> Geri bildirim formunuzun bize iletilmesi.</li>
                 <li><strong>Google (Google Formlar, Google E-Tablolar, Google Fonts, Google Haritalar):</strong> Kariyer başvuru formu, canlı yoğunluk bilgisinin sunulması, yazı tiplerinin yüklenmesi ve yol tarifi bağlantısı. Bu hizmetler kullanılırken IP adresiniz Google'a iletilebilir.</li>
+                <li><strong>Google Çeviri (ABD) — isteğe bağlı:</strong> Siteyi Türkçe dışında bir dilde görüntülemeyi seçtiğinizde, sayfa içeriği çevrilmek üzere Google'a iletilir ve IP adresiniz Google tarafından görülür. Bu hizmet siz bir dil seçene kadar hiç yüklenmez. Çeviriler otomatiktir; bağlayıcı olan metin Türkçe sürümdür.</li>
                 <li><strong>Cloudflare (ABD):</strong> Hava durumu bilgisinin sunulması için kullanılan ara sunucu; istek sırasında IP adresiniz teknik olarak işlenebilir.</li>
                 <li><strong>Yetkili kamu kurum ve kuruluşları:</strong> Mevzuat gereği talep halinde.</li>
             </ul>
@@ -1730,14 +1817,17 @@
                     <tr><td>kentkafe-cookie-consent</td><td>Zorunlu</td><td>Çerez tercihinizin kaydı</td><td>Siz silene kadar</td></tr>
                     <tr><td>kentkafe-location-consent</td><td>Zorunlu</td><td>Konum izni tercihinizin kaydı</td><td>Siz geri alana / silene kadar</td></tr>
                     <tr><td>kentkafe-theme</td><td>İşlevsel</td><td>Karanlık/aydınlık mod seçiminiz</td><td>Siz silene kadar</td></tr>
+                    <tr><td>kentkafe-lang</td><td>İşlevsel</td><td>Seçtiğiniz site dili</td><td>Siz silene kadar</td></tr>
+                    <tr><td>kentkafe-game-best</td><td>İşlevsel</td><td>Sitedeki mini oyunun en yüksek skoru</td><td>Siz silene kadar</td></tr>
+                    <tr><td>googtrans</td><td>İşlevsel (isteğe bağlı)</td><td>Google Çeviri'nin seçtiğiniz dili kullanması; yalnızca bir dil seçerseniz oluşur</td><td>Oturum</td></tr>
                     <tr><td>—</td><td>Performans</td><td>Şu anda sitemizde analiz/istatistik çerezi kullanılmamaktadır. İleride kullanılması halinde yalnızca izninizle etkinleştirilecektir.</td><td>—</td></tr>
                 </tbody>
             </table>
             </div>
-            <p>İşlevsel kayıt, yalnızca "İşlevsel Çerezler" izni verdiğinizde saklanır. Bu izni vermezseniz karanlık mod seçiminiz bir sonraki ziyarette hatırlanmaz.</p>
+            <p>İşlevsel kayıt, yalnızca "İşlevsel Çerezler" izni verdiğinizde saklanır. Bu izni vermezseniz karanlık mod ve dil seçiminiz bir sonraki ziyarette hatırlanmaz.</p>
 
             <h4>3. Üçüncü Taraf Hizmetler</h4>
-            <p>Sitemiz; Google Fonts (yazı tipleri), Google E-Tablolar (canlı yoğunluk bilgisi), Cloudflare (hava durumu ara sunucusu) ve Formspree (geri bildirim formu) gibi hizmetlerden yararlanır. Bu hizmetlerle iletişim sırasında IP adresiniz ve tarayıcı bilgileriniz teknik olarak ilgili sağlayıcıya iletilir. Bu sağlayıcılar kendi gizlilik ve çerez politikalarına tabidir. Instagram, Google Haritalar ve dış menü sayfası bağlantılarına tıkladığınızda ilgili sitenin politikaları geçerli olur.</p>
+            <p>Sitemiz; Google Fonts (yazı tipleri), Google Çeviri (yalnızca siz bir dil seçerseniz), Google E-Tablolar (canlı yoğunluk bilgisi), Cloudflare (hava durumu ara sunucusu) ve Formspree (geri bildirim formu) gibi hizmetlerden yararlanır. Bu hizmetlerle iletişim sırasında IP adresiniz ve tarayıcı bilgileriniz teknik olarak ilgili sağlayıcıya iletilir. Bu sağlayıcılar kendi gizlilik ve çerez politikalarına tabidir. Instagram, Google Haritalar ve dış menü sayfası bağlantılarına tıkladığınızda ilgili sitenin politikaları geçerli olur.</p>
 
             <h4>4. Konum Bilgisi</h4>
             <p>Konum bilgisi bir çerez değildir; ancak izne bağlı olduğu için aynı Tercih Merkezi'nden yönetilir. Konumunuz yalnızca "Bana Uzaklığımı Göster" düğmesine bastığınızda ve açık rıza verdiğinizde bir kez okunur; mesafe cihazınızda hesaplanır, hiçbir yere gönderilmez ve kaydedilmez. "Tümünü Kabul Et" seçeneği konum iznini <strong>kapsamaz</strong>. Ayrıntılar için KVKK Aydınlatma Metni'nin 8. bölümüne bakınız.</p>
@@ -1763,7 +1853,7 @@
 
     <div class="ck-banner" id="cookieConsent" role="dialog" aria-live="polite" aria-label="Çerez tercihleri">
         <div class="ck-title">Çerezlerle daha güzel bir kahve molası</div>
-        <p class="ck-text">Kent Kafe sitesinde deneyiminizi kolaylaştırmak ve tercihlerinizi (örneğin karanlık mod seçiminizi) hatırlamak için çerezler kullanıyoruz. Zorunlu çerezler sitenin çalışması için gereklidir; diğerlerini dilediğiniz gibi yönetebilirsiniz.</p>
+        <p class="ck-text">Kent Kafe sitesinde deneyiminizi kolaylaştırmak ve tercihlerinizi (örneğin karanlık mod ve dil seçiminizi) hatırlamak için çerezler kullanıyoruz. Zorunlu çerezler sitenin çalışması için gereklidir; diğerlerini dilediğiniz gibi yönetebilirsiniz.</p>
         <div class="ck-actions">
             <button class="ck-btn ck-primary" onclick="cookieAcceptAll()">Tümünü Kabul Et</button>
             <button class="ck-btn ck-outline" onclick="cookieRejectAll()">Tümünü Reddet</button>
@@ -1793,7 +1883,7 @@
                     <div class="ck-row-name">İşlevsel Çerezler</div>
                     <label class="ck-switch"><input type="checkbox" id="ckFunctional"><span class="ck-slider"></span></label>
                 </div>
-                <p>Karanlık/aydınlık mod seçiminiz gibi tercihlerinizi bir sonraki ziyaretinizde hatırlamamızı sağlar.</p>
+                <p>Karanlık/aydınlık mod ve dil seçiminiz gibi tercihlerinizi bir sonraki ziyaretinizde hatırlamamızı sağlar.</p>
             </div>
 
             <div class="ck-row">
@@ -2000,6 +2090,10 @@
             try {
                 if (c.functional) localStorage.setItem('kentkafe-theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
                 else localStorage.removeItem('kentkafe-theme');
+            } catch (e) {}
+            try {
+                if (!c.functional) { localStorage.removeItem('kentkafe-lang'); localStorage.removeItem('kentkafe-game-best'); }
+                else if (currentLang !== 'tr') localStorage.setItem('kentkafe-lang', currentLang);
             } catch (e) {}
             document.getElementById('cookieConsent').classList.remove('show');
             closeCookieSettings(true);
@@ -2396,7 +2490,7 @@
             const box = document.getElementById('wizAlternatives');
             box.innerHTML = others.length
                 ? '<div class="wiz-alt-title">Bunlara da göz atın</div>' + others.map((r, i) =>
-                    '<button type="button" class="wiz-alt" data-i="' + i + '">' + r.item.n + '</button>').join('')
+                    '<button type="button" class="wiz-alt" translate="no" data-i="' + i + '">' + r.item.n + '</button>').join('')
                 : '';
             box.querySelectorAll('.wiz-alt').forEach((btn, i) => {
                 btn.addEventListener('click', () => wizShowItem(others[i].item));
@@ -2405,6 +2499,422 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeCoffeeWizard();
         });
+
+        // ===== DİL DESTEĞİ (isteğe bağlı Google Çeviri) =====
+        // Google'ın çeviri betiği, yalnızca ziyaretçi Türkçe dışında bir dil seçtiğinde yüklenir.
+        const LANG_KEY = 'kentkafe-lang';
+        const LANG_NAMES = { tr: 1, en: 1, de: 1, ru: 1, ar: 1, fr: 1, es: 1, it: 1 };
+        let currentLang = 'tr';
+        let gtLoading = null;
+
+        function setLangStatus(msg) {
+            const el = document.getElementById('langStatus');
+            if (el) el.textContent = msg;
+        }
+        function storeLang(code) {
+            const c = getConsent();
+            try {
+                if (c && c.functional && code !== 'tr') localStorage.setItem(LANG_KEY, code);
+                else localStorage.removeItem(LANG_KEY);
+            } catch (e) {}
+        }
+        function clearGoogTransCookie() {
+            const exp = 'expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            const host = location.hostname;
+            document.cookie = 'googtrans=; ' + exp + '; path=/';
+            document.cookie = 'googtrans=; ' + exp + '; path=/; domain=' + host;
+            document.cookie = 'googtrans=; ' + exp + '; path=/; domain=.' + host;
+        }
+        // "Kent" sözcüğü "şehir" anlamına geldiği için marka adının çevrilmesini engeller.
+        function protectBrandNames() {
+            if (document.body.dataset.brandProtected) return;
+            document.body.dataset.brandProtected = '1';
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (node.nodeValue.indexOf('Kent Kafe') === -1) return NodeFilter.FILTER_REJECT;
+                    const p = node.parentElement;
+                    if (!p || p.closest('script, style, textarea, [translate="no"], .notranslate')) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+            const nodes = [];
+            while (walker.nextNode()) nodes.push(walker.currentNode);
+            nodes.forEach(node => {
+                const frag = document.createDocumentFragment();
+                const parts = node.nodeValue.split('Kent Kafe');
+                parts.forEach((part, i) => {
+                    if (part) frag.appendChild(document.createTextNode(part));
+                    if (i < parts.length - 1) {
+                        const sp = document.createElement('span');
+                        sp.setAttribute('translate', 'no');
+                        sp.className = 'notranslate';
+                        sp.textContent = 'Kent Kafe';
+                        frag.appendChild(sp);
+                    }
+                });
+                node.parentNode.replaceChild(frag, node);
+            });
+        }
+        function loadGoogleTranslate() {
+            if (gtLoading) return gtLoading;
+            gtLoading = new Promise((resolve, reject) => {
+                window.googleTranslateElementInit = function () {
+                    try {
+                        new google.translate.TranslateElement(
+                            { pageLanguage: 'tr', includedLanguages: 'en,de,ru,ar,fr,es,it', autoDisplay: false },
+                            'google_translate_element'
+                        );
+                    } catch (e) { reject(e); return; }
+                    let tries = 0;
+                    const timer = setInterval(() => {
+                        const combo = document.querySelector('#google_translate_element select.goog-te-combo');
+                        if (combo) { clearInterval(timer); resolve(combo); }
+                        else if (++tries > 50) { clearInterval(timer); reject(new Error('çeviri menüsü oluşmadı')); }
+                    }, 150);
+                };
+                const s = document.createElement('script');
+                s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+                s.async = true;
+                s.onerror = () => reject(new Error('çeviri betiği yüklenemedi'));
+                document.head.appendChild(s);
+            });
+            gtLoading.catch(() => { gtLoading = null; });
+            return gtLoading;
+        }
+        function setSiteLanguage(code) {
+            const select = document.getElementById('langSelect');
+            if (!LANG_NAMES[code] || code === currentLang) return;
+            const banner = document.getElementById('menuBanner');
+            if (banner && banner.classList.contains('open')) toggleBannerMenu();
+
+            if (code === 'tr') {
+                storeLang('tr');
+                clearGoogTransCookie();
+                location.reload();
+                return;
+            }
+            setLangStatus('…');
+            select.disabled = true;
+            protectBrandNames();
+            loadGoogleTranslate().then(combo => {
+                combo.value = code;
+                combo.dispatchEvent(new Event('change'));
+                currentLang = code;
+                storeLang(code);
+                setLangStatus('Otomatik çeviri · Automatic translation');
+            }).catch(() => {
+                select.value = currentLang;
+                setLangStatus('Çeviri yüklenemedi · Translation unavailable');
+            }).then(() => { select.disabled = false; });
+        }
+        window.addEventListener('load', () => {
+            const c = getConsent();
+            let saved = null;
+            try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
+            if (c && c.functional && saved && saved !== 'tr' && LANG_NAMES[saved]) {
+                document.getElementById('langSelect').value = saved;
+                setSiteLanguage(saved);
+            } else {
+                clearGoogTransCookie();
+            }
+        });
+
+        // ===== GİZLİ MİNİ KAHVE OYUNU =====
+        // Yan menüdeki logoya art arda 5 kez tıklayınca açılır.
+        const CoffeeGame = (function () {
+            const W = 96, H = 144, FLOOR = 10;
+            const BEST_KEY = 'kentkafe-game-best';
+            const CUP_ROWS = [
+                '...S..S.....',
+                '....S..S....',
+                '.WBBBBBBW...',
+                '.WWWWWWWWWW.',
+                '.WWWWWWWW..W',
+                '.WWWWWWWW..W',
+                '.WWWWWWWWWW.',
+                '..WWWWWWW...',
+                '...WWWWW....',
+                '.GGGGGGGGGG.'
+            ];
+            const PLAYER_ROWS = [
+                'TTTTTTTTTTTTTT',
+                '..S.HHHHHH.S..',
+                '..S.SSSSSS.S..',
+                '..S.SKSSKS.S..',
+                '..SGSSSSSSGS..',
+                '...GGGGGGGG...',
+                '...GGGGGGGG...',
+                '...GGGGGGGG...',
+                '...PP....PP...',
+                '...PP....PP...'
+            ];
+            const HEART_ROWS = ['.RR.RR.', 'RRRRRRR', 'RRRRRRR', '.RRRRR.', '..RRR..', '...R...'];
+            const DIGITS = {
+                '0': ['111','101','101','101','111'], '1': ['010','110','010','010','111'],
+                '2': ['111','001','111','100','111'], '3': ['111','001','111','001','111'],
+                '4': ['101','101','111','001','001'], '5': ['111','100','111','001','111'],
+                '6': ['111','100','111','101','111'], '7': ['111','001','010','010','010'],
+                '8': ['111','101','111','101','111'], '9': ['111','101','111','001','111']
+            };
+            const STARS = [[8,12],[22,26],[40,8],[58,20],[76,10],[88,30],[14,48],[50,44],[70,58],[30,70],[84,78],[10,92],[62,96],[44,112],[90,104]];
+
+            let canvas, ctx, sp, inited = false;
+            let state = 'ready', rafId = 0, lastTime = 0, open = false;
+            let player, items, particles, score, lives, spawnTimer, flash, best = 0, time = 0;
+            const keys = { left: false, right: false };
+            let targetX = null, soundOn = false, audioCtx = null;
+
+            function makeSprite(rows, pal) {
+                const c = document.createElement('canvas');
+                c.width = rows[0].length; c.height = rows.length;
+                const g = c.getContext('2d');
+                rows.forEach((row, y) => {
+                    for (let x = 0; x < row.length; x++) {
+                        const ch = row[x];
+                        if (ch !== '.' && pal[ch]) { g.fillStyle = pal[ch]; g.fillRect(x, y, 1, 1); }
+                    }
+                });
+                return c;
+            }
+            function canSave() {
+                const c = getConsent();
+                return !!(c && c.functional);
+            }
+            function loadBest() {
+                best = 0;
+                if (canSave()) {
+                    try { best = parseInt(localStorage.getItem(BEST_KEY), 10) || 0; } catch (e) {}
+                }
+            }
+            function saveBest() {
+                if (canSave()) { try { localStorage.setItem(BEST_KEY, String(best)); } catch (e) {} }
+            }
+
+            // --- 8-bit ses (varsayılan kapalı) ---
+            function beep(freq, dur, delay) {
+                if (!soundOn) return;
+                try {
+                    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                    const t = audioCtx.currentTime + (delay || 0);
+                    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                    osc.type = 'square'; osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.04, t);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+                    osc.connect(gain); gain.connect(audioCtx.destination);
+                    osc.start(t); osc.stop(t + dur);
+                } catch (e) {}
+            }
+            function toggleSound() {
+                soundOn = !soundOn;
+                document.getElementById('gameSoundBtn').textContent = 'SES: ' + (soundOn ? 'AÇIK' : 'KAPALI');
+                if (soundOn) beep(880, 0.08);
+            }
+
+            function reset() {
+                player = { x: (W - 14) / 2, y: H - FLOOR - 10, w: 14, h: 10 };
+                items = []; particles = []; score = 0; lives = 3; spawnTimer = 0.5; flash = 0;
+            }
+            function spawn() {
+                const gold = Math.random() < 0.12;
+                items.push({ x: Math.random() * (W - 12), y: -10, w: 12, h: 10, gold: gold, mul: 0.85 + Math.random() * 0.35 });
+            }
+            function burst(x, y, colors, n, up) {
+                for (let i = 0; i < n; i++) {
+                    particles.push({
+                        x: x, y: y,
+                        vx: (Math.random() - 0.5) * 60,
+                        vy: -(up ? 20 + Math.random() * 40 : Math.random() * 20),
+                        life: 0.45 + Math.random() * 0.3,
+                        c: colors[i % colors.length]
+                    });
+                }
+            }
+
+            function update(dt) {
+                if (keys.left) { player.x -= 95 * dt; targetX = null; }
+                if (keys.right) { player.x += 95 * dt; targetX = null; }
+                if (targetX !== null) {
+                    const d = targetX - player.x, step = 420 * dt;
+                    player.x += Math.abs(d) <= step ? d : Math.sign(d) * step;
+                }
+                player.x = Math.max(0, Math.min(W - player.w, player.x));
+
+                spawnTimer -= dt;
+                if (spawnTimer <= 0) {
+                    spawn();
+                    spawnTimer = Math.max(0.42, 1.05 - score * 0.012) * (0.8 + Math.random() * 0.4);
+                }
+                const vy = 34 + Math.min(72, score * 2);
+                for (let i = items.length - 1; i >= 0; i--) {
+                    const it = items[i];
+                    it.y += vy * it.mul * dt;
+                    const caught = it.y + it.h >= player.y && it.y <= player.y + 3 &&
+                                   it.x + it.w > player.x && it.x < player.x + player.w;
+                    if (caught) {
+                        score += it.gold ? 3 : 1;
+                        burst(it.x + 6, player.y, it.gold ? ['#ffd95a', '#fff3b0'] : ['#f4ead5', '#d4af37'], 8, true);
+                        if (it.gold) { beep(660, 0.07); beep(880, 0.07, 0.07); beep(1320, 0.1, 0.14); } else beep(880, 0.06);
+                        items.splice(i, 1);
+                    } else if (it.y + it.h >= H - FLOOR) {
+                        lives--; flash = 0.25;
+                        burst(it.x + 6, H - FLOOR, ['#6b4226', '#9a9a8f'], 7, true);
+                        beep(140, 0.22);
+                        items.splice(i, 1);
+                        if (lives <= 0) { gameOver(); return; }
+                    }
+                }
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.vy += 140 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt;
+                    if (p.life <= 0) particles.splice(i, 1);
+                }
+                if (flash > 0) flash -= dt;
+            }
+
+            function drawNumber(n, x, y, color) {
+                ctx.fillStyle = color;
+                String(n).split('').forEach((d, i) => {
+                    DIGITS[d].forEach((row, ry) => {
+                        for (let rx = 0; rx < 3; rx++) if (row[rx] === '1') ctx.fillRect(x + i * 4 + rx, y + ry, 1, 1);
+                    });
+                });
+            }
+            function draw() {
+                ctx.fillStyle = '#0a2216'; ctx.fillRect(0, 0, W, H);
+                ctx.fillStyle = '#0c2819'; ctx.fillRect(0, 36, W, 36);
+                ctx.fillStyle = '#0f301e'; ctx.fillRect(0, 72, W, 36);
+                ctx.fillStyle = '#123824'; ctx.fillRect(0, 108, W, H - 108);
+                ctx.fillStyle = '#2f6b4a';
+                STARS.forEach((s, i) => { if (((time * 2 + i) | 0) % 5 !== 0) ctx.fillRect(s[0], s[1], 1, 1); });
+                ctx.fillStyle = '#3b2417'; ctx.fillRect(0, H - FLOOR, W, FLOOR);
+                ctx.fillStyle = '#4d3120';
+                for (let x = 0; x < W; x += 12) ctx.fillRect(x, H - FLOOR + 1, 1, FLOOR - 1);
+                ctx.fillStyle = '#d4af37'; ctx.fillRect(0, H - FLOOR, W, 1);
+
+                items.forEach(it => ctx.drawImage(it.gold ? sp.gold : sp.cup, Math.round(it.x), Math.round(it.y)));
+                ctx.drawImage(sp.player, Math.round(player.x), Math.round(player.y));
+                particles.forEach(p => { ctx.fillStyle = p.c; ctx.fillRect(Math.round(p.x), Math.round(p.y), 1, 1); });
+
+                drawNumber(score, 3, 3, '#f5c542');
+                for (let i = 0; i < 3; i++) ctx.drawImage(i < lives ? sp.heart : sp.heartOff, W - 10 - i * 9, 3);
+                if (flash > 0) {
+                    ctx.fillStyle = 'rgba(224,72,62,0.35)';
+                    ctx.fillRect(0, 0, W, 2); ctx.fillRect(0, H - 2, W, 2); ctx.fillRect(0, 0, 2, H); ctx.fillRect(W - 2, 0, 2, H);
+                }
+            }
+            function loop(now) {
+                if (!open) return;
+                const dt = lastTime ? Math.min(0.05, (now - lastTime) / 1000) : 0;
+                lastTime = now; time += dt;
+                if (state === 'playing') update(dt);
+                draw();
+                rafId = requestAnimationFrame(loop);
+            }
+
+            function showScreen(id, visible) {
+                document.getElementById(id).classList.toggle('show', visible);
+            }
+            function updateBestLabel() {
+                document.getElementById('gameBest').textContent = 'REKOR: ' + best;
+            }
+            function startGame() {
+                reset();
+                targetX = null;
+                keys.left = keys.right = false;
+                state = 'playing';
+                showScreen('gameStart', false); showScreen('gameOver', false);
+                beep(660, 0.06); beep(990, 0.08, 0.07);
+            }
+            function gameOver() {
+                state = 'over';
+                const isNew = score > best && score > 0;
+                if (score > best) { best = score; saveBest(); }
+                document.getElementById('gameFinalScore').textContent = 'SKOR: ' + score;
+                document.getElementById('gameNewBest').textContent = isNew ? 'YENİ REKOR!' : '';
+                updateBestLabel();
+                showScreen('gameOver', true);
+                beep(330, 0.15); beep(262, 0.15, 0.15); beep(196, 0.3, 0.3);
+            }
+            function fit() {
+                const maxW = Math.min(window.innerWidth - 40, 420);
+                const maxH = window.innerHeight - 250;
+                const scale = Math.max(1, Math.floor(Math.min(maxW / W, maxH / H)));
+                canvas.style.width = (W * scale) + 'px';
+                canvas.style.height = (H * scale) + 'px';
+            }
+            function pointerToTarget(e) {
+                const r = canvas.getBoundingClientRect();
+                targetX = (e.clientX - r.left) * (W / r.width) - player.w / 2;
+            }
+            function init() {
+                canvas = document.getElementById('gameCanvas');
+                ctx = canvas.getContext('2d');
+                canvas.width = W; canvas.height = H;
+                ctx.imageSmoothingEnabled = false;
+                sp = {
+                    cup: makeSprite(CUP_ROWS, { W: '#f4ead5', B: '#6b4226', G: '#9a9a8f', S: '#cfc9b8' }),
+                    gold: makeSprite(CUP_ROWS, { W: '#ffd95a', B: '#6b4226', G: '#b8860b', S: '#fff3b0' }),
+                    player: makeSprite(PLAYER_ROWS, { T: '#d4af37', H: '#3b2417', S: '#e8b48a', K: '#1a1a1a', G: '#1e5c3a', P: '#2b3a55' }),
+                    heart: makeSprite(HEART_ROWS, { R: '#e0483e' }),
+                    heartOff: makeSprite(HEART_ROWS, { R: '#3d4a43' })
+                };
+                canvas.addEventListener('pointerdown', (e) => { if (state === 'playing') pointerToTarget(e); });
+                canvas.addEventListener('pointermove', (e) => { if (state === 'playing') pointerToTarget(e); });
+                document.addEventListener('keydown', (e) => {
+                    if (!open) return;
+                    const k = e.key;
+                    if (k === 'ArrowLeft' || k === 'a' || k === 'A') { keys.left = true; e.preventDefault(); }
+                    else if (k === 'ArrowRight' || k === 'd' || k === 'D') { keys.right = true; e.preventDefault(); }
+                    else if ((k === 'Enter' || k === ' ') && state !== 'playing') { e.preventDefault(); startGame(); }
+                    else if (k === 'Escape') { close(); }
+                });
+                document.addEventListener('keyup', (e) => {
+                    const k = e.key;
+                    if (k === 'ArrowLeft' || k === 'a' || k === 'A') keys.left = false;
+                    else if (k === 'ArrowRight' || k === 'd' || k === 'D') keys.right = false;
+                });
+                window.addEventListener('resize', () => { if (open) fit(); });
+                document.getElementById('gameOverlay').addEventListener('click', (e) => {
+                    if (e.target.id === 'gameOverlay') close();
+                });
+                inited = true;
+            }
+            function openGame() {
+                if (!inited) init();
+                const banner = document.getElementById('menuBanner');
+                if (banner && banner.classList.contains('open')) toggleBannerMenu();
+                loadBest(); updateBestLabel();
+                reset(); state = 'ready'; targetX = null;
+                keys.left = keys.right = false;
+                showScreen('gameStart', true); showScreen('gameOver', false);
+                document.getElementById('gameOverlay').classList.add('show');
+                open = true; fit();
+                lastTime = 0; cancelAnimationFrame(rafId); rafId = requestAnimationFrame(loop);
+            }
+            function close() {
+                open = false; state = 'ready';
+                cancelAnimationFrame(rafId);
+                document.getElementById('gameOverlay').classList.remove('show');
+            }
+            return {
+                open: openGame, close: close, start: startGame, toggleSound: toggleSound,
+                // Yalnızca durum okuma (otomatik test ve hata ayıklama için)
+                getState: () => ({ state, score, lives, best, open, player: player && { x: player.x, w: player.w }, items: (items || []).map(i => ({ x: i.x, y: i.y, w: i.w, gold: i.gold })) })
+            };
+        })();
+
+        // Logoya art arda 5 tıklama (her tık arasında en fazla 1,5 sn) oyunu açar.
+        (function () {
+            const logo = document.querySelector('.side-menu-logo img');
+            if (!logo) return;
+            let clicks = 0, timer;
+            logo.addEventListener('click', () => {
+                clearTimeout(timer);
+                clicks++;
+                if (clicks >= 5) { clicks = 0; CoffeeGame.open(); return; }
+                timer = setTimeout(() => { clicks = 0; }, 1500);
+            });
+        })();
 
         // ===== SİTE ARAMA =====
         const SEARCH_INDEX = [
@@ -2572,44 +3082,62 @@
             
             if (!wheel) return;
 
-            // Çark artık ekrana göre büyüyüp küçülüyor. Etiketin İÇ başlangıç noktası (merkezden
-            // uzaklığı) ile DIŞ ucu (metin genişliği eklenince ulaştığı nokta) her zaman diskin
-            // yarıçapının güvenli bir oranının içinde kalacak şekilde hesaplanır; böylece metin
-            // konteynerin overflow:hidden sınırının dışına taşıp görünmez olmaz.
-            const radius = wheel.getBoundingClientRect().width / 2;
-            const innerStart = Math.max(20, Math.round(radius * 0.22));
-            const outerEdge = Math.round(radius * 0.80);
-            const labelWidth = Math.max(50, outerEdge - innerStart);
-            const labelFontSize = Math.max(12, Math.round(radius * 0.088));
-            
             cocktails.forEach((item, index) => {
-                const startAngle = index * anglePerSlice;
-                const endAngle = (index + 1) * anglePerSlice;
-                const color = sliceColors[index];
-                conicParts.push(`${color} ${startAngle}deg ${endAngle}deg`);
-                
-                const textDiv = document.createElement('div');
-                textDiv.style.position = 'absolute';
-                textDiv.style.width = labelWidth + 'px';
-                textDiv.style.height = '30px';
-                textDiv.style.top = '50%';
-                textDiv.style.left = '50%';
-                textDiv.style.transformOrigin = 'left center';
-                textDiv.style.textAlign = 'right';
-                
-                const midAngle = startAngle + (anglePerSlice / 2);
-                textDiv.style.transform = `translate(0%, -50%) rotate(${midAngle - 90}deg) translate(${innerStart}px, 0px)`;
-                textDiv.style.color = '#ffffff';
-                textDiv.style.fontWeight = 'bold';
-                textDiv.style.fontSize = labelFontSize + 'px';
-                textDiv.style.whiteSpace = 'nowrap';
-                textDiv.style.overflow = 'hidden';
-                textDiv.style.textOverflow = 'ellipsis';
-                textDiv.style.fontFamily = 'sans-serif';
-                textDiv.innerText = item;
-                wheel.appendChild(textDiv);
+                conicParts.push(`${sliceColors[index]} ${index * anglePerSlice}deg ${(index + 1) * anglePerSlice}deg`);
             });
-            
+
+            // Etiketler çarkın gerçek boyutuna göre yerleştirilir. İsim tam gösterilir;
+            // ayrılan alana sığmazsa yazı tipi, sığana kadar küçültülür (üç nokta konmaz).
+            const labelEls = [];
+            function buildLabels() {
+                labelEls.forEach(el => el.remove());
+                labelEls.length = 0;
+                const radius = wheel.getBoundingClientRect().width / 2;
+                if (!radius) return;
+                const innerStart = Math.max(20, Math.round(radius * 0.22));
+                const outerEdge = Math.round(radius * 0.80);
+                const labelWidth = Math.max(50, outerEdge - innerStart);
+                const baseFontSize = Math.max(12, Math.round(radius * 0.088));
+                const minFontSize = 8;
+
+                cocktails.forEach((item, index) => {
+                    const midAngle = index * anglePerSlice + (anglePerSlice / 2);
+                    const textDiv = document.createElement('div');
+                    textDiv.style.position = 'absolute';
+                    textDiv.style.width = labelWidth + 'px';
+                    textDiv.style.height = '30px';
+                    textDiv.style.lineHeight = '30px';
+                    textDiv.style.top = '50%';
+                    textDiv.style.left = '50%';
+                    textDiv.style.transformOrigin = 'left center';
+                    textDiv.style.textAlign = 'right';
+                    textDiv.style.transform = `translate(0%, -50%) rotate(${midAngle - 90}deg) translate(${innerStart}px, 0px)`;
+                    textDiv.style.color = '#ffffff';
+                    textDiv.style.fontWeight = 'bold';
+                    textDiv.style.whiteSpace = 'nowrap';
+                    textDiv.style.fontFamily = 'sans-serif';
+                    const span = document.createElement('span');
+                    span.style.display = 'inline-block';
+                    span.textContent = item;
+                    textDiv.appendChild(span);
+                    wheel.appendChild(textDiv);
+                    labelEls.push(textDiv);
+
+                    let size = baseFontSize;
+                    textDiv.style.fontSize = size + 'px';
+                    while (span.offsetWidth > labelWidth && size > minFontSize) {
+                        size -= 0.5;
+                        textDiv.style.fontSize = size + 'px';
+                    }
+                });
+            }
+            buildLabels();
+            let wheelResizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(wheelResizeTimer);
+                wheelResizeTimer = setTimeout(buildLabels, 150);
+            });
+
             wheel.style.background = `conic-gradient(${conicParts.join(', ')})`;
             
             window.startLuckySpin = function() {
@@ -2635,7 +3163,7 @@
                     
                     // Renk artık var(--text-main) ile geliyor: açık temada koyu yeşil,
                     // karanlık modda otomatik olarak beyaza yakın bir tona dönüyor.
-                    resultDiv.innerHTML = `Şansına Gelen: <span style="color: var(--text-main); font-size: 14pt; border-bottom: 2px solid #d4af37; padding-bottom: 2px;">${winner}</span>`;
+                    resultDiv.innerHTML = `Şansına Gelen: <span translate="no" style="color: var(--text-main); font-size: 14pt; border-bottom: 2px solid #d4af37; padding-bottom: 2px;">${winner}</span>`;
                     isSpinning = false;
                     btn.style.opacity = '1';
                     btn.style.cursor = 'pointer';
