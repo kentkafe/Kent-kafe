@@ -54,6 +54,13 @@
         /* Kompakt ve Modern Menü Tasarımı */
         .side-banner { position: fixed; top: 0; right: -100%; width: 260px; height: 100%; background: rgba(10, 47, 29, 0.95); backdrop-filter: blur(10px); box-shadow: -5px 0 20px rgba(0,0,0,0.3); padding: 40px 20px; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1001; display: flex; flex-direction: column; gap: 10px; visibility: hidden; }
         .side-banner.open { right: 0; visibility: visible; }
+        /* Menü ekrana sığmadığında yukarı/aşağı kaydırılabilsin (PC ve mobil) */
+        .side-banner { height: 100vh; height: 100dvh; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.4) rgba(255,255,255,0.06); }
+        .side-banner > * { flex-shrink: 0; }
+        .side-banner::-webkit-scrollbar { width: 7px; }
+        .side-banner::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); }
+        .side-banner::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.4); border-radius: 4px; }
+        .side-banner::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.6); }
         .side-menu-logo { text-align: center; margin-bottom: 25px; }
         .side-menu-logo img { max-height: 50px; opacity: 0.9; }
 
@@ -139,7 +146,8 @@
         .insta-profile:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(0,0,0,0.12); }
         .ip-header { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
         .ip-avatar { width: 74px; height: 74px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7); flex-shrink: 0; }
-        .ip-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: contain; background: #0a2f1d; padding: 8px; border: 2px solid var(--card-bg); }
+        .ip-photo { display: block; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: #0a2f1d; border: 2px solid var(--card-bg); }
+        .ip-photo img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
         .ip-handle { font-family: var(--font-heading); font-size: 13pt; font-weight: 700; line-height: 1.2; }
         .ip-stats { font-size: 9pt; color: var(--text-muted); margin-top: 2px; }
         .ip-name { font-weight: 600; margin-top: 4px; font-size: 10pt; }
@@ -152,16 +160,16 @@
         .ip-grid img:hover { transform: scale(1.03); filter: brightness(1.05) !important; }
 
         @media (min-width: 768px) {
-            .insta-profile { max-width: 640px; margin-left: auto; margin-right: auto; padding: 34px 38px; }
-            .ip-header { gap: 34px; margin-bottom: 30px; }
-            .ip-avatar { width: 128px; height: 128px; padding: 4px; }
-            .ip-avatar img { padding: 14px; border-width: 3px; }
-            .ip-handle { font-size: 20pt; }
+            .insta-profile { max-width: 880px; margin-left: auto; margin-right: auto; padding: 40px 48px; }
+            .ip-header { gap: 44px; margin-bottom: 34px; }
+            .ip-avatar { width: 150px; height: 150px; padding: 4px; }
+            .ip-photo { border-width: 3px; }
+            .ip-handle { font-size: 22pt; }
             .ip-stats { font-size: 10.5pt; }
             .ip-name { font-size: 11pt; }
             .ip-bio { font-size: 11pt; margin-bottom: 14px; }
             .ip-btn { font-size: 10pt; padding: 10px 24px; }
-            .ip-grid { gap: 8px; }
+            .ip-grid { gap: 10px; }
         }
         
         #instagramSection h2 { text-align: center; margin-bottom: 15px; }
@@ -276,11 +284,25 @@
         .career-apply-btn-outline:hover { background: var(--card-border); box-shadow: none; }
 
         .career-benefits-wrap { background: var(--page-bg); padding: 50px 20px 55px; transition: background-color 0.4s ease; }
-        .career-benefits { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 30px; }
-        .career-benefit { text-align: left; border-top: 1px solid var(--card-border); padding-top: 18px; }
-        .cb-number { font-family: var(--font-heading); font-size: 20pt; color: #d4af37; font-weight: 700; margin-bottom: 6px; opacity: 0.9; }
+        .career-benefits { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 600px) { .career-benefits { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1000px) { .career-benefits { grid-template-columns: repeat(4, 1fr); } }
+        .career-benefit { text-align: left; }
+        .cb-card { position: relative; height: 100%; padding: 26px 22px 24px; border: 1px solid var(--card-border); border-radius: 14px; background: var(--card-bg); overflow: hidden; transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.4s ease; }
+        .cb-card::before { content: ''; position: absolute; left: 0; top: 0; height: 3px; width: 0; background: linear-gradient(90deg, #0a2f1d, #2f8f5b); transition: width 0.5s ease; }
+        .cb-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(10,47,29,0.16); border-color: #2f8f5b; }
+        .cb-card:hover::before { width: 100%; }
+        .cb-number { position: absolute; top: 14px; right: 18px; font-family: var(--font-heading); font-size: 24pt; line-height: 1; font-weight: 700; color: #d4af37; opacity: 0.28; transition: opacity 0.35s ease, transform 0.35s ease; }
+        .cb-card:hover .cb-number { opacity: 0.75; transform: scale(1.12); }
+        .cb-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: rgba(47,143,91,0.12); color: var(--text-main); margin-bottom: 14px; transition: transform 0.35s ease, background-color 0.35s ease, color 0.35s ease; }
+        .cb-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .cb-card:hover .cb-icon { background: #0a2f1d; color: #ffffff; transform: rotate(-6deg) scale(1.1); }
+        body.dark-mode .cb-card:hover .cb-icon { background: #2f8f5b; }
+        .cb-badge { display: inline-block; font-family: var(--font-body); font-size: 7.5pt; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: #0a2f1d; color: #ffffff; margin-bottom: 10px; }
+        body.dark-mode .cb-badge { background: #2f8f5b; }
         .cb-title { font-family: var(--font-heading); font-size: 12.5pt; color: var(--text-main); margin-bottom: 6px; font-weight: 700; }
         .cb-desc { font-family: var(--font-body); font-size: 9.5pt; color: var(--text-muted); line-height: 1.6; }
+        @media (prefers-reduced-motion: reduce) { .cb-card, .cb-card::before, .cb-icon, .cb-number { transition: none; } .cb-card:hover { transform: none; } }
         .career-apply-again { text-align: center; margin-top: 40px; }
 
         /* ===== KAHVE SEÇİM SİHİRBAZI ===== */
@@ -456,7 +478,7 @@
             .career-hero { padding: 80px 24px; }
             .career-title { font-size: 34pt; }
             .career-sub { font-size: 12pt; max-width: 620px; }
-            .career-benefits { grid-template-columns: 1fr 1fr; gap: 40px 56px; }
+            .career-benefits { gap: 26px; }
             .career-benefits-wrap { padding: 64px 20px 70px; }
         }
         .btn-visit-outline:hover { background: var(--card-border); box-shadow: none; }
@@ -1508,7 +1530,7 @@
             <!-- Instagram profil kartı: mobil ve PC'de aynı görünüm -->
             <a class="insta-profile" href="https://www.instagram.com/kentkafe16?igsh=OXk1Zm5jdnpoODlj" target="_blank" rel="noopener" aria-label="Kent Kafe Instagram profilini aç">
                 <div class="ip-header">
-                    <div class="ip-avatar"><img src="images/logo.png" alt="Kent Kafe" loading="lazy"></div>
+                    <div class="ip-avatar"><span class="ip-photo"><img src="images/logo.png" alt="Kent Kafe" loading="lazy"></span></div>
                     <div class="ip-info">
                         <div class="ip-handle" translate="no">kentkafe16</div>
                         <div class="ip-stats">86.543 takipçi · 86.543 takip</div>
@@ -1542,25 +1564,77 @@
 
         <div class="career-benefits-wrap">
             <div class="career-benefits">
-                <div class="career-benefit">
-                    <div class="cb-number">01</div>
-                    <div class="cb-title">Esnek Çalışma Saatleri</div>
-                    <p class="cb-desc">Okulunuz veya diğer sorumluluklarınızla uyumlu vardiya seçenekleri sunuyoruz.</p>
+                <div class="career-benefit reveal" style="transition-delay:0.00s">
+                    <div class="cb-card">
+                        <span class="cb-number">01</span>
+                        <div class="cb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17V7a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v10"/><path d="M5 17h14"/><path d="M5 12h14"/><path d="M6 17v2h2v-2"/><path d="M16 17v2h2v-2"/><path d="M8.5 14.5h.01"/><path d="M15.5 14.5h.01"/></svg></div>
+                        <span class="cb-badge">Ücretsiz</span>
+                        <div class="cb-title">Ücretsiz Ulaşım</div>
+                        <p class="cb-desc">İşe gidiş-geliş ulaşımınız Kent Kafe'den; yol masrafı düşünmeden çalışın.</p>
+                    </div>
                 </div>
-                <div class="career-benefit">
-                    <div class="cb-number">02</div>
-                    <div class="cb-title">Eğitim ve Gelişim</div>
-                    <p class="cb-desc">Barista eğitimlerinden müşteri deneyimine, işe başladığınız ilk günden itibaren yanınızdayız.</p>
+                <div class="career-benefit reveal" style="transition-delay:0.12s">
+                    <div class="cb-card">
+                        <span class="cb-number">02</span>
+                        <div class="cb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h12v5a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V9z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3v2"/><path d="M12 3v2"/></svg></div>
+                        <span class="cb-badge">Ücretsiz</span>
+                        <div class="cb-title">Ücretsiz İçecek Hakkı</div>
+                        <p class="cb-desc">Çalışma saatleriniz içinde kahve ve içecek hakkınızı keyifle kullanın.</p>
+                    </div>
                 </div>
-                <div class="career-benefit">
-                    <div class="cb-number">03</div>
-                    <div class="cb-title">Birlikte Büyüyen Bir Ekip</div>
-                    <p class="cb-desc">Kent Kafe ailesinde samimi, saygılı ve destekleyici bir çalışma kültürü sizi bekliyor.</p>
+                <div class="career-benefit reveal" style="transition-delay:0.24s">
+                    <div class="cb-card">
+                        <span class="cb-number">03</span>
+                        <div class="cb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+                        
+                        <div class="cb-title">Esnek Çalışma Saatleri</div>
+                        <p class="cb-desc">Okulunuz veya diğer sorumluluklarınızla uyumlu vardiya seçenekleri sunuyoruz.</p>
+                    </div>
                 </div>
-                <div class="career-benefit">
-                    <div class="cb-number">04</div>
-                    <div class="cb-title">Doğayla İç İçe Bir Ortam</div>
-                    <p class="cb-desc">Şehrin karmaşasından uzak, huzurlu bir atmosferde, keyifle çalışabileceğiniz bir mekan.</p>
+                <div class="career-benefit reveal" style="transition-delay:0.36s">
+                    <div class="cb-card">
+                        <span class="cb-number">04</span>
+                        <div class="cb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/></svg></div>
+                        
+                        <div class="cb-title">Eğitim ve Gelişim</div>
+                        <p class="cb-desc">Barista eğitimlerinden müşteri deneyimine, işe başladığınız ilk günden itibaren yanınızdayız.</p>
+                    </div>
+                </div>
+                <div class="career-benefit reveal" style="transition-delay:0.00s">
+                    <div class="cb-card">
+                        <span class="cb-number">05</span>
+                        <div class="cb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+                        
+                        <div class="cb-title">Kariyer Fırsatları</div>
+                        <p class="cb-desc">Barista olarak başlayın, deneyiminizle birlikte yeni sorumluluklara yükselin.</p>
+                    </div>
+                </div>
+                <div class="career-benefit reveal" style="transition-delay:0.12s">
+                    <div class="cb-card">
+                        <span class="cb-number">06</span>
+                        <div class="cb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/><path d="M15 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                        
+                        <div class="cb-title">Birlikte Büyüyen Bir Ekip</div>
+                        <p class="cb-desc">Kent Kafe ailesinde samimi, saygılı ve destekleyici bir çalışma kültürü sizi bekliyor.</p>
+                    </div>
+                </div>
+                <div class="career-benefit reveal" style="transition-delay:0.24s">
+                    <div class="cb-card">
+                        <span class="cb-number">07</span>
+                        <div class="cb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22V11"/><path d="M12 11C12 6.5 8.5 4 4 4c0 4.5 3 7 8 7z"/><path d="M12 15c0-3.5 3-6 8-6 0 4.5-3 7-8 7"/></svg></div>
+                        
+                        <div class="cb-title">Doğayla İç İçe Bir Ortam</div>
+                        <p class="cb-desc">Şehrin karmaşasından uzak, huzurlu bir atmosferde, keyifle çalışabileceğiniz bir mekan.</p>
+                    </div>
+                </div>
+                <div class="career-benefit reveal" style="transition-delay:0.36s">
+                    <div class="cb-card">
+                        <span class="cb-number">08</span>
+                        <div class="cb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/></svg></div>
+                        
+                        <div class="cb-title">Üniforma ve Ekipman</div>
+                        <p class="cb-desc">Çalışma kıyafetiniz ve ihtiyaç duyduğunuz ekipman işletmemiz tarafından sağlanır.</p>
+                    </div>
                 </div>
             </div>
 
@@ -2928,7 +3002,7 @@
             { title: 'Elektrikli Araç Şarjı', desc: 'Yüksek güçlü hızlı şarj istasyonu', type: 'anchor', target: '#featuresSection' },
             { title: 'Engelli Erişimi', desc: 'Engelli girişi ve engelli tuvaleti mevcuttur', type: 'anchor', target: '#featuresSection' },
             { title: 'Instagram', desc: 'Sosyal medya hesabımız, kentkafe16', type: 'anchor', target: '#instagramSection' },
-            { title: 'Kariyer', desc: 'Kent Kafe ailesine katılın, hemen başvurun', type: 'anchor', target: '#careerSection' },
+            { title: 'Kariyer', desc: 'Kent Kafe ailesine katılın; ücretsiz ulaşım, ücretsiz içecek hakkı, hemen başvurun', type: 'anchor', target: '#careerSection' },
             { title: 'Şans Çarkı', desc: 'Kokteyl çarkını çevirin, şansınızı deneyin', type: 'anchor', target: '#luckyWheelSection' },
             { title: 'Bizi Ziyaret Edin', desc: 'Adres, telefon, yol tarifi', type: 'anchor', target: '#visitSection' },
             { title: 'Çalışma Saatleri', desc: 'Her gün 08:30 – 00:30', type: 'anchor', target: '#visitSection' },
@@ -3050,15 +3124,19 @@
         }
         
         const banner = document.getElementById('menuBanner');
-        let startX = 0;
+        let startX = 0, startY = 0;
         if (banner) {
             banner.addEventListener('touchstart', (e) => {
                 startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
             }, { passive: true });
             
             banner.addEventListener('touchend', (e) => {
-                let endX = e.changedTouches[0].clientX;
-                if (endX - startX > 60) {
+                const dx = e.changedTouches[0].clientX - startX;
+                const dy = e.changedTouches[0].clientY - startY;
+                // Yalnızca belirgin biçimde yatay bir kaydırma menüyü kapatır;
+                // aşağı/yukarı kaydırma menüyü kapatmaz.
+                if (dx > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
                     banner.classList.remove('open');
                 }
             }, { passive: true });
