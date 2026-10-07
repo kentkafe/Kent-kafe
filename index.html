@@ -147,7 +147,7 @@
         .ip-header { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
         .ip-avatar { width: 74px; height: 74px; border-radius: 50%; padding: 3px; background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7); flex-shrink: 0; }
         .ip-photo { display: block; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: #0a2f1d; border: 2px solid var(--card-bg); }
-        .ip-photo img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
+        .ip-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
         .ip-handle { font-family: var(--font-heading); font-size: 13pt; font-weight: 700; line-height: 1.2; }
         .ip-stats { font-size: 9pt; color: var(--text-muted); margin-top: 2px; }
         .ip-name { font-weight: 600; margin-top: 4px; font-size: 10pt; }
@@ -445,6 +445,18 @@
         .game-sound { font-family: inherit; font-size: 8pt; font-weight: 700; letter-spacing: 1px; background: transparent; color: #f4ead5; border: 2px solid #f4ead5; padding: 4px 8px; cursor: pointer; }
         .game-sound:hover { background: rgba(244,234,213,0.15); }
         .game-hint { margin-top: 8px; font-size: 7pt; letter-spacing: 1px; color: #8fa89a; }
+
+        /* ===== ZİYARETÇİ DİPNOTU ("Bizi Ziyaret Edin" kartı) ===== */
+        .visit-footnote { display: none; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 12px; margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--card-border); font-family: var(--font-body); font-size: 7.5pt; letter-spacing: 1.3px; text-transform: uppercase; color: var(--text-muted); }
+        .visit-footnote.show { display: flex; animation: vfFadeIn 0.8s ease both; }
+        @keyframes vfFadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        .visit-footnote b { font-weight: 700; color: var(--text-main); font-variant-numeric: tabular-nums; letter-spacing: 0.6px; }
+        .vf-item { display: inline-flex; align-items: center; gap: 6px; }
+        .vf-sep { opacity: 0.5; }
+        .vf-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 0 rgba(16,185,129,0.55); animation: vfPulse 2.4s ease-out infinite; }
+        @keyframes vfPulse { 0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); } 70%, 100% { box-shadow: 0 0 0 7px rgba(16,185,129,0); } }
+        @media (prefers-reduced-motion: reduce) { .vf-dot { animation: none; } .visit-footnote.show { animation: none; } }
+        @media (min-width: 768px) { .visit-footnote { font-size: 8pt; margin-top: 30px; } }
 
         /* ===== SİTE ARAMA ===== */
         .search-modal { position: fixed; left: 50%; top: 12%; transform: translate(-50%, -10px); width: min(560px, calc(100% - 28px)); max-height: 76vh; display: flex; flex-direction: column; background: var(--card-bg); color: var(--text-main); border-radius: 16px; box-shadow: 0 24px 70px rgba(0,0,0,0.4); z-index: 6200; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease; }
@@ -1533,7 +1545,7 @@
                     <div class="ip-avatar"><span class="ip-photo"><img src="images/logo.png" alt="Kent Kafe" loading="lazy"></span></div>
                     <div class="ip-info">
                         <div class="ip-handle" translate="no">kentkafe16</div>
-                        <div class="ip-stats">86.543 takipçi · 86.543 takip</div>
+                        <div class="ip-stats">16 bin takipçi · 16 bin takip</div>
                         <div class="ip-name">Kent Kafe</div>
                         <div class="ip-bio">Karacabey, Bursa<br>Senin Şehrin, Senin Kahvecin.<br>www.kentkafe.com.tr ve 2 diğer</div>
                         <span class="ip-btn">Instagram'da Görüntüle</span>
@@ -1812,6 +1824,7 @@
                 <li><strong>Müşteri geri bildirimi:</strong> Atmosfer, temizlik, ilgi-alaka ve servis puanlarınız ile serbest yorum metniniz.</li>
                 <li><strong>Konum verisi:</strong> Yalnızca açık rızanız varsa, cihazınızın anlık enlem/boylam bilgisi (ayrıntılar 8. bölümde).</li>
                 <li><strong>İşlem güvenliği / internet trafiği bilgisi:</strong> IP adresi, tarayıcı ve cihaz türü, işletim sistemi, erişim tarihi ve saati, ziyaret edilen sayfalar.</li>
+                <li><strong>Ziyaretçi sayacı verisi:</strong> "Sitede şu an kaç kişi var, bugün kaç kişi geldi" bilgisini göstermek için IP adresiniz ve tarayıcı bilginizden, günlük değişen gizli bir anahtarla tek yönlü olarak üretilen anonim bir özet kodu. IP adresiniz ve tarayıcı bilginiz kaydedilmez; özet kodundan kişiye ulaşılamaz ve kod en geç 7 gün içinde silinir. Çerez veya yerel depolama kullanılmaz.</li>
                 <li><strong>Tercih kayıtları:</strong> Çerez tercihiniz, konum izni tercihiniz ve karanlık/aydınlık mod ve dil seçiminiz ile mini oyun rekorunuz (tarayıcınızın yerel depolamasında tutulur).</li>
                 <li><strong>Kariyer başvurusu:</strong> "Kariyer" bağlantısı üzerinden Google Formlar'da paylaştığınız bilgiler (ilgili formda ayrıca bilgilendirilirsiniz).</li>
             </ul>
@@ -1820,6 +1833,7 @@
             <ul>
                 <li>İnternet sitesinin çalıştırılması, güvenliğinin sağlanması ve teknik sorunların giderilmesi,</li>
                 <li>Geri bildirimlerin değerlendirilmesi, hizmet ve ürün kalitesinin iyileştirilmesi,</li>
+                <li>Sitedeki anlık ve günlük ziyaretçi sayısının anonim olarak gösterilmesi,</li>
                 <li>Tercihlerinizin (karanlık mod, çerez ve konum izni) hatırlanması,</li>
                 <li>Kent Kafe'ye olan uzaklığınızın hesaplanarak size gösterilmesi (yalnızca açık rızanızla),</li>
                 <li>Kariyer başvurularının değerlendirilmesi,</li>
@@ -1839,7 +1853,7 @@
                 <li><strong>Formspree (ABD):</strong> Geri bildirim formunuzun bize iletilmesi.</li>
                 <li><strong>Google (Google Formlar, Google E-Tablolar, Google Fonts, Google Haritalar):</strong> Kariyer başvuru formu, canlı yoğunluk bilgisinin sunulması, yazı tiplerinin yüklenmesi ve yol tarifi bağlantısı. Bu hizmetler kullanılırken IP adresiniz Google'a iletilebilir.</li>
                 <li><strong>Google Çeviri (ABD) — isteğe bağlı:</strong> Siteyi Türkçe dışında bir dilde görüntülemeyi seçtiğinizde, sayfa içeriği çevrilmek üzere Google'a iletilir ve IP adresiniz Google tarafından görülür. Bu hizmet siz bir dil seçene kadar hiç yüklenmez. Çeviriler otomatiktir; bağlayıcı olan metin Türkçe sürümdür.</li>
-                <li><strong>Cloudflare (ABD):</strong> Hava durumu bilgisinin sunulması için kullanılan ara sunucu; istek sırasında IP adresiniz teknik olarak işlenebilir.</li>
+                <li><strong>Cloudflare (ABD):</strong> Hava durumu bilgisinin ve anonim ziyaretçi sayacının sunulması için kullanılan ara sunucu ve veritabanı; istek sırasında IP adresiniz teknik olarak işlenebilir.</li>
                 <li><strong>Yetkili kamu kurum ve kuruluşları:</strong> Mevzuat gereği talep halinde.</li>
             </ul>
             <p>Bu hizmet sağlayıcıların bir kısmı yurt dışında bulunduğundan, aktarımlar KVKK'nın 9. maddesi kapsamında yapılır. <strong>Konum verisi hiçbir üçüncü kişiye aktarılmaz.</strong> Instagram, dış menü sayfası ve Google Haritalar bağlantılarına tıkladığınızda ilgili siteler kendi gizlilik politikalarına tabidir.</p>
@@ -1894,14 +1908,14 @@
                     <tr><td>kentkafe-lang</td><td>İşlevsel</td><td>Seçtiğiniz site dili</td><td>Siz silene kadar</td></tr>
                     <tr><td>kentkafe-game-best</td><td>İşlevsel</td><td>Sitedeki mini oyunun en yüksek skoru</td><td>Siz silene kadar</td></tr>
                     <tr><td>googtrans</td><td>İşlevsel (isteğe bağlı)</td><td>Google Çeviri'nin seçtiğiniz dili kullanması; yalnızca bir dil seçerseniz oluşur</td><td>Oturum</td></tr>
-                    <tr><td>—</td><td>Performans</td><td>Şu anda sitemizde analiz/istatistik çerezi kullanılmamaktadır. İleride kullanılması halinde yalnızca izninizle etkinleştirilecektir.</td><td>—</td></tr>
+                    <tr><td>Çerez yok</td><td>Performans</td><td>"Bizi Ziyaret Edin" bölümü altındaki anonim ziyaretçi sayacı çerez veya yerel depolama kullanmaz; yalnızca günlük değişen bir anahtarla üretilmiş anonim bir özet kod sunucuda en fazla 7 gün tutulur. Bunun dışında analiz/istatistik çerezi kullanılmamaktadır.</td><td>En fazla 7 gün</td></tr>
                 </tbody>
             </table>
             </div>
             <p>İşlevsel kayıt, yalnızca "İşlevsel Çerezler" izni verdiğinizde saklanır. Bu izni vermezseniz karanlık mod ve dil seçiminiz bir sonraki ziyarette hatırlanmaz.</p>
 
             <h4>3. Üçüncü Taraf Hizmetler</h4>
-            <p>Sitemiz; Google Fonts (yazı tipleri), Google Çeviri (yalnızca siz bir dil seçerseniz), Google E-Tablolar (canlı yoğunluk bilgisi), Cloudflare (hava durumu ara sunucusu) ve Formspree (geri bildirim formu) gibi hizmetlerden yararlanır. Bu hizmetlerle iletişim sırasında IP adresiniz ve tarayıcı bilgileriniz teknik olarak ilgili sağlayıcıya iletilir. Bu sağlayıcılar kendi gizlilik ve çerez politikalarına tabidir. Instagram, Google Haritalar ve dış menü sayfası bağlantılarına tıkladığınızda ilgili sitenin politikaları geçerli olur.</p>
+            <p>Sitemiz; Google Fonts (yazı tipleri), Google Çeviri (yalnızca siz bir dil seçerseniz), Google E-Tablolar (canlı yoğunluk bilgisi), Cloudflare (hava durumu ve ziyaretçi sayacı ara sunucusu) ve Formspree (geri bildirim formu) gibi hizmetlerden yararlanır. Bu hizmetlerle iletişim sırasında IP adresiniz ve tarayıcı bilgileriniz teknik olarak ilgili sağlayıcıya iletilir. Bu sağlayıcılar kendi gizlilik ve çerez politikalarına tabidir. Instagram, Google Haritalar ve dış menü sayfası bağlantılarına tıkladığınızda ilgili sitenin politikaları geçerli olur.</p>
 
             <h4>4. Konum Bilgisi</h4>
             <p>Konum bilgisi bir çerez değildir; ancak izne bağlı olduğu için aynı Tercih Merkezi'nden yönetilir. Konumunuz yalnızca "Bana Uzaklığımı Göster" düğmesine bastığınızda ve açık rıza verdiğinizde bir kez okunur; mesafe cihazınızda hesaplanır, hiçbir yere gönderilmez ve kaydedilmez. "Tümünü Kabul Et" seçeneği konum iznini <strong>kapsamaz</strong>. Ayrıntılar için KVKK Aydınlatma Metni'nin 8. bölümüne bakınız.</p>
@@ -2006,6 +2020,12 @@
                     <button type="button" class="btn-visit btn-visit-outline" onclick="requestDistance()">📍 Bana Uzaklığımı Göster</button>
                     <div id="distanceResult" class="distance-result"></div>
                 </div>
+            </div>
+
+            <div class="visit-footnote" id="visitFootnote" aria-live="polite">
+                <span class="vf-item"><span class="vf-dot" aria-hidden="true"></span>Şu an sitede <b id="vfOnline">–</b> kişi</span>
+                <span class="vf-sep" aria-hidden="true">·</span>
+                <span class="vf-item">Bugün <b id="vfToday">–</b> ziyaretçi</span>
             </div>
         </div>
     </section>
@@ -2988,6 +3008,41 @@
                 if (clicks >= 5) { clicks = 0; CoffeeGame.open(); return; }
                 timer = setTimeout(() => { clicks = 0; }, 1500);
             });
+        })();
+
+        // ===== ZİYARETÇİ SAYACI (dipnot) =====
+        // Sayılar, ziyaretci-sayaci-kurulum.txt dosyasındaki Cloudflare Worker'dan gelir.
+        // Worker yoksa ya da yanıt vermezse dipnot hiç gösterilmez (sahte sayı yazılmaz).
+        const VISITOR_COUNTER_URL = 'https://kentkafe-ziyaretci.kentkafee.workers.dev/';
+        (function () {
+            const box = document.getElementById('visitFootnote');
+            if (!box) return;
+            const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function animateTo(el, to) {
+                const from = parseInt(el.dataset.v || '0', 10);
+                el.dataset.v = to;
+                if (reduce || from === to) { el.textContent = to.toLocaleString('tr-TR'); return; }
+                const start = performance.now(), dur = 800;
+                (function step(now) {
+                    const t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
+                    el.textContent = Math.round(from + (to - from) * e).toLocaleString('tr-TR');
+                    if (t < 1) requestAnimationFrame(step);
+                })(start);
+            }
+            async function ping() {
+                try {
+                    const r = await fetch(VISITOR_COUNTER_URL, { method: 'POST', cache: 'no-store' });
+                    if (!r.ok) throw new Error('http ' + r.status);
+                    const d = await r.json();
+                    if (!Number.isFinite(d.online) || !Number.isFinite(d.today)) throw new Error('geçersiz yanıt');
+                    animateTo(document.getElementById('vfOnline'), Math.max(1, d.online));
+                    animateTo(document.getElementById('vfToday'), Math.max(1, d.today));
+                    box.classList.add('show');
+                } catch (e) { /* sayaç kullanılamıyor: dipnot gizli kalır */ }
+            }
+            ping();
+            setInterval(() => { if (!document.hidden) ping(); }, 60000);
+            document.addEventListener('visibilitychange', () => { if (!document.hidden) ping(); });
         })();
 
         // ===== SİTE ARAMA =====
