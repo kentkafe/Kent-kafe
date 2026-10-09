@@ -446,17 +446,6 @@
         .game-sound:hover { background: rgba(244,234,213,0.15); }
         .game-hint { margin-top: 8px; font-size: 7pt; letter-spacing: 1px; color: #8fa89a; }
 
-        /* ===== ZİYARETÇİ DİPNOTU ("Bizi Ziyaret Edin" kartı) ===== */
-        .visit-footnote { display: none; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 12px; margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--card-border); font-family: var(--font-body); font-size: 7.5pt; letter-spacing: 1.3px; text-transform: uppercase; color: var(--text-muted); }
-        .visit-footnote.show { display: flex; animation: vfFadeIn 0.8s ease both; }
-        @keyframes vfFadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-        .visit-footnote b { font-weight: 700; color: var(--text-main); font-variant-numeric: tabular-nums; letter-spacing: 0.6px; }
-        .vf-item { display: inline-flex; align-items: center; gap: 6px; }
-        .vf-sep { opacity: 0.5; }
-        .vf-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 0 rgba(16,185,129,0.55); animation: vfPulse 2.4s ease-out infinite; }
-        @keyframes vfPulse { 0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.55); } 70%, 100% { box-shadow: 0 0 0 7px rgba(16,185,129,0); } }
-        @media (prefers-reduced-motion: reduce) { .vf-dot { animation: none; } .visit-footnote.show { animation: none; } }
-        @media (min-width: 768px) { .visit-footnote { font-size: 8pt; margin-top: 30px; } }
 
         /* ===== SİTE ARAMA ===== */
         .search-modal { position: fixed; left: 50%; top: 12%; transform: translate(-50%, -10px); width: min(560px, calc(100% - 28px)); max-height: 76vh; display: flex; flex-direction: column; background: var(--card-bg); color: var(--text-main); border-radius: 16px; box-shadow: 0 24px 70px rgba(0,0,0,0.4); z-index: 6200; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease; }
@@ -2022,11 +2011,6 @@
                 </div>
             </div>
 
-            <div class="visit-footnote" id="visitFootnote" aria-live="polite">
-                <span class="vf-item"><span class="vf-dot" aria-hidden="true"></span>Şu an sitede <b id="vfOnline">–</b> kişi</span>
-                <span class="vf-sep" aria-hidden="true">·</span>
-                <span class="vf-item">Bugün <b id="vfToday">–</b> ziyaretçi</span>
-            </div>
         </div>
     </section>
 
@@ -2104,6 +2088,7 @@
 <footer id="siteFooter" style="background-color: #1e3129; color: #ffffff; text-align: center; width: 100%; box-sizing: border-box; margin-top: 50px;">
     <div style="max-width: 1200px; margin: 0 auto; width: 100%; opacity: 0.9;">
         © 2026 Kent Kafe. Tüm Hakları Saklıdır.
+        <div style="margin-top:8px;font-size:7.5pt;opacity:0.45;letter-spacing:1px;">v2.5.0 — Ekim 2026</div>
         <div class="legal-links">
             <a href="#careerSection">Kariyer</a>
             <span class="sep">·</span>
@@ -2119,18 +2104,22 @@
     
     <script>
         // Karşılama ekranı: siteye her girişte gösterilir, kısa süre sonra kaybolur.
-        window.addEventListener('load', () => {
-            const welcome = document.getElementById('welcomeScreen');
-            setTimeout(() => {
-                if (welcome) welcome.classList.add('hide');
+        // Açılış ekranı: window.load yerine güvenli timeout kullanılıyor
+        (function() {
+            function hideWelcome() {
+                var w = document.getElementById('welcomeScreen');
+                if (w) w.classList.add('hide');
                 document.body.classList.remove('welcome-active');
-            }, 2200);
-        });
+            }
+            // Her durumda 2.2 saniye sonra kapat (load beklemez)
+            setTimeout(hideWelcome, 2200);
+            // Sayfa yüklenirse daha erken kapat
+            window.addEventListener('load', hideWelcome);
+        })();
+            setTimeout(() => {
         // Kullanıcı beklemeden dokunursa/tıklarsa ekranı hemen kapat.
         document.getElementById('welcomeScreen').addEventListener('click', () => {
             document.getElementById('welcomeScreen').classList.add('hide');
-            document.body.classList.remove('welcome-active');
-        });
 
         function toggleBannerMenu() {
             const b = document.getElementById('menuBanner');
@@ -3009,61 +2998,6 @@
                 timer = setTimeout(() => { clicks = 0; }, 1500);
             });
         })();
-
-        // ===== ZİYARETÇİ SAYACI (dipnot) =====
-        // Ziyaretçi sayacı - Cloudflare Worker ile
-        const VISITOR_COUNTER_URL = 'https://kentkafe-ziyaretci.kentkafee.workers.dev/';
-        
-        async function ziyaretciSayaciniGuncelle() {
-            try {
-                const cevap = await fetch(VISITOR_COUNTER_URL, { 
-                    method: 'POST',
-                    cache: 'no-store'
-                });
-                
-                if (cevap.ok) {
-                    const veri = await cevap.json();
-                    
-                    // Sayıları güncelle
-                    if (veri.online && document.getElementById('vfOnline')) {
-                        animateTo(document.getElementById('vfOnline'), Math.max(1, veri.online));
-                    }
-                    if (veri.today && document.getElementById('vfToday')) {
-                        animateTo(document.getElementById('vfToday'), Math.max(1, veri.today));
-                    }
-                    
-                    // Dipnot göster
-                    const dipnot = document.getElementById('visitFootnote');
-                    if (dipnot) dipnot.style.display = 'block';
-                }
-            } catch (e) {
-                // Worker yanıt vermezse sessizce başarısız
-            }
-        }
-        
-        // Sayfa yüklendiğinde ve her 60 saniyede güncelle
-        ziyaretciSayaciniGuncelle();
-        setInterval(ziyaretciSayaciniGuncelle, 60000);
-        
-        // Animasyon fonksiyonu: sayıyı yumuşak geçişle güncelle
-        function animateTo(element, targetValue) {
-            const startValue = parseInt(element.textContent) || 0;
-            const duration = 600;
-            const startTime = Date.now();
-            
-            function update() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const currentValue = Math.floor(startValue + (targetValue - startValue) * progress);
-                element.textContent = currentValue;
-                
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                }
-            }
-            
-            requestAnimationFrame(update);
-        }
 
 
         // ===== SİTE ARAMA =====
