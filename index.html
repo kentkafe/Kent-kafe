@@ -3011,39 +3011,60 @@
         })();
 
         // ===== ZİYARETÇİ SAYACI (dipnot) =====
-        // Sayılar, ziyaretci-sayaci-kurulum.txt dosyasındaki Cloudflare Worker'dan gelir.
-        // Worker yoksa ya da yanıt vermezse dipnot hiç gösterilmez (sahte sayı yazılmaz).
+        // Ziyaretçi sayacı - Cloudflare Worker ile
         const VISITOR_COUNTER_URL = 'https://kentkafe-ziyaretci.kentkafee.workers.dev/';
-        (function () {
-            const box = document.getElementById('visitFootnote');
-            if (!box) return;
-            const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            function animateTo(el, to) {
-                const from = parseInt(el.dataset.v || '0', 10);
-                el.dataset.v = to;
-                if (reduce || from === to) { el.textContent = to.toLocaleString('tr-TR'); return; }
-                const start = performance.now(), dur = 800;
-                (function step(now) {
-                    const t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3);
-                    el.textContent = Math.round(from + (to - from) * e).toLocaleString('tr-TR');
-                    if (t < 1) requestAnimationFrame(step);
-                })(start);
+        
+        async function ziyaretciSayaciniGuncelle() {
+            try {
+                const cevap = await fetch(VISITOR_COUNTER_URL, { 
+                    method: 'POST',
+                    cache: 'no-store'
+                });
+                
+                if (cevap.ok) {
+                    const veri = await cevap.json();
+                    
+                    // Sayıları güncelle
+                    if (veri.online && document.getElementById('vfOnline')) {
+                        animateTo(document.getElementById('vfOnline'), Math.max(1, veri.online));
+                    }
+                    if (veri.today && document.getElementById('vfToday')) {
+                        animateTo(document.getElementById('vfToday'), Math.max(1, veri.today));
+                    }
+                    
+                    // Dipnot göster
+                    const dipnot = document.getElementById('visitFootnote');
+                    if (dipnot) dipnot.style.display = 'block';
+                }
+            } catch (e) {
+                // Worker yanıt vermezse sessizce başarısız
             }
-            async function ping() {
-                try {
-                    const r = await fetch(VISITOR_COUNTER_URL, { method: 'POST', cache: 'no-store' });
-                    if (!r.ok) throw new Error('http ' + r.status);
-                    const d = await r.json();
-                    if (!Number.isFinite(d.online) || !Number.isFinite(d.today)) throw new Error('geçersiz yanıt');
-                    animateTo(document.getElementById('vfOnline'), Math.max(1, d.online));
-                    animateTo(document.getElementById('vfToday'), Math.max(1, d.today));
-                    box.classList.add('show');
-                } catch (e) { /* sayaç kullanılamıyor: dipnot gizli kalır */ }
+        }
+        
+        // Sayfa yüklendiğinde ve her 60 saniyede güncelle
+        ziyaretciSayaciniGuncelle();
+        setInterval(ziyaretciSayaciniGuncelle, 60000);
+        
+        // Animasyon fonksiyonu: sayıyı yumuşak geçişle güncelle
+        function animateTo(element, targetValue) {
+            const startValue = parseInt(element.textContent) || 0;
+            const duration = 600;
+            const startTime = Date.now();
+            
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentValue = Math.floor(startValue + (targetValue - startValue) * progress);
+                element.textContent = currentValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
             }
-            ping();
-            setInterval(() => { if (!document.hidden) ping(); }, 60000);
-            document.addEventListener('visibilitychange', () => { if (!document.hidden) ping(); });
-        })();
+            
+            requestAnimationFrame(update);
+        }
+
 
         // ===== SİTE ARAMA =====
         const SEARCH_INDEX = [
@@ -3222,11 +3243,16 @@
             // Etiketler çarkın gerçek boyutuna göre yerleştirilir. İsim tam gösterilir;
             // ayrılan alana sığmazsa yazı tipi, sığana kadar küçültülür (üç nokta konmaz).
             const labelEls = [];
+            let lastBuiltWidth = 0;
             function buildLabels() {
+                // clientWidth, çarkın dönüşünden etkilenmez (getBoundingClientRect döndürülmüş
+                // çarkta olduğundan büyük ölçer ve yazıların taşmasına yol açar).
+                const wheelWidth = wheel.clientWidth;
+                if (!wheelWidth || wheelWidth === lastBuiltWidth) return;   // genişlik değişmediyse yeniden kurma
+                lastBuiltWidth = wheelWidth;
                 labelEls.forEach(el => el.remove());
                 labelEls.length = 0;
-                const radius = wheel.getBoundingClientRect().width / 2;
-                if (!radius) return;
+                const radius = wheelWidth / 2;
                 const innerStart = Math.max(20, Math.round(radius * 0.22));
                 const outerEdge = Math.round(radius * 0.80);
                 const labelWidth = Math.max(50, outerEdge - innerStart);
